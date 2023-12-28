@@ -12,6 +12,44 @@
 <script src="{{ url_for('static', filename='script.js') }}"></script>
 
 <div class="container-md my-5">
+
+    <div class="card my-4 border-0 shadow">
+        <div class="card-body">
+            <h5 class="card-title h2 mb-0">
+                Contact Information
+            </h5>
+            <p class="card-text text-muted">
+                <small>
+                    Please provide some contact information. We'll only display it on the final debriefing page if
+                    you do not direct the participants to a post-stimulus survey.
+                </small>
+            </p>
+            <form>
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <select class="form-select" id="title" aria-describedby="title_help">
+                        <option value="Dr." selected>Dr.</option>
+                        <option value="Prof.">Prof.</option>
+                        <option value="Ms.">Ms.</option>
+                        <option value="Mr.">Mr.</option>
+                    </select>
+                    <div id="title_help" class="form-text">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" aria-describedby="name_help" value="">
+                    <div id="name_help" class="form-text">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="eMail" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="eMail" placeholder="name@example.com">
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="card my-4 border-0 shadow">
         <div class="card-body">
             <h5 class="card-title h2 mb-0">

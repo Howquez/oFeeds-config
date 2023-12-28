@@ -42,6 +42,9 @@ def create_session():
             session_config_name='oTweet',
             num_participants=data.get('participant_number'),
             modified_session_config_fields=dict(
+                title=data.get('title'),
+                name=data.get('full_name'),
+                eMail=data.get('eMail'),
                 data_path=data.get('content_url'),
                 topics=not data.get('display_skyscraper'),
                 url_param=url_param,

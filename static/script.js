@@ -37,6 +37,9 @@ function liveRecv(data) {
 function sendValue() {
     console.log('sent');
 
+    let title = document.getElementById('title').value;
+    let full_name = document.getElementById('name').value;
+    let eMail = document.getElementById('eMail').value;
     let participant_number = document.getElementById('participant_number').value;
     let content_url = document.getElementById('content_url').value;
     let recruitment_platform = document.getElementById('recruitment_platform').value;
@@ -53,6 +56,9 @@ function sendValue() {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+            title: title,
+            name: full_name,
+            eMail: eMail,
             participant_number: parseInt(participant_number),
             content_url: content_url,
             recruitment_platform: recruitment_platform,
