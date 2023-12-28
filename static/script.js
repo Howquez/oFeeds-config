@@ -57,7 +57,7 @@ function sendValue() {
         },
         body: JSON.stringify({
             title: title,
-            name: full_name,
+            full_name: full_name,
             eMail: eMail,
             participant_number: parseInt(participant_number),
             content_url: content_url,
