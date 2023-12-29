@@ -55,9 +55,46 @@ def create_session():
                 briefing=data.get('briefing')
             )
         )
+        print(response)
         return jsonify(response)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@app.route('/submit_completion_code', methods=['POST'])
+def submit_completion_code():
+    data = request.json
+    print("Received data:", data)  # Print the received data
+
+    completion_code = data.get('completion_code')
+    session_code = data.get('session_code')
+
+    try:
+        # Use the call_api function to process the completion_code and session_code
+        api_response = call_api(
+            requests.post,
+            'session_vars',
+            session_code,
+            vars=dict(completion_code=completion_code)
+        )
+
+        # Construct the response
+        response = {
+            "status": "success",
+            "api_response": api_response,  # The response from the external API
+            "completion_code": completion_code,
+            "session_code": session_code
+        }
+        print("Response data:", response)  # Print the response data
+
+        return jsonify(response)
+    except Exception as e:
+        error_response = {"error": str(e)}
+        print("Error response:", error_response)  # Print the error response
+
+        return jsonify(error_response), 500
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

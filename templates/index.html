@@ -28,7 +28,7 @@
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
                     <select class="form-select" id="title" aria-describedby="title_help">
-                        <option value="Dr." selected>Dr.</option>
+                        <option value="Dr.">Dr.</option>
                         <option value="Prof.">Prof.</option>
                         <option value="Ms.">Ms.</option>
                         <option value="Mr.">Mr.</option>
@@ -38,13 +38,13 @@
                 </div>
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name" aria-describedby="name_help" value="" placeholder="John Doe">
+                    <input type="text" class="form-control" id="name" aria-describedby="name_help" value="" placeholder="John Doe" required>
                     <div id="name_help" class="form-text">
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="eMail" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="eMail" placeholder="name@example.com">
+                    <input type="email" class="form-control" id="eMail" placeholder="name@example.com" required>
                 </div>
             </form>
         </div>
@@ -240,6 +240,31 @@
     <button type="button" class="btn btn-primary" onclick="sendValue(); console.log('hi');">Create Session</button>
 
     <div id="alertPlaceholder"></div>
+
+    <!-- Completion Code Section -->
+    <div id="completionCodeSection" class="card my-4 border-0 shadow" style="display: none;">
+        <div class="card-body">
+            <h5 class="card-title h2 mb-0">
+                Completion Code
+            </h5>
+            <p class="card-text text-muted">
+                <small>
+                    Please enter the completion code if you have selected Prolific as your recruitment platform.
+                </small>
+            </p>
+            <form id="completionCodeForm">
+                <div class="mb-3">
+                    <label for="completionCode" class="form-label">Completion Code</label>
+                    <input type="text" class="form-control" id="completionCode" placeholder="Enter Completion Code">
+                </div>
+                <button type="button" class="btn btn-primary" onclick="submitCompletionCode();">Submit Code</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="completionAlertPlaceholder"></div>
+
+
 </div>
 </body>
 </html>

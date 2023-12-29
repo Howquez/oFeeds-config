@@ -1,11 +1,18 @@
 
+var globalSessionCode;
+
 // This function is called when the server sends back a response
 function liveRecv(data) {
     console.log('receiving');
+
+    // Store the session code from the response
+    globalSessionCode = data.code;
+
     var alertDiv = document.getElementById('alertPlaceholder');
+    let recruitment_platform = document.getElementById('recruitment_platform').value;
 
     // Update class and role of the div
-    alertDiv.className = 'alert alert-success mt-4 mb-5';
+    alertDiv.className = 'alert alert-primary mt-4 mb-5';
     alertDiv.setAttribute('role', 'alert');
 
     // Clear existing content
@@ -17,7 +24,7 @@ function liveRecv(data) {
 
     // Create a paragraph element for the text
     var paragraph = document.createElement('p');
-    paragraph.textContent = 'You can visit your session here: ';
+    paragraph.textContent = 'You can visit your session and download the data here: ';
 
     // Create an anchor (a) element for the hyperlink
     var link = document.createElement('a');
@@ -31,6 +38,60 @@ function liveRecv(data) {
 
     // Append the anchor element (link) to the paragraph
     paragraph.appendChild(link);
+
+    // Display the modified session-wide URL only if 'Prolific' was selected
+    if (recruitment_platform === 'Prolific' && data.session_wide_url) {
+        var modifiedSessionWideUrl = data.session_wide_url +
+                                     '/?participant_label={{%PROLIFIC_PID%}}' +
+                                     '&prolific_study_id={{%STUDY_ID%}}' +
+                                     '&prolific_session_id={{%SESSION_ID%}}';
+
+        // Explanatory text
+        var explanatoryText = document.createElement('p');
+        explanatoryText.textContent = 'Copy the following URL and provide it to Prolific:';
+
+        // Create a Bootstrap input group
+        var inputGroup = document.createElement('div');
+        inputGroup.className = 'input-group mb-3';
+
+        // Create a readonly input to display the URL
+        var urlInput = document.createElement('input');
+        urlInput.setAttribute('type', 'text');
+        urlInput.className = 'form-control';
+        urlInput.setAttribute('value', modifiedSessionWideUrl);
+        urlInput.setAttribute('readonly', true);
+        urlInput.setAttribute('aria-label', 'Modified URL');
+        urlInput.setAttribute('aria-describedby', 'button-addon');
+
+        // Create a button for copying the URL
+        var copyButton = document.createElement('button');
+        copyButton.className = 'btn btn-outline-primary';
+        copyButton.setAttribute('type', 'button');
+        copyButton.setAttribute('id', 'button-addon');
+        copyButton.textContent = 'Copy URL';
+        copyButton.onclick = function() {
+            urlInput.select();
+            document.execCommand('copy');
+        };
+
+        // Append the input and button to the input group
+        inputGroup.appendChild(urlInput);
+        inputGroup.appendChild(copyButton);
+
+        // Append the explanatory text and input group to the alert div
+        var alertDiv = document.getElementById('alertPlaceholder');
+        alertDiv.appendChild(explanatoryText);
+        alertDiv.appendChild(inputGroup);
+    }
+
+    // Store the session code
+    var sessionCode = data.code;
+
+    // Check if Prolific was the chosen platform and display additional input
+    if (recruitment_platform === 'Prolific') {
+        // Show the completion code section
+        document.getElementById('completionCodeSection').style.display = 'block';
+    }
 }
 
 // This function is called when the "Create Session" button is clicked
@@ -78,6 +139,36 @@ function sendValue() {
         console.error('Error:', error);
     });
 }
+
+function submitCompletionCode() {
+    var completionCode = document.getElementById('completionCode').value;
+    var completionAlertDiv = document.getElementById('completionAlertPlaceholder');
+
+    fetch('/submit_completion_code', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            completion_code: completionCode,
+            session_code: globalSessionCode // Include the stored session_code
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Display success message
+        completionAlertDiv.innerHTML = '';
+        completionAlertDiv.className = 'alert alert-success my-4';
+        completionAlertDiv.textContent = 'Everything is set up now!';
+    })
+    .catch((error) => {
+        // Display error message
+        completionAlertDiv.innerHTML = '';
+        completionAlertDiv.className = 'alert alert-danger my-4';
+        completionAlertDiv.textContent = 'Error occurred: ' + error;
+    });
+}
+
 
 // This event listener is used to show/hide the skyscraper ad configuration
 document.addEventListener('DOMContentLoaded', function () {
