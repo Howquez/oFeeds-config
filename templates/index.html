@@ -15,7 +15,7 @@
   <div class="container">
     <a class="navbar-brand" href="#">
       <img src="{{ url_for('static', filename='favicon.ico') }}" alt="Logo" width="30" height="30">
-        Feed Configurator
+        &nbsp; &nbsp;Feed Configurator
     </a>
   </div>
 </nav>
@@ -49,7 +49,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="name" aria-describedby="name_help" value="" placeholder="John Doe" required>
+                            <input type="text" class="form-control" id="name" aria-describedby="name_help" value="" placeholder="Jane Doe" required>
                             <div id="name_help" class="form-text">
                             </div>
                         </div>
@@ -119,6 +119,9 @@
                             <input type="text" class="form-control" id="content_url" aria-describedby="url_help" value="https://raw.githubusercontent.com/Howquez/oFeeds/main/software/oTweet/twitter/static/data/sample_tweets.csv">
                             <div id="url_help" class="form-text">
                                 Please provide a url directing to your raw, ;-separated, UTF-8 formatted csv file (preferably GitHub or gDrive).
+                                <a href="{{ url_for('static', filename='sample_feed.csv') }}" download="sample_feed.csv">Click here</a>
+                                to download a sample *.csv file that you can use as a template.
+
                             </div>
                         </div>
                         <div class="mb-3">
@@ -150,7 +153,7 @@
                     <form>
                         <div class="mb-3">
                             <label for="condition_col" class="form-label">Define Condition Variable (within csv file)</label>
-                            <input type="text" class="form-control" id="condition_col" aria-describedby="col_help" value="column_name">
+                            <input type="text" class="form-control" id="condition_col" aria-describedby="col_help" value="condition">
                             <div id="col_help" class="form-text">
                                 If you intend to manipulate some element of the feed between-subjects, you can do so by creating
                                 a column in the csv file you provide. This column can take as many values as you need.
@@ -161,7 +164,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="sort_by" class="form-label">Define Sorting Variable (within csv file)</label>
-                            <input type="text" class="form-control" id="sort_by" aria-describedby="sort_help" value="time_stamp">
+                            <input type="text" class="form-control" id="sort_by" aria-describedby="sort_help" value="sequence">
                             <div id="sort_help" class="form-text">
                                 You can also provide a variable that specifies the order in which the posts are displayed.
                                 Please provide one unique numeric value per row. The post associated to the lowest number will
@@ -208,8 +211,8 @@
                             Configure the following fields, if you want to append a survey to the stimulus.
                             We'll create a redirect with url parameters to pass both the participant ID as well as
                             the completion code (for Prolific). Make sure that your survey tool accepts them
-                            (see <a href="https://researcher-help.prolific.com/hc/en-gb/articles/360009224113-Qualtrics-integration-guide" target="_blank">embedded data</a>
-                            when using Qualtrics).
+                            (see <a href="https://researcher-help.prolific.com/hc/en-gb/articles/360009224113-Qualtrics-integration-guide" target="_blank">embedded data documentation</a>
+                            if you are using Qualtrics).
                         </small>
                     </p>
                     <form>
@@ -238,7 +241,7 @@
                 </div>
             </div>
 
-            <button type="button" class="btn btn-primary" onclick="sendValue(); console.log('hi');">Create Session</button>
+            <button type="button" class="btn btn-primary" onclick="sendValue();">Create Session</button>
 
             <div id="alertPlaceholder"></div>
 
