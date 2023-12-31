@@ -12,19 +12,31 @@ function liveRecv(data) {
     let recruitment_platform = document.getElementById('recruitment_platform').value;
 
     // Update class and role of the div
-    alertDiv.className = 'alert alert-primary mt-4 mb-5';
+    alertDiv.className = 'alert alert-primary mt-4 mb-5 shadow';
     alertDiv.setAttribute('role', 'alert');
 
     // Clear existing content
     alertDiv.innerHTML = '';
 
-    // Create a title element (e.g., h4)
     var title = document.createElement('h4');
-    title.textContent = 'Session created successfully!';
+    title.textContent = 'Session ';
+
+    // Create a code element for data.code
+    var codeElement = document.createElement('code');
+    codeElement.textContent = data.code;
+
+    // Append the code element to the title
+    title.appendChild(codeElement);
+
+    title.append(' created successfully!');
 
     // Create a paragraph element for the text
-    var paragraph = document.createElement('p');
-    paragraph.textContent = 'You can visit your session and download the data here: ';
+    var paragraph_1 = document.createElement('p');
+    paragraph_1.textContent = 'You can visit your session: ';
+
+    // Create a paragraph element for the text
+    var paragraph_2 = document.createElement('p');
+    paragraph_2.textContent = "Please write the session code (" + data.code + ") or the URL down. You will need them to download your data, eventually.";
 
     // Create an anchor (a) element for the hyperlink
     var link = document.createElement('a');
@@ -32,12 +44,11 @@ function liveRecv(data) {
     link.textContent = data.admin_url;
     link.setAttribute('target', '_blank'); // Open in new tab
 
-    // Append the title and paragraph to the div
+    // Append the title, link and paragraphs to the div
     alertDiv.appendChild(title);
-    alertDiv.appendChild(paragraph);
-
-    // Append the anchor element (link) to the paragraph
-    paragraph.appendChild(link);
+    alertDiv.appendChild(paragraph_1);
+    paragraph_1.appendChild(link);
+    alertDiv.appendChild(paragraph_2);
 
     // Display the modified session-wide URL only if 'Prolific' was selected
     if (recruitment_platform === 'Prolific' && data.session_wide_url) {

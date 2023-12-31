@@ -272,16 +272,24 @@
     </div>
 </div>
 
-<footer class="bg-light text-center text-lg-start mt-4">
-    <div class="text-center p-3 bg-light border-top border-opacity-50 bg-opacity-50">
-        <p>Software under MIT License with added citation requirement</p>
-        <p><a href="https://github.com/Howquez/oFeeds/blob/main/LICENSE" target="_blank">View License</a></p>
-        <p>© 2023 Your Company or Name</p> <!-- Replace with your company or personal name -->
-        <p>
-            <a href="IMPRINT_URL" target="_blank">Imprint</a> <!-- Replace IMPRINT_URL with the URL to your imprint page, if available -->
-        </p>
-    </div>
-</footer>
+
+    <footer class="bg-light text-lg-start mt-4">
+        <div class="row justify-content-end p-3 text-secondary bg-light border-top border-opacity-50 bg-opacity-25">
+            <div class="col-lg-4 col-md-5 col-sm-6 mb-3 pe-5 pt-3">
+                <a class="navbar-brand" href="#">
+                  <img src="{{ url_for('static', filename='favicon.ico') }}" alt="Logo" width="30" height="30">
+                    &nbsp; &nbsp;Feed Configurator
+                </a>
+                <ul class="list-unstyled small text-muted mt-3">
+                    <li class="mb-2">Designed and built with Bootstrap and for oTree.</li>
+                    <li class="mb-2">Code licensed <a class="text-secondary" href="https://github.com/Howquez/oFeeds/blob/main/LICENSE" target="_blank" rel="license noopener"> under MIT License with added citation requirement.</a>.</li>
+                    <li class="mb-2">No web analytics implemented.</li>
+                    <li class="mb-2">© 2023 HCR</li>
+                    <li class="mb-2">No <a class="text-secondary" href="IMPRINT_URL" target="_blank">Imprint</a> yet.</li>
+                </ul>
+            </div>
+        </div>
+    </footer>
 
 </body>
 </html>

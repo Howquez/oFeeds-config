@@ -55,7 +55,7 @@ def create_session():
                 briefing=data.get('briefing')
             )
         )
-        print(response)
+        # print(response)
         return jsonify(response)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
