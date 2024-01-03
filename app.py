@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 # Constants for API calls
 SERVER_URL = 'https://ibt-hsg.herokuapp.com'
-REST_KEY = ''  # fill this with your actual REST key
+REST_KEY = 'Torstrasse25'  # fill this with your actual REST key
 
 @app.route('/')
 def index():
