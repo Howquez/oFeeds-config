@@ -31,7 +31,7 @@
                     </h5>
                     <p class="card-text text-muted">
                         <small>
-                            Please provide some contact information. We'll display it in the privacy policy and
+                            Please provide some contact information. They will be displayed in the privacy policy and
                             on the final debriefing page if you do not direct the participants to a post-stimulus survey.
                         </small>
                     </p>
@@ -82,8 +82,10 @@
                             <label for="participant_number" class="form-label">Specify the Number of Rows in Database</label>
                             <input type="number" class="form-control w-100" id="participant_number" aria-describedby="participant_help" value="1" min="0">
                             <div id="participant_help" class="form-text">
-                                Please specify the desired number of participants and keep in mind that every started
-                                participation burns one slot -- independent of whether the participant completes the survey.
+                                Please specify the desired number of participants and account for attrition:
+                                Each participation uses one slot, regardless of whether the participant completes the survey.
+                                Potential participants who try to enter the experiment after all slots (rows in the database)
+                                are used, cannot do so.
                             </div>
                         </div>
                     </form>
@@ -114,7 +116,7 @@
                             <label for="content_url" class="form-label">Provide URL Directing to Your Content</label>
                             <input type="text" class="form-control" id="content_url" aria-describedby="url_help" value="https://raw.githubusercontent.com/Howquez/oFeeds/main/software/oTweet/twitter/static/data/sample_tweets.csv">
                             <div id="url_help" class="form-text">
-                                Please provide a url directing to your raw, ;-separated, UTF-8 formatted csv file (preferably GitHub or gDrive).
+                                Please provide a url directing to your raw, ;-separated, UTF-8 formatted csv file (preferably GitHub or Google Drive).
                                 <a href="{{ url_for('static', filename='sample_feed.csv') }}" download="sample_feed.csv">Click here</a>
                                 to download a sample *.csv file that you can use as a template.
 
@@ -148,25 +150,25 @@
                     </p>
                     <form>
                         <div class="mb-3">
-                            <label for="condition_col" class="form-label">Specify Condition Variable (within csv file)</label>
+                            <label for="condition_col" class="form-label">Specify Condition Variable (provide its column name in csv file)</label>
                             <input type="text" class="form-control" id="condition_col" aria-describedby="col_help" value="condition">
                             <div id="col_help" class="form-text">
                                 If you intend to manipulate some element of the feed between-subjects, you can do so by creating
                                 a column in the csv file you provide. This column can take as many values as you need.
-                                Participants will be randomly assigned to one of the values in that column.
+                                Participants will be randomly assigned to one of the values (that represent conditions) in that column.
                                 If you don't provide a column name, there won't be any conditions that differ with respect to
                                 the feed's content.
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="sort_by" class="form-label">Specify Sorting Variable (within csv file)</label>
+                            <label for="sort_by" class="form-label">Specify Sorting Variable (provide its column name in csv file)</label>
                             <input type="text" class="form-control" id="sort_by" aria-describedby="sort_help" value="sequence">
                             <div id="sort_help" class="form-text">
                                 You can also provide a variable that specifies the order in which the posts are displayed.
                                 Please provide one unique numeric value per row. The post associated to the lowest number will
                                 be displayed on top of the feed, the post associated to the highest number will be displayed
                                 at the bottom.
-                                You can provide both a condition and a sorting variable to mock different recommender- and
+                                You can provide both a condition and a sorting variable to mimic different recommender- and
                                 sorting algorithms. If you don't provide a column name, the posts will be displayed in a fully
                                 randomized order (between subjects).
                             </div>
