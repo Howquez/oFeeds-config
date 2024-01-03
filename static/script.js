@@ -81,7 +81,7 @@ function liveRecv(data) {
 
         // Create a button for copying the URL
         var copyButton = document.createElement('button');
-        copyButton.className = 'btn btn-outline-primary';
+        copyButton.className = 'btn btn-primary';
         copyButton.setAttribute('type', 'button');
         copyButton.setAttribute('id', 'button-addon');
         copyButton.textContent = 'Copy URL';
@@ -107,7 +107,7 @@ function liveRecv(data) {
     if (recruitment_platform === 'Prolific') {
         // Show the completion code section
         var stepThreeTitle = document.createElement('p');
-        stepThreeTitle.textContent = '3. Prolific provides a completion code. Please enter the completion code such that (only eligible) respondents can confirm their participation at the end of your study.';
+        stepThreeTitle.textContent = '3. Prolific provides a completion code. Please enter (and submit) the completion code such that (only eligible) respondents can confirm their participation at the end of your study.';
 
         // Create a Bootstrap input group
         var inputGroup2 = document.createElement('div');
@@ -208,10 +208,19 @@ function submitCompletionCode() {
         // Display success message
         completionAlertDiv.innerHTML = '';
         completionAlertDiv.className = 'alert alert-success my-4';
-        completionAlertDiv.textContent = 'Everything is set up now!';
+        completionAlertDiv.textContent = 'Everything is set up now! Consider to print this page for documentation purposes.';
 
         // Change color of Alert div
         alertDiv.className = 'alert alert-success mt-4 mb-5 shadow';
+
+        // Add print button
+        var printButton = document.createElement('button');
+        printButton.type = 'button';
+        printButton.className = 'btn btn-primary btn-sm ms-5';
+        printButton.textContent = 'Print Page';
+        printButton.onclick = function() { window.print(); };
+
+        completionAlertDiv.appendChild(printButton);
 
     })
     .catch((error) => {
