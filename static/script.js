@@ -21,6 +21,9 @@ function liveRecv(data) {
     var title = document.createElement('h4');
     title.textContent = 'Session ';
 
+    var subtitle = document.createElement('h5');
+    subtitle.textContent = 'Next Steps:';
+
     // Create a code element for data.code
     var codeElement = document.createElement('code');
     codeElement.textContent = data.code;
@@ -36,7 +39,7 @@ function liveRecv(data) {
 
     // Create a paragraph element for the text
     var paragraph_2 = document.createElement('p');
-    paragraph_2.textContent = "Please write the session code (" + data.code + ") or the URL down. You will need them to download your data, eventually.";
+    paragraph_2.textContent = "1. Please write the session code ('" + data.code + "') or the URL (displayed above) down. They are unique to the session you just created and they are the only route for you to monitor the session's progress and to download your data, eventually.";
 
     // Create an anchor (a) element for the hyperlink
     var link = document.createElement('a');
@@ -47,6 +50,7 @@ function liveRecv(data) {
     // Append the title, link and paragraphs to the div
     alertDiv.appendChild(title);
     alertDiv.appendChild(paragraph_1);
+    alertDiv.appendChild(subtitle);
     paragraph_1.appendChild(link);
     alertDiv.appendChild(paragraph_2);
 
@@ -59,7 +63,7 @@ function liveRecv(data) {
 
         // Explanatory text
         var explanatoryText = document.createElement('p');
-        explanatoryText.textContent = 'Copy the following URL and provide it to Prolific:';
+        explanatoryText.textContent = "2. Copy the following URL and provide it to Prolific's study details. The structure of the URL ensures that Prolific IDs are tracked. This ensures that you can merge oFeeds- and Qualtrics data.";
 
         // Create a Bootstrap input group
         var inputGroup = document.createElement('div');
@@ -109,6 +113,11 @@ function liveRecv(data) {
 function sendValue() {
     console.log('sent');
 
+    // Disable the create session button and show spinner
+    var createSessionBtn = document.getElementById('createSessionBtn');
+    createSessionBtn.innerHTML = '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Loading...';
+    createSessionBtn.disabled = true;
+
     let title = document.getElementById('title').value;
     let full_name = document.getElementById('name').value;
     let eMail = document.getElementById('eMail').value;
@@ -145,6 +154,7 @@ function sendValue() {
     .then(response => response.json())
     .then(data => {
         liveRecv(data);
+        createSessionBtn.style.display = 'none';
     })
     .catch((error) => {
         console.error('Error:', error);

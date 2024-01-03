@@ -77,10 +77,6 @@
                                 <option value="None">None</option>
                                 <option value="Prolific" selected>Prolific</option>
                             </select>
-                            <div id="recruitment_help" class="form-text">
-                                As of today, you can only select 'Prolific' or 'None'.
-                                You'll soon be able to also select other platforms to recruit from.
-                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="participant_number" class="form-label">Specify the Number of Rows in Database</label>
@@ -134,7 +130,7 @@
 
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" role="switch" id="display_skyscraper">
-                            <label class="form-check-label" for="display_skyscraper">Display  Skyskraper Banner Ad?</label>
+                            <label class="form-check-label" for="display_skyscraper">Display  Skyskraper Banner Ads</label>
                         </div>
                     </form>
                 </div>
@@ -152,7 +148,7 @@
                     </p>
                     <form>
                         <div class="mb-3">
-                            <label for="condition_col" class="form-label">Define Condition Variable (within csv file)</label>
+                            <label for="condition_col" class="form-label">Specify Condition Variable (within csv file)</label>
                             <input type="text" class="form-control" id="condition_col" aria-describedby="col_help" value="condition">
                             <div id="col_help" class="form-text">
                                 If you intend to manipulate some element of the feed between-subjects, you can do so by creating
@@ -163,7 +159,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="sort_by" class="form-label">Define Sorting Variable (within csv file)</label>
+                            <label for="sort_by" class="form-label">Specify Sorting Variable (within csv file)</label>
                             <input type="text" class="form-control" id="sort_by" aria-describedby="sort_help" value="sequence">
                             <div id="sort_help" class="form-text">
                                 You can also provide a variable that specifies the order in which the posts are displayed.
@@ -241,7 +237,7 @@
                 </div>
             </div>
 
-            <button type="button" class="btn btn-primary" onclick="sendValue();">Create Session</button>
+            <button id="createSessionBtn" type="button" class="btn btn-primary" onclick="sendValue();">Create Session</button>
 
             <div id="alertPlaceholder"></div>
 
