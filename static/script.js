@@ -20,6 +20,7 @@ function liveRecv(data) {
 
     var title = document.createElement('h4');
     title.textContent = 'Session ';
+    title.className = 'card-title h2 mb-0';
 
     var subtitle = document.createElement('h5');
     subtitle.textContent = 'Next Steps:';
@@ -105,7 +106,33 @@ function liveRecv(data) {
     // Check if Prolific was the chosen platform and display additional input
     if (recruitment_platform === 'Prolific') {
         // Show the completion code section
-        document.getElementById('completionCodeSection').style.display = 'block';
+        var stepThreeTitle = document.createElement('p');
+        stepThreeTitle.textContent = '3. Prolific provides a completion code. Please enter the completion code such that (only eligible) respondents can confirm their participation at the end of your study.';
+
+        // Create a Bootstrap input group
+        var inputGroup2 = document.createElement('div');
+        inputGroup2.className = 'input-group mb-3';
+
+        // Include the input field for the completion code
+        var completionCodeInput = document.createElement('input');
+        completionCodeInput.type = 'text';
+        completionCodeInput.className = 'form-control';
+        completionCodeInput.id = 'completionCode';
+        completionCodeInput.placeholder = 'Enter Completion Code';
+
+        // Include the button to submit the completion code
+        var submitCodeButton = document.createElement('button');
+        submitCodeButton.className = 'btn btn-primary';
+        submitCodeButton.textContent = 'Submit Code';
+        submitCodeButton.onclick = function() { submitCompletionCode(); };
+
+        // Append the input and button to the input group
+        inputGroup2.appendChild(completionCodeInput);
+        inputGroup2.appendChild(submitCodeButton);
+
+        // Append the new elements to the alert div
+        alertDiv.appendChild(stepThreeTitle);
+        alertDiv.appendChild(inputGroup2);
     }
 }
 
@@ -162,6 +189,7 @@ function sendValue() {
 }
 
 function submitCompletionCode() {
+    var alertDiv = document.getElementById('alertPlaceholder');
     var completionCode = document.getElementById('completionCode').value;
     var completionAlertDiv = document.getElementById('completionAlertPlaceholder');
 
@@ -181,12 +209,19 @@ function submitCompletionCode() {
         completionAlertDiv.innerHTML = '';
         completionAlertDiv.className = 'alert alert-success my-4';
         completionAlertDiv.textContent = 'Everything is set up now!';
+
+        // Change color of Alert div
+        alertDiv.className = 'alert alert-success mt-4 mb-5 shadow';
+
     })
     .catch((error) => {
         // Display error message
         completionAlertDiv.innerHTML = '';
         completionAlertDiv.className = 'alert alert-danger my-4';
         completionAlertDiv.textContent = 'Error occurred: ' + error;
+
+        // Change color of Alert div
+        alertDiv.className = 'alert alert-danger mt-4 mb-5 shadow';
     });
 }
 
