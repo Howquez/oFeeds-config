@@ -39,7 +39,7 @@ def create_session():
         response = call_api(
             requests.post,
             'sessions',
-            session_config_name='oTweet',
+            session_config_name='DICE',
             num_participants=data.get('participant_number'),
             modified_session_config_fields=dict(
                 title=data.get('title'),
