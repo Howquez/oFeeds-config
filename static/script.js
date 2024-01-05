@@ -64,7 +64,7 @@ function liveRecv(data) {
 
         // Explanatory text
         var explanatoryText = document.createElement('p');
-        explanatoryText.textContent = "2. Copy the following URL and provide it to Prolific's study details. The structure of the URL ensures that Prolific IDs are tracked. This ensures that you can merge oFeeds- and Qualtrics data.";
+        explanatoryText.textContent = "2. Copy the following URL and provide it to Prolific's study details. The structure of the URL ensures that Prolific IDs are tracked. This ensures that you can merge DICE- and Qualtrics data.";
 
         // Create a Bootstrap input group
         var inputGroup = document.createElement('div');
