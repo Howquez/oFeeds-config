@@ -15,8 +15,14 @@
   <div class="container">
     <a class="navbar-brand" href="#">
       <img src="{{ url_for('static', filename='favicon.ico') }}" alt="Logo" width="30" height="30">
-        &nbsp; &nbsp;DICE Feed Configurator
+      &nbsp; &nbsp;DICE Feed Configurator
     </a>
+    <!-- Add form for session code input
+    <form class="d-flex" onsubmit="retrieveSessionData(event)">
+      <input class="form-control me-2" type="search" placeholder="Enter session code" aria-label="Session code" id="sessionCodeInput">
+      <button class="btn btn-outline-success" type="submit">Get Data</button>
+    </form>
+    -->
   </div>
 </nav>
 
@@ -239,7 +245,7 @@
                 </div>
             </div>
 
-            <button id="createSessionBtn" type="button" class="btn btn-primary" onclick="sendValue();">Create Session</button>
+            <button id="createSessionBtn" type="button" class="btn btn-primary">Create Session</button>
 
             <div id="alertPlaceholder"></div>
 

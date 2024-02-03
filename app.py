@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, jsonify
+from pprint import pprint
 import requests
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -25,6 +27,40 @@ def call_api(method, *path_parts, **params):
         )
         raise Exception(msg)
     return resp.json()
+
+# Add the CSV validation logic here
+def check_delimiter(content_url, expected_delimiter=';'):
+    try:
+        df = pd.read_csv(content_url, sep=expected_delimiter, engine='python')
+        if df.shape[1] == 1:
+            return False, None
+        return True, df
+    except Exception:
+        return False, None
+
+@app.route('/validate_csv', methods=['POST'])
+def validate_csv():
+    data = request.json
+    content_url = data.get('content_url')
+    expected_delimiter = ';'
+
+    delimiter_ok, df = check_delimiter(content_url, expected_delimiter)
+    if not delimiter_ok:
+        return jsonify({"error": "CSV file seems to use a wrong delimiter. Expected ';'."}), 400
+
+    try:
+        required_columns = ['datetime', 'tweet', 'replies', 'retweets', 'likes', 'media', 'username']
+        if not all(column in df.columns for column in required_columns):
+            return jsonify({"error": "CSV file is missing one or more required columns."}), 400
+
+        pd.to_datetime(df['datetime'])
+        for column in ['replies', 'retweets', 'likes']:
+            if not pd.api.types.is_numeric_dtype(df[column]):
+                return jsonify({"error": f"Column '{column}' contains non-numeric values."}), 400
+
+        return jsonify({"message": "CSV validation passed."})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/create_session', methods=['POST'])
 def create_session():
@@ -93,6 +129,17 @@ def submit_completion_code():
         print("Error response:", error_response)  # Print the error response
 
         return jsonify(error_response), 500
+
+
+@app.route('/api/sessions/<session_code>')
+def get_session_data(session_code):
+    try:
+        data = call_api(requests.get, 'sessions', session_code)
+        # You may need to process data here before sending it to the frontend
+        # return jsonify(data)
+        pprint(data)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 

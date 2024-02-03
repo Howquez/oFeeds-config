@@ -25,52 +25,41 @@ function liveRecv(data) {
     var subtitle = document.createElement('h5');
     subtitle.textContent = 'Next Steps:';
 
-    // Create a code element for data.code
     var codeElement = document.createElement('code');
     codeElement.textContent = data.code;
 
-    // Append the code element to the title
     title.appendChild(codeElement);
-
     title.append(' created successfully!');
 
-    // Create a paragraph element for the text
     var paragraph_1 = document.createElement('p');
     paragraph_1.textContent = 'You can visit your session: ';
 
-    // Create a paragraph element for the text
     var paragraph_2 = document.createElement('p');
     paragraph_2.textContent = "1. Please write the session code ('" + data.code + "') or the URL (displayed above) down. They are unique to the session you just created and they are the only route for you to monitor the session's progress and to download your data, eventually.";
 
-    // Create an anchor (a) element for the hyperlink
     var link = document.createElement('a');
     link.href = data.admin_url;
     link.textContent = data.admin_url;
-    link.setAttribute('target', '_blank'); // Open in new tab
+    link.setAttribute('target', '_blank');
 
-    // Append the title, link and paragraphs to the div
     alertDiv.appendChild(title);
     alertDiv.appendChild(paragraph_1);
     alertDiv.appendChild(subtitle);
     paragraph_1.appendChild(link);
     alertDiv.appendChild(paragraph_2);
 
-    // Display the modified session-wide URL only if 'Prolific' was selected
     if (recruitment_platform === 'Prolific' && data.session_wide_url) {
         var modifiedSessionWideUrl = data.session_wide_url +
                                      '/?participant_label={{%PROLIFIC_PID%}}' +
                                      '&prolific_study_id={{%STUDY_ID%}}' +
                                      '&prolific_session_id={{%SESSION_ID%}}';
 
-        // Explanatory text
         var explanatoryText = document.createElement('p');
         explanatoryText.textContent = "2. Copy the following URL and provide it to Prolific's study details. The structure of the URL ensures that Prolific IDs are tracked. This ensures that you can merge DICE- and Qualtrics data.";
 
-        // Create a Bootstrap input group
         var inputGroup = document.createElement('div');
         inputGroup.className = 'input-group mb-3';
 
-        // Create a readonly input to display the URL
         var urlInput = document.createElement('input');
         urlInput.setAttribute('type', 'text');
         urlInput.className = 'form-control';
@@ -79,7 +68,6 @@ function liveRecv(data) {
         urlInput.setAttribute('aria-label', 'Modified URL');
         urlInput.setAttribute('aria-describedby', 'button-addon');
 
-        // Create a button for copying the URL
         var copyButton = document.createElement('button');
         copyButton.className = 'btn btn-primary';
         copyButton.setAttribute('type', 'button');
@@ -90,57 +78,23 @@ function liveRecv(data) {
             document.execCommand('copy');
         };
 
-        // Append the input and button to the input group
         inputGroup.appendChild(urlInput);
         inputGroup.appendChild(copyButton);
 
-        // Append the explanatory text and input group to the alert div
-        var alertDiv = document.getElementById('alertPlaceholder');
         alertDiv.appendChild(explanatoryText);
         alertDiv.appendChild(inputGroup);
     }
 
-    // Store the session code
-    var sessionCode = data.code;
-
-    // Check if Prolific was the chosen platform and display additional input
+    // Show the completion code section if Prolific was chosen
     if (recruitment_platform === 'Prolific') {
-        // Show the completion code section
-        var stepThreeTitle = document.createElement('p');
-        stepThreeTitle.textContent = '3. Prolific provides a completion code. Please enter (and submit) the completion code such that (only eligible) respondents can confirm their participation at the end of your study.';
-
-        // Create a Bootstrap input group
-        var inputGroup2 = document.createElement('div');
-        inputGroup2.className = 'input-group mb-3';
-
-        // Include the input field for the completion code
-        var completionCodeInput = document.createElement('input');
-        completionCodeInput.type = 'text';
-        completionCodeInput.className = 'form-control';
-        completionCodeInput.id = 'completionCode';
-        completionCodeInput.placeholder = 'Enter Completion Code';
-
-        // Include the button to submit the completion code
-        var submitCodeButton = document.createElement('button');
-        submitCodeButton.className = 'btn btn-primary';
-        submitCodeButton.textContent = 'Submit Code';
-        submitCodeButton.onclick = function() { submitCompletionCode(); };
-
-        // Append the input and button to the input group
-        inputGroup2.appendChild(completionCodeInput);
-        inputGroup2.appendChild(submitCodeButton);
-
-        // Append the new elements to the alert div
-        alertDiv.appendChild(stepThreeTitle);
-        alertDiv.appendChild(inputGroup2);
+        var completionAlertDiv = document.getElementById('completionAlertPlaceholder');
+        completionAlertDiv.style.display = 'block';
     }
 }
 
-// This function is called when the "Create Session" button is clicked
 function sendValue() {
     console.log('sent');
 
-    // Disable the create session button and show spinner
     var createSessionBtn = document.getElementById('createSessionBtn');
     createSessionBtn.innerHTML = '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Loading...';
     createSessionBtn.disabled = true;
@@ -158,33 +112,56 @@ function sendValue() {
     let display_skyscraper = document.getElementById('display_skyscraper').checked;
     let html_briefing = document.getElementById('html_briefing').value;
 
-    fetch('/create_session', {
+    // Perform CSV validation before creating a session
+    fetch('/validate_csv', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-            title: title,
-            full_name: full_name,
-            eMail: eMail,
-            participant_number: parseInt(participant_number),
-            content_url: content_url,
-            recruitment_platform: recruitment_platform,
-            survey_url: survey_url,
-            search_term: search_term,
-            sort_by: sort_by,
-            condition_col: condition_col,
-            display_skyscraper: display_skyscraper,
-            briefing: html_briefing
-        }),
+        body: JSON.stringify({content_url: content_url}),
     })
     .then(response => response.json())
     .then(data => {
-        liveRecv(data);
-        createSessionBtn.style.display = 'none';
+        if (data.message) {
+            console.log(data.message);
+            // Proceed with creating the session after successful validation
+            fetch('/create_session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    title: title,
+                    full_name: full_name,
+                    eMail: eMail,
+                    participant_number: parseInt(participant_number),
+                    content_url: content_url,
+                    recruitment_platform: recruitment_platform,
+                    survey_url: survey_url,
+                    search_term: search_term,
+                    sort_by: sort_by,
+                    condition_col: condition_col,
+                    display_skyscraper: display_skyscraper,
+                    briefing: html_briefing
+                }),
+            })
+            .then(response => response.json())
+            .then(sessionData => {
+                liveRecv(sessionData);
+                createSessionBtn.style.display = 'none';
+            })
+            .catch(error => {
+                console.error('Session Creation Error:', error);
+            });
+        } else if (data.error) {
+            alert("Validation Error: " + data.error);
+            createSessionBtn.innerHTML = 'Create Session';
+            createSessionBtn.disabled = false;
+        }
     })
-    .catch((error) => {
-        console.error('Error:', error);
+    .catch(error => {
+        console.error('CSV Validation Error:', error);
+        alert("Validation request failed.");
     });
 }
 
@@ -205,46 +182,45 @@ function submitCompletionCode() {
     })
     .then(response => response.json())
     .then(data => {
-        // Display success message
-        completionAlertDiv.innerHTML = '';
+        completionAlertDiv.innerHTML = 'Everything is set up now! Consider to print this page for documentation purposes.';
         completionAlertDiv.className = 'alert alert-success my-4';
-        completionAlertDiv.textContent = 'Everything is set up now! Consider to print this page for documentation purposes.';
-
-        // Change color of Alert div
         alertDiv.className = 'alert alert-success mt-4 mb-5 shadow';
 
-        // Add print button
-        var printButton = document.createElement('button');
-        printButton.type = 'button';
-        printButton.className = 'btn btn-primary btn-sm ms-5';
-        printButton.textContent = 'Print Page';
-        printButton.onclick = function() { window.print(); };
-
-        completionAlertDiv.appendChild(printButton);
-
+        // Optionally add a print button or other response handling here
     })
-    .catch((error) => {
-        // Display error message
-        completionAlertDiv.innerHTML = '';
+    .catch(error => {
+        console.error('Error submitting completion code:', error);
+        completionAlertDiv.innerHTML = 'Error occurred: ' + error;
         completionAlertDiv.className = 'alert alert-danger my-4';
-        completionAlertDiv.textContent = 'Error occurred: ' + error;
-
-        // Change color of Alert div
         alertDiv.className = 'alert alert-danger mt-4 mb-5 shadow';
     });
 }
 
-
-// This event listener is used to show/hide the skyscraper ad configuration
 document.addEventListener('DOMContentLoaded', function () {
     var checkBox = document.getElementById('display_skyscraper');
     var adCard = document.getElementById('adCard');
 
     checkBox.addEventListener('change', function () {
-        if (this.checked) {
-            adCard.style.display = 'block';
-        } else {
-            adCard.style.display = 'none';
-        }
+        adCard.style.display = this.checked ? 'block' : 'none';
     });
 });
+
+
+function retrieveSessionData(event) {
+    event.preventDefault(); // Prevent the form from submitting the traditional way
+    const sessionCode = document.getElementById('sessionCodeInput').value;
+    if (sessionCode) {
+        // Call your Flask backend with the session code
+        fetch(`/api/sessions/${sessionCode}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // Handle the response data
+                // Display data or initiate download of data as needed
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    } else {
+        alert('Please enter a session code.');
+    }
+}
