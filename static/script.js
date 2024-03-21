@@ -197,6 +197,7 @@ function submitCompletionCode() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('createSessionBtn').addEventListener('click', sendValue);
     var checkBox = document.getElementById('display_skyscraper');
     var adCard = document.getElementById('adCard');
 
