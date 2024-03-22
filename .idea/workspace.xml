@@ -108,7 +108,7 @@
       <workItem from="1708956351743" duration="495000" />
       <workItem from="1709278909380" duration="248000" />
       <workItem from="1710946610145" duration="3734000" />
-      <workItem from="1711011598745" duration="5090000" />
+      <workItem from="1711011598745" duration="6221000" />
     </task>
     <servers />
   </component>
@@ -116,7 +116,7 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/oFeeds_config$feed_configurator.coverage" NAME="feed_configurator Coverage Results" MODIFIED="1711039970213" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/oFeeds_config$feed_configurator.coverage" NAME="feed_configurator Coverage Results" MODIFIED="1711040528730" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/feed_configurator$feed_configurator.coverage" NAME="feed_configurator Coverage Results" MODIFIED="1704012830462" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

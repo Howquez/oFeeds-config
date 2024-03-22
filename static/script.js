@@ -87,8 +87,34 @@ function liveRecv(data) {
 
     // Show the completion code section if Prolific was chosen
     if (recruitment_platform === 'Prolific') {
-        var completionAlertDiv = document.getElementById('completionAlertPlaceholder');
-        completionAlertDiv.style.display = 'block';
+        // Show the completion code section
+        var stepThreeTitle = document.createElement('p');
+        stepThreeTitle.textContent = '3. Prolific provides a completion code. Please enter (and submit) the completion code such that (only eligible) respondents can confirm their participation at the end of your study.';
+
+        // Create a Bootstrap input group
+        var inputGroup2 = document.createElement('div');
+        inputGroup2.className = 'input-group mb-3';
+
+        // Include the input field for the completion code
+        var completionCodeInput = document.createElement('input');
+        completionCodeInput.type = 'text';
+        completionCodeInput.className = 'form-control';
+        completionCodeInput.id = 'completionCode';
+        completionCodeInput.placeholder = 'Enter Completion Code';
+
+        // Include the button to submit the completion code
+        var submitCodeButton = document.createElement('button');
+        submitCodeButton.className = 'btn btn-primary';
+        submitCodeButton.textContent = 'Submit Code';
+        submitCodeButton.onclick = function() { submitCompletionCode(); };
+
+        // Append the input and button to the input group
+        inputGroup2.appendChild(completionCodeInput);
+        inputGroup2.appendChild(submitCodeButton);
+
+        // Append the new elements to the alert div
+        alertDiv.appendChild(stepThreeTitle);
+        alertDiv.appendChild(inputGroup2);
     }
 }
 
