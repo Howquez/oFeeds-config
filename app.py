@@ -14,6 +14,10 @@ def index():
     # This route serves the index.html template
     return render_template('index.html')
 
+@app.route('/documentation')
+def documentation():
+    return render_template('documentation.html')
+
 # Helper function to call the external API
 def call_api(method, *path_parts, **params):
     path_parts = '/'.join(str(part) for part in path_parts)
