@@ -128,6 +128,7 @@ function sendValue() {
     let title = document.getElementById('title').value;
     let full_name = document.getElementById('name').value;
     let eMail = document.getElementById('eMail').value;
+    let channel_type = document.getElementById('channel_type').value;
     let participant_number = document.getElementById('participant_number').value;
     let content_url = document.getElementById('content_url').value;
     let recruitment_platform = document.getElementById('recruitment_platform').value;
@@ -160,6 +161,7 @@ function sendValue() {
                     title: title,
                     full_name: full_name,
                     eMail: eMail,
+                    channel_type: channel_type,
                     participant_number: parseInt(participant_number),
                     content_url: content_url,
                     recruitment_platform: recruitment_platform,

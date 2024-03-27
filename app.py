@@ -81,6 +81,7 @@ def create_session():
                 title=data.get('title'),
                 full_name=data.get('full_name'),
                 eMail=data.get('eMail'),
+                channel_type=data.get('channel_type'),
                 data_path=data.get('content_url'),
                 topics=not data.get('display_skyscraper'),
                 url_param=url_param,

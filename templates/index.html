@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>DICE Hub</title>
+    <title>DICE App</title>
     <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
@@ -17,7 +17,7 @@
     <div class="container">
         <a class="navbar-brand" href="#">
             <img src="{{ url_for('static', filename='favicon.ico') }}" alt="Logo" width="30" height="30">
-            &nbsp; &nbsp;DICE Hub
+            &nbsp; &nbsp;DICE App
         </a>
         <!-- Add form for session code input
         <form class="d-flex" onsubmit="retrieveSessionData(event)">
@@ -48,34 +48,31 @@
         </div>
     </div>
 </div>
-<!--
-    <div id="demoSection" class="text-bg-primary text-center overflow-hidden">
-        <div class="my-3 py-3">
-            <h2 class="display-5 mt-4">Demo</h2>
-            <p class="lead">Brooklyn pug tilde dreamcatcher single-origin coffee blog poutine roof party. Pork belly VHS everyday carry scenester microdosing sus snackwave austin photo booth.</p>
-        </div>
-        <div class="bg-body-tertiary shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
-    </div>
--->
 
 <div id="configureStudySection" class="bg-body-tertiary overflow-hidden">
-    <div class="my-3 p-3">
-        <h2 class= "display-5 mt-4  text-center">Configure a Study</h2>
-        <p class="lead  text-center">
-            The following form walks you through the process of creating your own DICE experiment.<br>
-            Choose <code>Testing</code> if you are in the dev-phase and just want to create and test a set of stimuli.<br>
-            Choose <code>Final Configuration</code> once you tested your stimuli and want to configure your final experiment.
-        </p>
-    </div>
-    <div class="d-flex justify-content-center">
-        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
-            <label class="btn btn-outline-dark" for="btnradio1">Testing</label>
+    <div class="container my-3 py-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h2 class="display-5 mt-4 text-center">Configure a Study</h2>
+                <p class="lead text-center">
+                    In just a few clicks, you can create and customize your social media experiment. No coding required.
+                    The following form walks you through the process of creating your own DICE experiment.
+                    To start, choose <code>Testing</code> if you are in the dev-phase and just want to create and test a set of stimuli.
+                    Choose <code>Final Configuration</code> once you tested your stimuli and want to configure your final experiment.
+                </p>
+                <div class="d-flex justify-content-center">
+                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
+                        <label class="btn btn-outline-dark" for="btnradio1">Testing</label>
 
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-            <label class="btn btn-outline-dark" for="btnradio2">Final Configuration</label>
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                        <label class="btn btn-outline-dark" for="btnradio2">Final Configuration</label>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
     <div class= "container-md my-5">
     <div class= "row justify-content-center">
         <div class= "col-lg-8 col-md-10">
@@ -132,7 +129,7 @@
                         <div class="mb-3">
                             <label for="recruitment_platform" class="form-label">Choose Your Recruitment Platform</label>
                             <select class="form-select" id="recruitment_platform" aria-describedby="recruitment_help">
-                                <option value="None">None</option>
+                                <option value="Lab">Lab</option>
                                 <option value="Prolific" selected>Prolific</option>
                             </select>
                         </div>
@@ -163,12 +160,12 @@
                     </p>
                     <form>
                         <div class="mb-3">
-                            <label for="channel_type" class="form-label">Choose Social Media Platform</label>
-                            <input type="text" class="form-control" id="channel_type" aria-describedby="channel_help" value="Twitter" readonly>
-                            <div id="channel_help" class="form-text">
-                                As of today, you can only select 'Twitter'.
-                                You'll soon be able to also select other platforms to mimic.
-                            </div>
+                            <label for="channel_type" class="form-label">Choose Media Platform to Mimic</label>
+                            <select class="form-select" id="channel_type" aria-describedby="title_help">
+                                <option value="Twitter">Twitter</option>
+                                <option value="Linkedin">Linkedin</option>
+                                <option value="Mass_Media">Mass Media</option>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="content_url" class="form-label">Provide URL Directing to Your Content</label>
@@ -331,24 +328,65 @@
 
 
 <div id="dataSection" class= "text-bg-primary text-center overflow-hidden">
-    <div class= "my-3 py-3">
-        <h2 class= "display-5 mt-4">Data (WIP)</h2>
-        <p class= "lead">Use our
-            <a class="text-white" href="https://roggenkamp.shinyapps.io/DICE-Preprocessing/" target="_blank">oTree</a>
-            Shiny App to process your data and get the most out of DICE, code-free!</p>
+    <div class="container my-3 py-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h2 class="display-5 mt-4 text-center">Data </h2>
+                <p class= "lead">Use our
+                    <a class="text-white" href="https://roggenkamp.shinyapps.io/DICE-Preprocessing/" target="_blank">oTree</a>
+                    Shiny App to process your data and get the most out of DICE, code-free!
+                </p>
+            </div>
+        </div>
     </div>
-    <div class= "bg-body-tertiary shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
 </div>
 
 <div id="contributeSection" class="bg-body-tertiary overflow-hidden">
-    <div class="my-3 py-3 px-5">
-        <h2 class= "display-5 mt-4 text-center">Contribute (WIP)</h2>
-        <p class= "lead text-center mx-5">
-            We intentionally chose to use widely used frameworks such as the Python-based
-            <a href="https://www.otree.org/" target="_blank">oTree</a> and
-            <a href="https://getbootstrap.com/docs/5.2/getting-started/introduction/" target="_blank">Bootstrap</a>
-            as DICE's foundation to invite researchers to contribute to and, ultimately, enhance DICE.
-        </p>
+    <div class="container my-3 py-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h2 class="display-5 mt-4 text-center">Contribute </h2>
+                <p class="lead text-center">
+                    To foster collaborative development, we intentionally made DICE open-source and chose to use widely used frameworks such as the Python-based
+                    <a href="https://www.otree.org/" target="_blank">oTree</a>,
+                    <a href="https://flask.palletsprojects.com/en/3.0.x/" target="_blank">Flask</a>, and
+                    <a href="https://getbootstrap.com/docs/5.2/getting-started/introduction/" target="_blank">Bootstrap</a>
+                    as DICE's foundation to invite researchers to contribute to and, ultimately, enhance DICE.
+                </p>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-4">
+            <div class="col-lg-8"> <!-- Adjust the column size for the overall card group to make it more narrow -->
+                <div class="card-group">
+
+                    <div class="card mb-3 me-2 border-0 shadow rounded-3"> <!-- Add margin to the right for spacing between cards -->
+                        <div class="card-body">
+                            <p class="lead text-center">Your Contributions Matter</p>
+                            <p class="card-text text-center">
+                                Whether you're contributing code, participating in problem-solving, or sharing your research findings, your contributions are pivotal.
+                                With each shared idea or line of code, you help refine DICE's functionality and user experience.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3 ms-2 border-0 shadow rounded-3">
+                        <div class="card-body">
+                            <p class="lead text-center">Ways to contribute:</p>
+                            <p class="">
+                                Code Development<br>
+                                <small>Enhance the DICE with your Python skills or help us create additional user interfaces with Bootstrap.</small><br><br>
+                                Suggestions<br>
+                                <small>Have an idea for a new feature? We welcome your proposals to help make DICE more versatile and user-friendly.</small><br><br>
+                                Issue Reporting<br>
+                                <small>Encounter a glitch? Let us know. Your reports help us maintain a seamless experience for researchers and study participants.</small>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -358,7 +396,7 @@
         <div class="col-lg-4 col-md-5 col-sm-6 mb-3 pe-5 pt-3">
             <a class="navbar-brand" href="#">
                 <img src="{{ url_for('static', filename='favicon.ico') }}" alt="Logo" width="30" height="30">
-                &nbsp; &nbsp;DICE Hub
+                &nbsp; &nbsp;DICE App
             </a>
             <ul class="list-unstyled small text-muted mt-3">
                 <li class="mb-2">Designed and built with Bootstrap and for oTree.</li>
