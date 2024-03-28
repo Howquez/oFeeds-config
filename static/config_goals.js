@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
             ['card3', 'card4', 'card5'].forEach(cardId => document.getElementById(cardId).style.display = 'block');
             // Set defaults for Recruitment card
             document.getElementById('recruitment_platform').value = 'None';
-            document.getElementById('participant_number').value = 10;
+            document.getElementById('participant_number').value = 20;
         } else if (show === 'final') {
             // For Final Configuration, show all cards
             cardsToShowHide.forEach(cardId => document.getElementById(cardId).style.display = 'block');

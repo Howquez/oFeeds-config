@@ -79,7 +79,7 @@ def create_session():
         response = call_api(
             requests.post,
             'sessions',
-            session_config_name='DICE',
+            session_config_name='Twitter',
             num_participants=data.get('participant_number'),
             modified_session_config_fields=dict(
                 title=data.get('title'),
