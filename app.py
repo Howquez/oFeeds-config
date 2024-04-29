@@ -53,12 +53,12 @@ def validate_csv():
         return jsonify({"error": "CSV file seems to use a wrong delimiter. Expected ';'."}), 400
 
     try:
-        required_columns = ['datetime', 'tweet', 'replies', 'retweets', 'likes', 'media', 'username']
+        required_columns = ['datetime', 'text', 'replies', 'reposts', 'likes', 'media', 'username']
         if not all(column in df.columns for column in required_columns):
             return jsonify({"error": "CSV file is missing one or more required columns."}), 400
 
         pd.to_datetime(df['datetime'])
-        for column in ['replies', 'retweets', 'likes']:
+        for column in ['replies', 'reposts', 'likes']:
             if not pd.api.types.is_numeric_dtype(df[column]):
                 return jsonify({"error": f"Column '{column}' contains non-numeric values."}), 400
 
