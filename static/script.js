@@ -212,11 +212,25 @@ function submitCompletionCode() {
     })
     .then(response => response.json())
     .then(data => {
-        completionAlertDiv.innerHTML = 'Everything is set up now! Consider to print this page for documentation purposes.';
+        completionAlertDiv.innerHTML = 'Everything is set up now! Consider downloading the replication package (a .json file) for documentation purposes.';
         completionAlertDiv.className = 'alert alert-success my-4';
         alertDiv.className = 'alert alert-success mt-4 mb-5 shadow';
 
-        // Optionally add a print button or other response handling here
+        // Add a line break before the button
+        let lineBreak1 = document.createElement('br');
+        let lineBreak2 = document.createElement('br');
+        completionAlertDiv.appendChild(lineBreak1);
+        completionAlertDiv.appendChild(lineBreak2);
+
+        // Add the Create Replication Package button
+        let replicationButton = document.createElement('button');
+        replicationButton.id = 'createReplicationPackageBtn';
+        replicationButton.type = 'button';
+        replicationButton.className = 'btn btn-success';
+        replicationButton.textContent = 'Create Replication Package';
+        replicationButton.setAttribute('onclick', 'createReplicationPackage();');
+
+        completionAlertDiv.appendChild(replicationButton);
     })
     .catch(error => {
         console.error('Error submitting completion code:', error);
@@ -255,3 +269,51 @@ function retrieveSessionData(event) {
         alert('Please enter a session code.');
     }
 }
+
+
+function createReplicationPackage() {
+    let contentUrl = document.getElementById('content_url').value;
+    let eMail = document.getElementById('eMail').value;
+    let study_name = document.getElementById('external_name').value;
+    let recruitmentPlatform = document.getElementById('recruitment_platform').value;
+    let participantNumber = document.getElementById('participant_number').value;
+    let surveyUrl = document.getElementById('survey_url').value;
+    let searchTerm = document.getElementById('search_term').value;
+    let conditionCol = document.getElementById('condition_col').value;
+    let sortBy = document.getElementById('sort_by').value;
+
+    let data = {
+        content_url: contentUrl,
+        configurations: {
+            email: eMail,
+            study_name: study_name,
+            recruitmentPlatform: recruitmentPlatform,
+            participantNumber: participantNumber,
+            surveyUrl: surveyUrl,
+            searchTerm: searchTerm,
+            conditionCol: conditionCol,
+            sortBy: sortBy
+        }
+    };
+
+    fetch('/create_replication_package', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.blob())
+    .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'replication_package.json';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+    })
+    .catch(error => console.error('Error:', error));
+}
+

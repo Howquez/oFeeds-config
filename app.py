@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, Response
 from pprint import pprint
 import requests
 import pandas as pd
+from io import StringIO
+import json
 
 app = Flask(__name__)
 
@@ -148,6 +150,34 @@ def get_session_data(session_code):
         return jsonify({"error": str(e)}), 500
 
 
+@app.route('/create_replication_package', methods=['POST'])
+def create_replication_package():
+    data = request.json
+    csv_url = data['content_url']
+    configurations = data.get('configurations', {})
+
+    try:
+        response = requests.get(csv_url)
+        response.raise_for_status()
+        csv_data = pd.read_csv(StringIO(response.text), delimiter=';')
+
+        replication_package = {
+            "configurations": configurations,
+            "csv_data": csv_data.to_dict(orient='records')
+        }
+
+        package_json = json.dumps(replication_package, indent=4)
+
+        download_filename = 'replication_package.json'
+        response = Response(package_json, mimetype='application/json')
+        response.headers['Content-Disposition'] = f'attachment; filename={download_filename}'
+
+        return response
+    except requests.RequestException as e:
+        return jsonify({'status': 'error', 'message': 'Failed to fetch CSV data: ' + str(e)})
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': 'An error occurred: ' + str(e)})
 
 if __name__ == '__main__':
     app.run(debug=True)
+
