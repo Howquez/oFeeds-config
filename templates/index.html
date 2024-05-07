@@ -84,11 +84,11 @@
             <div id="card1" class="card my-4 border-0 shadow">
                 <div class="card-body">
                     <h5 class="card-title h2 mb-0">
-                        1. Contact Information
+                        1. Meta Information
                     </h5>
                     <p class="card-text text-muted">
                         <small>
-                            Please provide some contact information. They will be displayed in the privacy policy and
+                            Please provide some meta and contact information. The contact information will be displayed in the privacy policy and
                             on the final debriefing page if you do not direct the participants to a post-stimulus survey.
                         </small>
                     </p>
@@ -113,6 +113,15 @@
                         <div class="mb-3">
                             <label for="eMail" class="form-label">Email address</label>
                             <input type="email" class="form-control" id="eMail" placeholder="name@example.com" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="external_name" class="form-label">External study name</label>
+                            <input type="text" class="form-control" id="external_name" value="" placeholder="A study about ice cream" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="internal_name" class="form-label">Internal study name (not visible to participants)</label>
+                            <input type="text" class="form-control" id="internal_name" value="" placeholder="My ice cream study" required>
                         </div>
                     </form>
                 </div>
