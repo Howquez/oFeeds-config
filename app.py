@@ -48,11 +48,11 @@ def check_delimiter(content_url, expected_delimiter=';'):
 def validate_csv():
     data = request.json
     content_url = data.get('content_url')
-    expected_delimiter = ';'
+    expected_delimiter = data.get('delimiter')
 
     delimiter_ok, df = check_delimiter(content_url, expected_delimiter)
     if not delimiter_ok:
-        return jsonify({"error": "CSV file seems to use a wrong delimiter. Expected ';'."}), 400
+        return jsonify({"error": "CSV file seems to use a wrong delimiter."}), 400
 
     try:
         required_columns = ['datetime', 'text', 'replies', 'reposts', 'likes', 'media', 'username']
@@ -160,7 +160,7 @@ def create_replication_package():
     try:
         response = requests.get(csv_url)
         response.raise_for_status()
-        csv_data = pd.read_csv(StringIO(response.text), delimiter=';')
+        csv_data = pd.read_csv(StringIO(response.text), delimiter=data.get('delimiter'))
 
         replication_package = {
             "configurations": configurations,

@@ -131,6 +131,7 @@ function sendValue() {
     let study_name = document.getElementById('external_name').value;
     let channel_type = document.getElementById('channel_type').value;
     let participant_number = document.getElementById('participant_number').value;
+    let delimiter = document.getElementById('delimiter').value;
     let content_url = document.getElementById('content_url').value;
     let recruitment_platform = document.getElementById('recruitment_platform').value;
     let survey_url = document.getElementById('survey_url').value;
@@ -166,6 +167,7 @@ function sendValue() {
                     channel_type: channel_type,
                     participant_number: parseInt(participant_number),
                     content_url: content_url,
+                    delimiter: delimiter,
                     recruitment_platform: recruitment_platform,
                     survey_url: survey_url,
                     search_term: search_term,
