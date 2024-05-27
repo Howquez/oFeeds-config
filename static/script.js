@@ -273,6 +273,7 @@ function retrieveSessionData(event) {
 
 function createReplicationPackage() {
     let contentUrl = document.getElementById('content_url').value;
+    let delimiter = document.getElementById('delimiter').value;
     let eMail = document.getElementById('eMail').value;
     let study_name = document.getElementById('external_name').value;
     let recruitmentPlatform = document.getElementById('recruitment_platform').value;
@@ -287,6 +288,7 @@ function createReplicationPackage() {
         configurations: {
             email: eMail,
             study_name: study_name,
+            date_time: new Date(),
             recruitmentPlatform: recruitmentPlatform,
             participantNumber: participantNumber,
             surveyUrl: surveyUrl,

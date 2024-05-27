@@ -186,7 +186,17 @@
                                 Please provide a url directing to your raw, ;-separated, UTF-8 formatted csv file (preferably GitHub or Google Drive).
                                 <a href="{{ url_for('static', filename='sample_feed.csv') }}" download="sample_feed.csv">Click here</a>
                                 to download a sample *.csv file that you can use as a template.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="delimiter" class="form-label">Specify Your CSV Delimiter.</label>
+                            <select class="form-select" id="delimiter" aria-describedby="delimiter_help">
+                                <option value=";">Semicolon</option>
+                                <option value=",">Comma</option>
 
+                            </select>
+                            <div id="delimiter_help" class="form-text">
+                                Please select the character that separates the data fields in your CSV file.
                             </div>
                         </div>
                         <div class="mb-3">
