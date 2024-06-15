@@ -183,7 +183,7 @@
                             <label for="content_url" class="form-label">Provide URL Directing to Your Content</label>
                             <input type="text" class="form-control" id="content_url" aria-describedby="url_help" value="https://raw.githubusercontent.com/Howquez/oFeeds/main/software/DICE/DICE/static/data/sample_tweets.csv">
                             <div id="url_help" class="form-text">
-                                Please provide a url directing to your raw, ;-separated, UTF-8 formatted csv file (preferably GitHub or Google Drive).
+                                Please provide a url directing to your raw, UTF-8 formatted csv file (preferably GitHub or Google Drive).
                                 <a href="{{ url_for('static', filename='sample_feed.csv') }}" download="sample_feed.csv">Click here</a>
                                 to download a sample *.csv file that you can use as a template.
                             </div>
@@ -218,39 +218,34 @@
             <div id="card4" class="card my-4 border-0 shadow">
                 <div class="card-body">
                     <h5 class="card-title h2 mb-0">
-                        4. Experimental Conditions
+                        4. Experimental Control
                     </h5>
                     <p class="card-text text-muted">
                         <small>
-                            Please use the following forms to define potential conditions participants will be randomly assigned to.
+                            Please read the following instructions on how to define conditions participants will be randomly assigned to.
                         </small>
                     </p>
-                    <form>
-                        <div class="mb-3">
-                            <label for="condition_col" class="form-label">Specify Condition Variable (provide its column name in csv file)</label>
-                            <input type="text" class="form-control" id="condition_col" aria-describedby="col_help" value="condition">
-                            <div id="col_help" class="form-text">
-                                If you intend to manipulate some element of the feed between-subjects, you can do so by creating
-                                a column in the csv file you provide. This column can take as many values as you need.
-                                Participants will be randomly assigned to one of the values (that represent conditions) in that column.
-                                If you don't provide a column name, there won't be any conditions that differ with respect to
-                                the feed's content.
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="sort_by" class="form-label">Specify Sorting Variable (provide its column name in csv file)</label>
-                            <input type="text" class="form-control" id="sort_by" aria-describedby="sort_help" value="sequence">
-                            <div id="sort_help" class="form-text">
-                                You can also provide a variable that specifies the order in which the posts are displayed.
-                                Please provide one unique numeric value per row. The post associated to the lowest number will
-                                be displayed on top of the feed, the post associated to the highest number will be displayed
-                                at the bottom.
-                                You can provide both a condition and a sorting variable to mimic different recommender- and
-                                sorting algorithms. If you don't provide a column name, the posts will be displayed in a fully
-                                randomized order (between subjects).
-                            </div>
-                        </div>
-                    </form>
+                    <h6 class="mb-0">
+                        Conditions
+                    </h6>
+                    <p class="text-secondary">
+                        The data you provide must contain a column called <code>condition</code>.
+                        This column can take one or as many values as you need.
+                        Participants will be randomly assigned to one of the values (that represent conditions) in that column.
+                    </p>
+
+                    <h6 class="mb-0">
+                        Sequence
+                    </h6>
+                    <p class="text-secondary">
+                        The data must also contain a column called <code>sequence</code>.
+                        This columns specifies the order in which the posts are displayed.
+                        Provide unique numeric value per row if you want to control the order. The post associated to the lowest number will
+                        be displayed on top of the feed, the post associated to the highest number will be displayed
+                        at the bottom. If two or more rows contain missing values, their order will be randomized.
+                        You can provide both a condition and a sorting variable to mimic different recommender- and
+                        sorting algorithms.
+                    </p>
                 </div>
             </div>
 

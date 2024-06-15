@@ -136,8 +136,8 @@ function sendValue() {
     let recruitment_platform = document.getElementById('recruitment_platform').value;
     let survey_url = document.getElementById('survey_url').value;
     let search_term = document.getElementById('search_term').value;
-    let sort_by = document.getElementById('sort_by').value;
-    let condition_col = document.getElementById('condition_col').value;
+    let sort_by = "sequence"; //document.getElementById('sort_by').value;
+    let condition_col = "condition"; // document.getElementById('condition_col').value;
     let display_skyscraper = document.getElementById('display_skyscraper').checked;
     let html_briefing = document.getElementById('html_briefing').value;
 
@@ -282,8 +282,6 @@ function createReplicationPackage() {
     let participantNumber = document.getElementById('participant_number').value;
     let surveyUrl = document.getElementById('survey_url').value;
     let searchTerm = document.getElementById('search_term').value;
-    let conditionCol = document.getElementById('condition_col').value;
-    let sortBy = document.getElementById('sort_by').value;
 
     let data = {
         content_url: contentUrl,
@@ -294,9 +292,7 @@ function createReplicationPackage() {
             recruitmentPlatform: recruitmentPlatform,
             participantNumber: participantNumber,
             surveyUrl: surveyUrl,
-            searchTerm: searchTerm,
-            conditionCol: conditionCol,
-            sortBy: sortBy
+            searchTerm: searchTerm
         }
     };
 
