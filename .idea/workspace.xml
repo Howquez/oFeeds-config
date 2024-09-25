@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="30b5c7ea-e441-4fbc-8322-3516ac5cd1b3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/script.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +51,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/haukeroggenkamp/TechX Dropbox/Hauke Roggenkamp/oFeeds-config/static&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/haukeroggenkamp/TechX Dropbox/Hauke Roggenkamp/oFeeds-config&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -132,7 +130,12 @@
       <workItem from="1715061038094" duration="4661000" />
       <workItem from="975589" duration="428000" />
       <workItem from="1715777306050" duration="5063000" />
-      <workItem from="1718461055460" duration="1648000" />
+      <workItem from="1718461055460" duration="2288000" />
+      <workItem from="1718951574537" duration="431000" />
+      <workItem from="1720090953286" duration="418000" />
+      <workItem from="1720700967354" duration="522000" />
+      <workItem from="1720715890677" duration="209000" />
+      <workItem from="1727246874057" duration="186000" />
     </task>
     <servers />
   </component>
@@ -140,7 +143,7 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/oFeeds_config$feed_configurator.coverage" NAME="feed_configurator Coverage Results" MODIFIED="1718462122117" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/oFeeds_config$feed_configurator.coverage" NAME="feed_configurator Coverage Results" MODIFIED="1720715991765" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/feed_configurator$feed_configurator.coverage" NAME="feed_configurator Coverage Results" MODIFIED="1704012830462" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
