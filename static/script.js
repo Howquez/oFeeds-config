@@ -135,6 +135,7 @@ function sendValue() {
     let content_url = document.getElementById('content_url').value;
     let recruitment_platform = document.getElementById('recruitment_platform').value;
     let survey_url = document.getElementById('survey_url').value;
+    let dwell_threshold = document.getElementById('dwell_threshold').value;
     let search_term = document.getElementById('search_term').value;
     let sort_by = "sequence"; //document.getElementById('sort_by').value;
     let condition_col = "condition"; // document.getElementById('condition_col').value;
@@ -170,6 +171,7 @@ function sendValue() {
                     delimiter: delimiter,
                     recruitment_platform: recruitment_platform,
                     survey_url: survey_url,
+                    dwell_threshold: dwell_threshold,
                     search_term: search_term,
                     sort_by: sort_by,
                     condition_col: condition_col,
@@ -281,6 +283,7 @@ function createReplicationPackage() {
     let recruitmentPlatform = document.getElementById('recruitment_platform').value;
     let participantNumber = document.getElementById('participant_number').value;
     let surveyUrl = document.getElementById('survey_url').value;
+    let dwellThreshold = document.getElementById('dwell_threshold').value;
     let searchTerm = document.getElementById('search_term').value;
 
     let data = {
@@ -292,6 +295,7 @@ function createReplicationPackage() {
             recruitmentPlatform: recruitmentPlatform,
             participantNumber: participantNumber,
             surveyUrl: surveyUrl,
+            dwellThreshold: dwellThreshold,
             searchTerm: searchTerm
         }
     };

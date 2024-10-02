@@ -94,6 +94,7 @@ def create_session():
                 topics=not data.get('display_skyscraper'),
                 url_param=url_param,
                 survey_link=data.get('survey_url'),
+                dwell_threshold=data.get('dwell_threshold'),
                 search_term=data.get('search_term'),
                 sort_by=data.get('sort_by'),
                 condition_col=data.get('condition_col'),

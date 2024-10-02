@@ -252,7 +252,7 @@
             <div id="card5" class="card my-4 border-0 shadow">
                 <div class="card-body">
                     <h5 class="card-title h2 mb-0">
-                        5. Pre-Stimulus Configurations
+                        5. Briefing
                     </h5>
                     <p class="card-text text-muted">
                         <small>
@@ -274,15 +274,11 @@
             <div id="card6" class="card my-4 border-0 shadow">
                 <div class="card-body">
                     <h5 class="card-title h2 mb-0">
-                        6. Post-Stimulus Configurations
+                        6. Measurement
                     </h5>
                     <p class="card-text text-muted">
                         <small>
-                            Configure the following fields, if you want to append a survey to the stimulus.
-                            We'll create a redirect with url parameters to pass both the participant ID as well as
-                            the completion code (for Prolific). Make sure that your survey tool accepts them
-                            (see <a href="https://researcher-help.prolific.com/hc/en-gb/articles/360009224113-Qualtrics-integration-guide" target="_blank">embedded data documentation</a>
-                            if you are using Qualtrics).
+                            Plese use the following forms to define what you measure and how you measure it.
                         </small>
                     </p>
                     <form>
@@ -290,9 +286,24 @@
                             <label for="survey_url" class="form-label">Insert Your Survey's URL</label>
                             <input type="text" class="form-control" id="survey_url" aria-describedby="survey_url_help" value="https://unisg.qualtrics.com/jfe/form/SV_0DnMoLpM0VxjhrM">
                             <div id="survey_url_help" class="form-text">
-                                Please provide a url directing to your survey. Please don't add any manual url parameters.
+                                Configure this  field, if you want to append a survey to the stimulus.
+                                We'll create a redirect with url parameters to pass both the participant ID as well as
+                                the completion code (for Prolific). Make sure that your survey tool accepts them
+                                (see <a href="https://researcher-help.prolific.com/hc/en-gb/articles/360009224113-Qualtrics-integration-guide" target="_blank">embedded data documentation</a>
+                                if you are using Qualtrics).Please provide a url directing to your survey. Please don't add any manual url parameters.
                                 If you leave this field empty, the study will close with an end of survey screen that provides
                                 your contact information provided above.
+                            </div>
+                        </div>
+                        <label for="dwell_threshold" class="form-label">Dwell Time Tracking Threshold</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">%</span>
+                            <input type="number" class="form-control" id="dwell_threshold" value="75" min="1" max="100">
+                            <div id="dwell_threshold_help" class="form-text">
+                                This setting determines the visibility threshold for tracking dwell time.
+                                It represents the percentage of a social media post that must be visible to the participant before it's considered "in view".
+                                A lower value (closer to 1%) will track social media posts as soon as they're barely visible,
+                                whereas a higher value (closer to 100%) will only track rows when they're almost fully visible.
                             </div>
                         </div>
                     </form>
