@@ -1,0 +1,5 @@
+# Preface {.unnumbered}
+
+This is a Quarto book documenting the usage of DICE.
+
+It is work in progress.

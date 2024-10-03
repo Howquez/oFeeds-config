@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, Response
+from flask import Flask, render_template, request, jsonify, Response, send_from_directory, redirect, url_for
 from pprint import pprint
 import requests
 import pandas as pd
@@ -16,9 +16,13 @@ def index():
     # This route serves the index.html template
     return render_template('index.html')
 
-@app.route('/documentation')
-def documentation():
-    return render_template('documentation.html')
+@app.route('/docs/', defaults={'filename': 'index.html'})
+@app.route('/docs/<path:filename>')
+def serve_docs(filename):
+    try:
+        return send_from_directory('templates/docs', filename)
+    except FileNotFoundError:
+        return redirect(url_for('serve_docs', filename='index.html'))
 
 # Helper function to call the external API
 def call_api(method, *path_parts, **params):
