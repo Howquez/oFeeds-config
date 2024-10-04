@@ -1,7 +1,132 @@
-# Summary
+# Deploy DICE yourself
 
-In summary, this book has no content whatsoever.
+Don't worry if this guide looks complicated at first glance—it's actually much simpler than it might appear! Even if you're not familiar with using the terminal or command prompt, you'll find that the process is straightforward and easy to follow. The commands you'll be using are simple, and you'll be guided through each step. Remember, many researchers who aren't computer experts use oTree successfully every day. So take a deep breath, follow along, and you'll have your experiment up and running in no time!
 
-```{r}
-1 + 1
+What's more, oTree has a large and active user community, which brings several advantages:
+
+1. **Extensive Documentation**: oTree is well-documented, with comprehensive guides and tutorials available online.
+2. **Community Support**: There's an active forum where you can ask questions and get help from experienced users.
+3. **AI Assistance**: Because of its popularity and well-documented nature, generative AI tools can provide reliable assistance with oTree-related queries.
+
+Whether you prefer reading documentation, asking the community, or using AI tools, help is always at hand. Hence, we are confident that you'll have your experiment up and running in no time!
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+1. **Python**: oTree requires Python 3.7 or higher. Download and install Python from [python.org](https://www.python.org/downloads/).
+
+2. **pip**: This is Python's package installer. It usually comes with Python installation.
+
+3. **Command Prompt or Terminal**: This is a text-based interface to interact with your computer. You'll use it to run commands for installing and running oTree.
+   - On Windows: Search for "Command Prompt" or "PowerShell" in the Start menu.
+   - On macOS: Open the "Terminal" application (found in Applications > Utilities).
+   - On Linux: You can usually open a terminal with Ctrl+Alt+T or by searching for "Terminal" in your application menu.
+
+
+
+## Install oTree
+
+Open a command prompt or terminal and run:
+
+```{.bash}
+pip install otree
 ```
+
+## Extract the Provided oTree Project
+
+Create and open a new directory (e.g. `my_DICE_experiment`) for your experiment (either manually or using the command prompt or terminal):
+
+```{.bash}
+mkdir my_DICE_experiment
+cd my_DICE_experiment
+```
+
+Now download the `DICE.otreezip` file [(which you can find here)](https://github.com/Howquez/oFeeds/blob/main/software/DICE/DICE.otreezip) and store it in your new directory. Then use the command prompt or terminal and run the `otree unzip` command to extract the contents of the otreezip file:
+
+```{.bash}
+otree unzip DICE.otreezip
+```
+
+If necessary, adjust the path to the otreezip file.
+
+
+This will unpack the experiment such that you can browse and edit its raw files. One of them is called `requirements.txt`. You can find it in `my_DICE_experiment/` (or whatever name you chose for your project directory). You should have all the requirements installed but it may not hurt to re-install them using:
+
+```{.bash}
+pip install -r requirements.txt
+```
+
+## Running the experiment locally
+
+Run the following command to set up the database:
+
+```{.bash}
+otree resetdb
+```
+
+
+Start the oTree development server:
+
+```{.bash}
+otree devserver
+```
+
+Open a web browser and go to:
+
+```
+http://localhost:8000
+```
+
+You should see the oTree admin interface.
+
+## Troubleshooting
+
+If you encounter any issues while setting up or running the experiment, consider the following:
+
+- If you see any "module not found" errors, make sure all required packages are installed.
+- Check that you're in the correct directory when running commands.
+- Ensure your Python version is compatible with the oTree version used in the provided experiment.
+
+::: {.callout-note}
+If you encounter any specific errors or issues with the provided experiment, consult oTree's [official documentation](https://otree.readthedocs.io/en/latest/), oTree's [official forum](https://www.otreehub.com/forum/), generative AI or Hauke Roggenkamp.
+:::
+
+
+# Server setup
+
+::: {.callout-note}
+The following text copies and summarizes  oTree's [official documentation](https://otree.readthedocs.io/en/latest/server/intro.html#server-setup).
+:::
+
+If you are just testing your app on your personal computer, you can use otree devserver. You don’t need a full server setup.
+
+However, when you want to share your app with an audience, you must use a web server.
+
+Choose which option you need:
+
+- You want to launch your app to users on the internet: Use _Heroku._
+- You want the easiest setup: Again, we recommend _Heroku._
+
+## Basic server setup with _Heroku_
+
+[Heroku](https://dashboard.heroku.com/apps) is a commercial cloud hosting provider. It is the simplest way to deploy oTree.
+
+The Heroku free plan is sufficient for testing your app, but once you are ready to launch a study, you should upgrade to a paid server, which can handle more traffic. However, Heroku is quite inexpensive, because you only pay for the time you actually use it. If you run a study for only 1 day, you can turn off your dynos and addons, and then you only pay 1/30 of the monthly cost. Often this means you can run a study for just a few dollars.
+
+To deploy to Heroku, you should use [oTree Hub](https://www.otreehub.com/), which automates your server setup and ensures your server is correctly configured.
+
+oTree Hub also offers error/performance monitoring.
+
+### Server performance
+
+Heroku offers different performance tiers for resources such as your dyno and database. What tier you need depends on how much traffic your app will get, and how it is coded.
+
+Performance is a complicated subject since there are many factors that affect performance. oTree Hub’s Pro plan has a "monitor" section that will analyze your logs to identify performance issues.
+
+### General tips
+
+- Upgrade oTree to the latest version
+- With the higher dyno tiers, Heroku provides a "Metrics" tab. Look at "Dyno load". If users are experiencing slow page load times and your your dyno load stays above 1, then you should get a faster dyno. (But don’t run more than 1 web dyno.)
+- If your dyno load stays under 1 but page load times are still slow, the bottleneck might be something else like your Postgres database.
+
