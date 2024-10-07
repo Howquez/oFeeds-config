@@ -3,3 +3,12 @@
 This is a Quarto book documenting the usage of DICE.
 
 It is work in progress.
+
+
+::: {#fig-tutorial-1 .unnumbered}
+
+{{< video https://www.youtube.com/watch?v=lx_akVasq7I >}}
+
+DICE: csv file configuration
+
+:::
