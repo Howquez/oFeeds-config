@@ -1,0 +1,4 @@
+# Data
+
+We created the [shiny-app](https://dice-app.shinyapps.io/DICE-Preprocessing/) to pre-process the raw data which is tabular but also contains columns with JSON data.
+

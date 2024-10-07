@@ -1,0 +1,11 @@
+# Stimuli
+
+This section describes how to generate a feed's content.
+
+::: {#fig-tutorial-1}
+
+{{< video https://www.youtube.com/watch?v=lx_akVasq7I >}}
+
+DICE: csv file configuration
+
+:::

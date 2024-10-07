@@ -1,14 +1,22 @@
 # Preface {.unnumbered}
 
-This is a Quarto book documenting the usage of DICE.
+This is a Quarto book documenting the usage of DICE. The document is organized as follows: ...
 
 It is work in progress.
 
 
-::: {#fig-tutorial-1 .unnumbered}
+<!--
+Please cite as
 
-{{< video https://www.youtube.com/watch?v=lx_akVasq7I >}}
+```bibtex
+@software{Roggenkamp_Digital_In-Context_Experiments_2024,
+  author = {Roggenkamp, Hauke and Boegershausen, Johannes and Hildebrand, Christian},
+  month = jan,
+  title = {{Digital In-Context Experiments (DICE)}},
+  url = {https://github.com/Howquez/oFeeds},
+  version = {1.0},
+  year = {2024}
+}
+```
+-->
 
-DICE: csv file configuration
-
-:::

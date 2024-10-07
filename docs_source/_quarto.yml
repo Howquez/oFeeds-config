@@ -8,8 +8,10 @@ book:
   date: "10/3/2024"
   chapters:
     - index.qmd
-    - intro.qmd
-    - summary.qmd
+    - stimuli.qmd
+    - dice-app.qmd
+    - deployment.qmd
+    - data.qmd
     - references.qmd
 
 bibliography: references.bib

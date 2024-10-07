@@ -1,0 +1,3 @@
+# Launch a study
+
+This section will describe how to use the web-app to configure and launch DICE studies.

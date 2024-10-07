@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.132">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>DICE documentation - 3&nbsp; Deploy DICE yourself</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./data.html" rel="next">
+<link href="./dice-app.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Deploy DICE yourself</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">DICE documentation</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./stimuli.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Stimuli</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dice-app.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Launch a study</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./deployment.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Deploy DICE yourself</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites"><span class="toc-section-number">3.1</span>  Prerequisites</a></li>
+  <li><a href="#install-otree" id="toc-install-otree" class="nav-link" data-scroll-target="#install-otree"><span class="toc-section-number">3.2</span>  Install oTree</a></li>
+  <li><a href="#extract-the-provided-otree-project" id="toc-extract-the-provided-otree-project" class="nav-link" data-scroll-target="#extract-the-provided-otree-project"><span class="toc-section-number">3.3</span>  Extract the Provided oTree Project</a></li>
+  <li><a href="#running-the-experiment-locally" id="toc-running-the-experiment-locally" class="nav-link" data-scroll-target="#running-the-experiment-locally"><span class="toc-section-number">3.4</span>  Running the experiment locally</a></li>
+  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting"><span class="toc-section-number">3.5</span>  Troubleshooting</a></li>
+  <li><a href="#server-setup" id="toc-server-setup" class="nav-link" data-scroll-target="#server-setup"><span class="toc-section-number">4</span>  Server setup</a>
+  <ul class="collapse">
+  <li><a href="#basic-server-setup-with-heroku" id="toc-basic-server-setup-with-heroku" class="nav-link" data-scroll-target="#basic-server-setup-with-heroku"><span class="toc-section-number">4.1</span>  Basic server setup with <em>Heroku</em></a>
+  <ul class="collapse">
+  <li><a href="#server-performance" id="toc-server-performance" class="nav-link" data-scroll-target="#server-performance"><span class="toc-section-number">4.1.1</span>  Server performance</a></li>
+  <li><a href="#general-tips" id="toc-general-tips" class="nav-link" data-scroll-target="#general-tips"><span class="toc-section-number">4.1.2</span>  General tips</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Deploy DICE yourself</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<p>Don’t worry if this guide looks complicated at first glance—it’s actually much simpler than it might appear! Even if you’re not familiar with using the terminal or command prompt, you’ll find that the process is straightforward and easy to follow. The commands you’ll be using are simple, and you’ll be guided through each step. Remember, many researchers who aren’t computer experts use oTree successfully every day. So take a deep breath, follow along, and you’ll have your experiment up and running in no time!</p>
+<p>What’s more, oTree has a large and active user community, which brings several advantages:</p>
+<ol type="1">
+<li><strong>Extensive Documentation</strong>: oTree is well-documented, with comprehensive guides and tutorials available online.</li>
+<li><strong>Community Support</strong>: There’s an active forum where you can ask questions and get help from experienced users.</li>
+<li><strong>AI Assistance</strong>: Because of its popularity and well-documented nature, generative AI tools can provide reliable assistance with oTree-related queries.</li>
+</ol>
+<p>Whether you prefer reading documentation, asking the community, or using AI tools, help is always at hand. Hence, we are confident that you’ll have your experiment up and running in no time!</p>
+<section id="prerequisites" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="prerequisites"><span class="header-section-number">3.1</span> Prerequisites</h2>
+<p>Before you begin, ensure you have the following installed:</p>
+<ol type="1">
+<li><p><strong>Python</strong>: oTree requires Python 3.7 or higher. Download and install Python from <a href="https://www.python.org/downloads/">python.org</a>.</p></li>
+<li><p><strong>pip</strong>: This is Python’s package installer. It usually comes with Python installation.</p></li>
+<li><p><strong>Command Prompt or Terminal</strong>: This is a text-based interface to interact with your computer. You’ll use it to run commands for installing and running oTree.</p>
+<ul>
+<li>On Windows: Search for “Command Prompt” or “PowerShell” in the Start menu.</li>
+<li>On macOS: Open the “Terminal” application (found in Applications &gt; Utilities).</li>
+<li>On Linux: You can usually open a terminal with Ctrl+Alt+T or by searching for “Terminal” in your application menu.</li>
+</ul></li>
+</ol>
+</section>
+<section id="install-otree" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="install-otree"><span class="header-section-number">3.2</span> Install oTree</h2>
+<p>Open a command prompt or terminal and run:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install otree</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="extract-the-provided-otree-project" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="extract-the-provided-otree-project"><span class="header-section-number">3.3</span> Extract the Provided oTree Project</h2>
+<p>Create and open a new directory (e.g.&nbsp;<code>my_DICE_experiment</code>) for your experiment (either manually or using the command prompt or terminal):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> my_DICE_experiment</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> my_DICE_experiment</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now download the <code>DICE.otreezip</code> file <a href="https://github.com/Howquez/oFeeds/blob/main/software/DICE/DICE.otreezip">(which you can find here)</a> and store it in your new directory. Then use the command prompt or terminal and run the <code>otree unzip</code> command to extract the contents of the otreezip file:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">otree</span> unzip DICE.otreezip</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If necessary, adjust the path to the otreezip file.</p>
+<p>This will unpack the experiment such that you can browse and edit its raw files. One of them is called <code>requirements.txt</code>. You can find it in <code>my_DICE_experiment/</code> (or whatever name you chose for your project directory). You should have all the requirements installed but it may not hurt to re-install them using:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="running-the-experiment-locally" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="running-the-experiment-locally"><span class="header-section-number">3.4</span> Running the experiment locally</h2>
+<p>Run the following command to set up the database:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">otree</span> resetdb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Start the oTree development server:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">otree</span> devserver</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Open a web browser and go to:</p>
+<pre><code>http://localhost:8000</code></pre>
+<p>You should see the oTree admin interface.</p>
+</section>
+<section id="troubleshooting" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="troubleshooting"><span class="header-section-number">3.5</span> Troubleshooting</h2>
+<p>If you encounter any issues while setting up or running the experiment, consider the following:</p>
+<ul>
+<li>If you see any “module not found” errors, make sure all required packages are installed.</li>
+<li>Check that you’re in the correct directory when running commands.</li>
+<li>Ensure your Python version is compatible with the oTree version used in the provided experiment.</li>
+</ul>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you encounter any specific errors or issues with the provided experiment, consult oTree’s <a href="https://otree.readthedocs.io/en/latest/">official documentation</a>, oTree’s <a href="https://www.otreehub.com/forum/">official forum</a>, generative AI or Hauke Roggenkamp.</p>
+</div>
+</div>
+</section>
+<section id="server-setup" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Server setup</h1>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The following text copies and summarizes oTree’s <a href="https://otree.readthedocs.io/en/latest/server/intro.html#server-setup">official documentation</a>.</p>
+</div>
+</div>
+<p>If you are just testing your app on your personal computer, you can use otree devserver. You don’t need a full server setup.</p>
+<p>However, when you want to share your app with an audience, you must use a web server.</p>
+<p>Choose which option you need:</p>
+<ul>
+<li>You want to launch your app to users on the internet: Use <em>Heroku.</em></li>
+<li>You want the easiest setup: Again, we recommend <em>Heroku.</em></li>
+</ul>
+<section id="basic-server-setup-with-heroku" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="basic-server-setup-with-heroku"><span class="header-section-number">4.1</span> Basic server setup with <em>Heroku</em></h2>
+<p><a href="https://dashboard.heroku.com/apps">Heroku</a> is a commercial cloud hosting provider. It is the simplest way to deploy oTree.</p>
+<p>The Heroku free plan is sufficient for testing your app, but once you are ready to launch a study, you should upgrade to a paid server, which can handle more traffic. However, Heroku is quite inexpensive, because you only pay for the time you actually use it. If you run a study for only 1 day, you can turn off your dynos and addons, and then you only pay 1/30 of the monthly cost. Often this means you can run a study for just a few dollars.</p>
+<p>To deploy to Heroku, you should use <a href="https://www.otreehub.com/">oTree Hub</a>, which automates your server setup and ensures your server is correctly configured.</p>
+<p>oTree Hub also offers error/performance monitoring.</p>
+<section id="server-performance" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="server-performance"><span class="header-section-number">4.1.1</span> Server performance</h3>
+<p>Heroku offers different performance tiers for resources such as your dyno and database. What tier you need depends on how much traffic your app will get, and how it is coded.</p>
+<p>Performance is a complicated subject since there are many factors that affect performance. oTree Hub’s Pro plan has a “monitor” section that will analyze your logs to identify performance issues.</p>
+</section>
+<section id="general-tips" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="general-tips"><span class="header-section-number">4.1.2</span> General tips</h3>
+<ul>
+<li>Upgrade oTree to the latest version</li>
+<li>With the higher dyno tiers, Heroku provides a “Metrics” tab. Look at “Dyno load”. If users are experiencing slow page load times and your your dyno load stays above 1, then you should get a faster dyno. (But don’t run more than 1 web dyno.)</li>
+<li>If your dyno load stays under 1 but page load times are still slow, the bottleneck might be something else like your Postgres database.</li>
+</ul>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./dice-app.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Launch a study</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./data.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
