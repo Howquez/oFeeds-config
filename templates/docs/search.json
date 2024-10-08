@@ -11,7 +11,14 @@
     "href": "stimuli.html",
     "title": "1  Stimuli",
     "section": "",
-    "text": "This section describes how to generate a feed’s content.\n\n\n\nFigure 1.1: DICE: csv file configuration"
+    "text": "This section describes how to generate a feed’s content."
+  },
+  {
+    "objectID": "stimuli.html#useful-links",
+    "href": "stimuli.html#useful-links",
+    "title": "1  Stimuli",
+    "section": "1.1 Useful links",
+    "text": "1.1 Useful links\nWe created a set of synthetic users, where we matched actual usernames and handles (see McKelvey et al. 2017) with stock images (from unsplash.com) and some synthetic, LLM-generated information. In addition, there are web sources available. Visit our Github repository for more information (url will be provided after review). Also see generated.photos and their academic data for user images and behindthename.com for user names.\nYou will likely create your own images. To include them in your feed, you need to host them somewhere publicly. We usually use Github for these purposes. We learnt that it makes a lot of sense to compress the images you are using such that your stimuli are less affected by slow internet connections on your participants’ side. In addition, it helps to use an image format that is optimized for web usage. We made good experiences with the .webp format. There are many online converters and even python modules available.1\n\n\n\n\nMcKelvey, Kevin, Peter Goutzounis, Stephen da Cruz, and Nathanael Chambers. 2017. “Aligning Entity Names with Online Aliases on Twitter.” In Proceedings of the Fifth International Workshop on Natural Language Processing for Social Media, edited by Lun-Wei Ku and Cheng-Te Li, 25–35. Valencia, Spain: Association for Computational Linguistics. https://doi.org/10.18653/v1/W17-1104."
   },
   {
     "objectID": "dice-app.html",
@@ -75,5 +82,19 @@
     "title": "4  Data",
     "section": "",
     "text": "We created the shiny-app to pre-process the raw data which is tabular but also contains columns with JSON data."
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "McKelvey, Kevin, Peter Goutzounis, Stephen da Cruz, and Nathanael\nChambers. 2017. “Aligning Entity Names with Online Aliases on\nTwitter.” In Proceedings of the Fifth\nInternational Workshop on Natural Language Processing for Social\nMedia, edited by Lun-Wei Ku and Cheng-Te Li, 25–35. Valencia,\nSpain: Association for Computational Linguistics. https://doi.org/10.18653/v1/W17-1104."
+  },
+  {
+    "objectID": "stimuli.html#footnotes",
+    "href": "stimuli.html#footnotes",
+    "title": "1  Stimuli",
+    "section": "",
+    "text": "See our repository (url provided after review) for more details on the technical implementation.↩︎"
   }
 ]

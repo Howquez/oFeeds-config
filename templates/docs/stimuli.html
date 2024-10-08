@@ -20,7 +20,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -140,7 +159,13 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#useful-links" id="toc-useful-links" class="nav-link active" data-scroll-target="#useful-links"><span class="header-section-number">1.1</span> Useful links</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -169,8 +194,24 @@ ul.task-list li input[type="checkbox"] {
 <figcaption class="figure-caption">Figure&nbsp;1.1: DICE: csv file configuration</figcaption>
 </figure>
 </div>
+<section id="useful-links" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="useful-links"><span class="header-section-number">1.1</span> Useful links</h2>
+<p>We created a set of synthetic users, where we matched <a href="https://www.usna.edu/Users/cs/nchamber/data/twitternames/">actual usernames and handles</a> <span class="citation" data-cites="McKelveyEtAl_2017">(see <a href="references.html#ref-McKelveyEtAl_2017" role="doc-biblioref">McKelvey et al. 2017</a>)</span> with stock images (from <a href="https://unsplash.com/">unsplash.com</a>) and some synthetic, LLM-generated information. In addition, there are web sources available. Visit our Github repository for more information (url will be provided after review). Also see <a href="https://generated.photos/datasets/academic">generated.photos</a> and their academic data for user images and <a href="https://www.behindthename.com/random/">behindthename.com</a> for user names.</p>
+<p>You will likely create your own images. To include them in your feed, you need to host them somewhere publicly. We usually use Github for these purposes. We learnt that it makes a lot of sense to compress the images you are using such that your stimuli are less affected by slow internet connections on your participants’ side. In addition, it helps to use an image format that is optimized for web usage. We made good experiences with the <a href="https://developers.google.com/speed/webp">.webp</a> format. There are many <a href="https://cloudconvert.com/webp-converter">online converters</a> and even <a href="https://pillow.readthedocs.io/en/stable/reference/Image.html">python modules</a> available.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-McKelveyEtAl_2017" class="csl-entry" role="listitem">
+McKelvey, Kevin, Peter Goutzounis, Stephen da Cruz, and Nathanael Chambers. 2017. <span>“Aligning Entity Names with Online Aliases on <span>T</span>witter.”</span> In <em>Proceedings of the Fifth International Workshop on Natural Language Processing for Social Media</em>, edited by Lun-Wei Ku and Cheng-Te Li, 25–35. Valencia, Spain: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/W17-1104">https://doi.org/10.18653/v1/W17-1104</a>.
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>See our repository (url provided after review) for more details on the technical implementation.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

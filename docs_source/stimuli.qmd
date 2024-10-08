@@ -9,3 +9,9 @@ This section describes how to generate a feed's content.
 DICE: csv file configuration
 
 :::
+
+## Useful links
+
+We created a set of synthetic users, where we matched [actual usernames and handles](https://www.usna.edu/Users/cs/nchamber/data/twitternames/) [see @McKelveyEtAl_2017] with stock images (from [unsplash.com](https://unsplash.com/)) and some synthetic, LLM-generated information. In addition, there are web sources available. Visit our Github repository for more information (url will be provided after review). Also see [generated.photos](https://generated.photos/datasets/academic) and their academic data for user images and [behindthename.com](https://www.behindthename.com/random/) for user names. 
+
+You will likely create your own images. To include them in your feed, you need to host them somewhere publicly. We usually use Github for these purposes. We learnt that it makes a lot of sense to compress the images you are using such that your stimuli are less affected by slow internet connections on your participants' side. In addition, it helps to use an image format that is optimized for web usage. We made good experiences with the [.webp](https://developers.google.com/speed/webp) format. There are many [online converters](https://cloudconvert.com/webp-converter) and even [python modules](https://pillow.readthedocs.io/en/stable/reference/Image.html) available.^[See our repository (url provided after review) for more details on the technical implementation.]
