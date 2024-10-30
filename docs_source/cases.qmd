@@ -14,7 +14,7 @@ if (!requireNamespace("groundhog", quietly = TRUE)) {
     library("groundhog")
 }
 
-pkgs <- c("magrittr", "data.table", "knitr", "stringr", "english", "moments",
+pkgs <- c("magrittr", "data.table", "knitr", "kableExtra", "stringr", "english", "moments",
           "ggplot2", "patchwork", "scales",  "ggdist", "gghalves", "sjPlot", "gtsummary", "wesanderson", "ggsci",
           "stargazer", "gt",
           "lme4")
@@ -202,26 +202,79 @@ summary_1 <- subset[,
 ```
 
 ```{r}
-#| results: asis
 #| warning: false
 #| label: tbl-summary-participant-level 
 #| tbl-cap: Summary Statistics on the Participant-Level
 
-stargazer(summary_1,
-          header = FALSE, 
-          type = "html",
-          digits = 2)
+# stargazer(summary_1,
+#           header = FALSE, 
+#           type = "html",
+#           digits = 2)
+
+# Table 1: Participant-Level Summary Statistics
+stats_list <- list()
+
+# Function to calculate summary statistics
+calc_stats <- function(x) {
+  c(N = length(x),
+    Mean = mean(x, na.rm = TRUE),
+    `St. Dev.` = sd(x, na.rm = TRUE),
+    Min = min(x, na.rm = TRUE),
+    Max = max(x, na.rm = TRUE))
+}
+
+# Calculate statistics for each column in summary_1
+cols <- c("Age", "Female", "Desktop", "Recall Apple", ".. Bose", 
+          ".. Nintendo", ".. Samsung", ".. Whoop")
+
+participant_stats <- rbindlist(lapply(cols, function(col) {
+  as.list(calc_stats(summary_1[[col]]))
+}), idcol = "Statistic")
+
+setnames(participant_stats, "Statistic", "Statistic")
+participant_stats[, Statistic := cols]
+
+# Format first table
+kable(participant_stats,
+      format = "html",
+      caption = "Summary Statistics on the Participant-Level",
+      align = c('l', 'r', 'r', 'r', 'r', 'r'),
+      digits = 2) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"),
+                full_width = FALSE)
+
+
 ```
 
 ```{r}
-#| results: asis
 #| warning: false
 #| label: tbl-summary-post-participant-level 
 #| tbl-cap: Summary Statistics on the Sponsored Post x Participant-Level
-stargazer(summary_2,
-          header = FALSE,
-          type = "html",
-          digits = 3)
+
+# stargazer(summary_2,
+#           header = FALSE,
+#           type = "html",
+#           digits = 3)
+
+# Table 2: Sponsored Post x Participant-Level Summary Statistics
+cols <- c("Position in Feed", "Likes", "Replies", "Seconds in Viewport",
+          "log(Seconds in Viewport)", "Post Height", "Dwell Time")
+
+post_stats <- rbindlist(lapply(cols, function(col) {
+  as.list(calc_stats(summary_2[[col]]))
+}), idcol = "Statistic")
+
+setnames(post_stats, "Statistic", "Statistic")
+post_stats[, Statistic := cols]
+
+# Format second table
+kable(post_stats,
+      format = "html",
+      caption = "Summary Statistics on the Sponsored Post x Participant-Level",
+      align = c('l', 'r', 'r', 'r', 'r', 'r'),
+      digits = 3) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"),
+                full_width = FALSE)
 ```
 
 ##### Position in Feed

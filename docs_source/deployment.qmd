@@ -127,6 +127,6 @@ Performance is a complicated subject since there are many factors that affect pe
 ### General tips
 
 - Upgrade oTree to the latest version
-- With the higher dyno tiers, Heroku provides a "Metrics" tab. Look at "Dyno load". If users are experiencing slow page load times and your your dyno load stays above 1, then you should get a faster dyno. (But don’t run more than 1 web dyno.)
+- With the higher dyno tiers, Heroku provides a "Metrics" tab. Look at "Dyno load". If users are experiencing slow page load times and your dyno load stays above 1, then you should get a faster dyno. (But don’t run more than 1 web dyno.)
 - If your dyno load stays under 1 but page load times are still slow, the bottleneck might be something else like your Postgres database.
 
