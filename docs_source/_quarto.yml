@@ -3,11 +3,11 @@ project:
   output-dir: "../templates/docs/"
 
 book:
-  title: "DICE documentation"
-  # author: "Norah Jones"
-  date: "10/3/2024"
+  title: "DICE Documentation"
+  date: "10/30/2024"
   chapters:
     - index.qmd
+    - cases.qmd
     - stimuli.qmd
     - dice-app.qmd
     - deployment.qmd
@@ -19,6 +19,9 @@ bibliography: references.bib
 format:
   html:
     theme: cosmo
+    execute:
+      echo: false
+      warning: false
   pdf:
     documentclass: scrreprt
 

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>DICE documentation - 3&nbsp; Deploy DICE yourself</title>
+<title>DICE Documentation - 4&nbsp; Deploy DICE yourself</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -133,7 +133,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Deploy DICE yourself</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Deploy DICE yourself</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -146,7 +146,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">DICE documentation</a> 
+      <a href="./">DICE Documentation</a> 
     </div>
       </div>
       <div class="mt-2 flex-shrink-0 align-items-center">
@@ -163,22 +163,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./stimuli.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Stimuli</span></a>
+  <a href="./cases.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Case Studies</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dice-app.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Launch a study</span></a>
+  <a href="./stimuli.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Stimuli</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./deployment.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Deploy DICE yourself</span></a>
+  <a href="./dice-app.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Launch a study</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data</span></a>
+  <a href="./deployment.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Deploy DICE yourself</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -195,17 +200,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites"><span class="toc-section-number">3.1</span>  Prerequisites</a></li>
-  <li><a href="#install-otree" id="toc-install-otree" class="nav-link" data-scroll-target="#install-otree"><span class="toc-section-number">3.2</span>  Install oTree</a></li>
-  <li><a href="#extract-the-provided-otree-project" id="toc-extract-the-provided-otree-project" class="nav-link" data-scroll-target="#extract-the-provided-otree-project"><span class="toc-section-number">3.3</span>  Extract the Provided oTree Project</a></li>
-  <li><a href="#running-the-experiment-locally" id="toc-running-the-experiment-locally" class="nav-link" data-scroll-target="#running-the-experiment-locally"><span class="toc-section-number">3.4</span>  Running the experiment locally</a></li>
-  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting"><span class="toc-section-number">3.5</span>  Troubleshooting</a></li>
-  <li><a href="#server-setup" id="toc-server-setup" class="nav-link" data-scroll-target="#server-setup"><span class="toc-section-number">4</span>  Server setup</a>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites"><span class="toc-section-number">4.1</span>  Prerequisites</a></li>
+  <li><a href="#install-otree" id="toc-install-otree" class="nav-link" data-scroll-target="#install-otree"><span class="toc-section-number">4.2</span>  Install oTree</a></li>
+  <li><a href="#extract-the-provided-otree-project" id="toc-extract-the-provided-otree-project" class="nav-link" data-scroll-target="#extract-the-provided-otree-project"><span class="toc-section-number">4.3</span>  Extract the Provided oTree Project</a></li>
+  <li><a href="#running-the-experiment-locally" id="toc-running-the-experiment-locally" class="nav-link" data-scroll-target="#running-the-experiment-locally"><span class="toc-section-number">4.4</span>  Running the experiment locally</a></li>
+  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting"><span class="toc-section-number">4.5</span>  Troubleshooting</a></li>
+  <li><a href="#server-setup" id="toc-server-setup" class="nav-link" data-scroll-target="#server-setup"><span class="toc-section-number">5</span>  Server setup</a>
   <ul class="collapse">
-  <li><a href="#basic-server-setup-with-heroku" id="toc-basic-server-setup-with-heroku" class="nav-link" data-scroll-target="#basic-server-setup-with-heroku"><span class="toc-section-number">4.1</span>  Basic server setup with <em>Heroku</em></a>
+  <li><a href="#basic-server-setup-with-heroku" id="toc-basic-server-setup-with-heroku" class="nav-link" data-scroll-target="#basic-server-setup-with-heroku"><span class="toc-section-number">5.1</span>  Basic server setup with <em>Heroku</em></a>
   <ul class="collapse">
-  <li><a href="#server-performance" id="toc-server-performance" class="nav-link" data-scroll-target="#server-performance"><span class="toc-section-number">4.1.1</span>  Server performance</a></li>
-  <li><a href="#general-tips" id="toc-general-tips" class="nav-link" data-scroll-target="#general-tips"><span class="toc-section-number">4.1.2</span>  General tips</a></li>
+  <li><a href="#server-performance" id="toc-server-performance" class="nav-link" data-scroll-target="#server-performance"><span class="toc-section-number">5.1.1</span>  Server performance</a></li>
+  <li><a href="#general-tips" id="toc-general-tips" class="nav-link" data-scroll-target="#general-tips"><span class="toc-section-number">5.1.2</span>  General tips</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -216,7 +221,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Deploy DICE yourself</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Deploy DICE yourself</span></h1>
 </div>
 
 
@@ -238,8 +243,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><strong>AI Assistance</strong>: Because of its popularity and well-documented nature, generative AI tools can provide reliable assistance with oTree-related queries.</li>
 </ol>
 <p>Whether you prefer reading documentation, asking the community, or using AI tools, help is always at hand. Hence, we are confident that you’ll have your experiment up and running in no time!</p>
-<section id="prerequisites" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="prerequisites"><span class="header-section-number">3.1</span> Prerequisites</h2>
+<section id="prerequisites" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="prerequisites"><span class="header-section-number">4.1</span> Prerequisites</h2>
 <p>Before you begin, ensure you have the following installed:</p>
 <ol type="1">
 <li><p><strong>Python</strong>: oTree requires Python 3.7 or higher. Download and install Python from <a href="https://www.python.org/downloads/">python.org</a>.</p></li>
@@ -252,13 +257,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ol>
 </section>
-<section id="install-otree" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="install-otree"><span class="header-section-number">3.2</span> Install oTree</h2>
+<section id="install-otree" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="install-otree"><span class="header-section-number">4.2</span> Install oTree</h2>
 <p>Open a command prompt or terminal and run:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install otree</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="extract-the-provided-otree-project" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="extract-the-provided-otree-project"><span class="header-section-number">3.3</span> Extract the Provided oTree Project</h2>
+<section id="extract-the-provided-otree-project" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="extract-the-provided-otree-project"><span class="header-section-number">4.3</span> Extract the Provided oTree Project</h2>
 <p>Create and open a new directory (e.g.&nbsp;<code>my_DICE_experiment</code>) for your experiment (either manually or using the command prompt or terminal):</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> my_DICE_experiment</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> my_DICE_experiment</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -268,8 +273,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This will unpack the experiment such that you can browse and edit its raw files. One of them is called <code>requirements.txt</code>. You can find it in <code>my_DICE_experiment/</code> (or whatever name you chose for your project directory). You should have all the requirements installed but it may not hurt to re-install them using:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="running-the-experiment-locally" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="running-the-experiment-locally"><span class="header-section-number">3.4</span> Running the experiment locally</h2>
+<section id="running-the-experiment-locally" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="running-the-experiment-locally"><span class="header-section-number">4.4</span> Running the experiment locally</h2>
 <p>Run the following command to set up the database:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">otree</span> resetdb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Start the oTree development server:</p>
@@ -278,8 +283,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>http://localhost:8000</code></pre>
 <p>You should see the oTree admin interface.</p>
 </section>
-<section id="troubleshooting" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="troubleshooting"><span class="header-section-number">3.5</span> Troubleshooting</h2>
+<section id="troubleshooting" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="troubleshooting"><span class="header-section-number">4.5</span> Troubleshooting</h2>
 <p>If you encounter any issues while setting up or running the experiment, consider the following:</p>
 <ul>
 <li>If you see any “module not found” errors, make sure all required packages are installed.</li>
@@ -300,8 +305,8 @@ Note
 </div>
 </div>
 </section>
-<section id="server-setup" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Server setup</h1>
+<section id="server-setup" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Server setup</h1>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -322,19 +327,19 @@ Note
 <li>You want to launch your app to users on the internet: Use <em>Heroku.</em></li>
 <li>You want the easiest setup: Again, we recommend <em>Heroku.</em></li>
 </ul>
-<section id="basic-server-setup-with-heroku" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="basic-server-setup-with-heroku"><span class="header-section-number">4.1</span> Basic server setup with <em>Heroku</em></h2>
+<section id="basic-server-setup-with-heroku" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="basic-server-setup-with-heroku"><span class="header-section-number">5.1</span> Basic server setup with <em>Heroku</em></h2>
 <p><a href="https://dashboard.heroku.com/apps">Heroku</a> is a commercial cloud hosting provider. It is the simplest way to deploy oTree.</p>
 <p>The Heroku free plan is sufficient for testing your app, but once you are ready to launch a study, you should upgrade to a paid server, which can handle more traffic. However, Heroku is quite inexpensive, because you only pay for the time you actually use it. If you run a study for only 1 day, you can turn off your dynos and addons, and then you only pay 1/30 of the monthly cost. Often this means you can run a study for just a few dollars.</p>
 <p>To deploy to Heroku, you should use <a href="https://www.otreehub.com/">oTree Hub</a>, which automates your server setup and ensures your server is correctly configured.</p>
 <p>oTree Hub also offers error/performance monitoring.</p>
-<section id="server-performance" class="level3" data-number="4.1.1">
-<h3 data-number="4.1.1" class="anchored" data-anchor-id="server-performance"><span class="header-section-number">4.1.1</span> Server performance</h3>
+<section id="server-performance" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="server-performance"><span class="header-section-number">5.1.1</span> Server performance</h3>
 <p>Heroku offers different performance tiers for resources such as your dyno and database. What tier you need depends on how much traffic your app will get, and how it is coded.</p>
 <p>Performance is a complicated subject since there are many factors that affect performance. oTree Hub’s Pro plan has a “monitor” section that will analyze your logs to identify performance issues.</p>
 </section>
-<section id="general-tips" class="level3" data-number="4.1.2">
-<h3 data-number="4.1.2" class="anchored" data-anchor-id="general-tips"><span class="header-section-number">4.1.2</span> General tips</h3>
+<section id="general-tips" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="general-tips"><span class="header-section-number">5.1.2</span> General tips</h3>
 <ul>
 <li>Upgrade oTree to the latest version</li>
 <li>With the higher dyno tiers, Heroku provides a “Metrics” tab. Look at “Dyno load”. If users are experiencing slow page load times and your your dyno load stays above 1, then you should get a faster dyno. (But don’t run more than 1 web dyno.)</li>
@@ -448,12 +453,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./dice-app.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Launch a study</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Launch a study</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./data.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
