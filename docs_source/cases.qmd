@@ -286,6 +286,36 @@ rc_2 <- sprintf(fmt = "%.2f", 100 * summary_1[, mean(`.. Whoop`)])
 `r rc_2`% (Whoop)
 recalled seeing the sponsored post. Only `r subset[recalled_brand_cued == FALSE, .N, by = participant_label][N == 5, .N]` participants indicated that they did not remember seeing any sponsored post.
 
+@tbl-show-data-1 shows an excerpt of the processed data to illustrate its nested (i.e., "long") structure.
+
+```{r}
+#| label: tbl-show-data-1
+#| tbl-cap: Processed Data Analyzed in Study 1
+
+tmp <- data[,
+            .(`Participant ID` = participant_label,
+              `Post ID` = doc_id,
+              `Sponsored Post` = sponsored,
+              Brand = brand,
+              `Position in Feed` = displayed_sequence,
+              Likes = liked,
+              Replies = hasReply,
+              `Seconds in Viewport` = seconds_in_viewport,
+              `log(Seconds in Viewport)` = log_dwell_time,
+              `Post Height` = height,
+              `Dwell Time` = log_dwell_pixel,
+              Age = age, 
+              Female = female, 
+              Desktop = as.logical(is_desktop),
+              `Recall Apple` = cued_apple, 
+              `Recall Bose` = cued_bose, 
+              `Recall Nintendo` = cued_nintendo, 
+              `Recall Samsung` = cued_samsung, 
+              `Recall Whoop` = cued_whoop)]
+
+kable(tmp[35:45])
+```
+
 
 ### Analysis
 
@@ -474,3 +504,24 @@ Our dataset comprises `r short[, length(unique(participant_label))]` participant
 
 This simplified "short" data structure has two convenient methodological implications. First, because we analyze one observation per participant rather than nested data, we can apply simpler methods such as ordinary least squares (OLS) regressions in our analyses. Second, because we only focus on one sponsored post, we do not need to divide our dwell time measure by the post's height as we did in Case Study 1. Both aspects increase the interpretability of our results.
 
+@tbl-show-data-2 shows an excerpt of the processed data to illustrate its nested (i.e., "long") structure.
+
+```{r}
+#| label: tbl-show-data-2
+#| tbl-cap: Processed Data Analyzed in Study 2
+
+tmp <- short[,
+            .(`Participant ID` = participant_label,
+              `Position in Feed` = 5,
+              Likes = liked,
+              Replies = hasReply,
+              `Seconds in Viewport` = seconds_in_viewport,
+              `Dwell Time` = log_dwell_time,
+              `Brand Attitudes` = brand_attitude,
+              Age = age, 
+              Female = female, 
+              Desktop = as.logical(is_desktop),
+              Recall = klm_uncued_recall)]
+
+kable(tmp[35:45])
+```

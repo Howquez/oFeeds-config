@@ -6,26 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="30b5c7ea-e441-4fbc-8322-3516ac5cd1b3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs_source/_quarto.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docs_source/_quarto.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs_source/references.bib" beforeDir="false" afterPath="$PROJECT_DIR$/docs_source/references.bib" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/sample_feed.csv" beforeDir="false" afterPath="$PROJECT_DIR$/static/sample_feed.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docs/data.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/data.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docs/deployment.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/deployment.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docs/dice-app.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/dice-app.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docs/references.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/references.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs_source/cases.qmd" beforeDir="false" afterPath="$PROJECT_DIR$/docs_source/cases.qmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/docs/cases.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/cases.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/docs/search.json" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/search.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docs/site_libs/bootstrap/bootstrap-icons.css" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/site_libs/bootstrap/bootstrap-icons.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docs/site_libs/bootstrap/bootstrap-icons.woff" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/site_libs/bootstrap/bootstrap-icons.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docs/site_libs/bootstrap/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/site_libs/bootstrap/bootstrap.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docs/site_libs/clipboard/clipboard.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/site_libs/clipboard/clipboard.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docs/site_libs/quarto-html/quarto-syntax-highlighting.css" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/site_libs/quarto-html/quarto-syntax-highlighting.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docs/site_libs/quarto-html/quarto.js" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/site_libs/quarto-html/quarto.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docs/site_libs/quarto-nav/quarto-nav.js" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/site_libs/quarto-nav/quarto-nav.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docs/site_libs/quarto-search/autocomplete.umd.js" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/site_libs/quarto-search/autocomplete.umd.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docs/site_libs/quarto-search/fuse.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/site_libs/quarto-search/fuse.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docs/site_libs/quarto-search/quarto-search.js" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/site_libs/quarto-search/quarto-search.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docs/stimuli.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/stimuli.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +140,7 @@
       <workItem from="1720715890677" duration="209000" />
       <workItem from="1727246874057" duration="923000" />
       <workItem from="1727851279572" duration="9808000" />
-      <workItem from="1729952591856" duration="773000" />
+      <workItem from="1729952591856" duration="1776000" />
     </task>
     <servers />
   </component>
