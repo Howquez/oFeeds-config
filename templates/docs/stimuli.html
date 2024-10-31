@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>DICE Documentation - 2&nbsp; Stimuli</title>
+<title>Documentation - 2&nbsp; Stimuli</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -61,11 +61,11 @@ div.csl-indent {
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "sidebar",
+  "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "start",
-  "type": "textbox",
+  "panel-placement": "end",
+  "type": "overlay",
   "limit": 20,
   "language": {
     "search-no-results-text": "No results",
@@ -83,10 +83,25 @@ div.csl-indent {
 
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="https://www.dice-app.org/" class="navbar-brand navbar-brand-logo">
+    <img src="./dice-logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="https://www.dice-app.org/">
+    <span class="navbar-title">Documentation</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools ms-auto">
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -102,14 +117,9 @@ div.csl-indent {
   </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
-    <div class="sidebar-title mb-0 py-0">
-      <a href="./">DICE Documentation</a> 
-    </div>
-      </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -143,14 +153,14 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./deployment.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Deploy DICE yourself</span></span></a>
+  <a href="./data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data</span></span></a>
+  <a href="./deployment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Deploy DICE yourself</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -169,7 +179,16 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#useful-links" id="toc-useful-links" class="nav-link active" data-scroll-target="#useful-links"><span class="header-section-number">2.1</span> Useful links</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">2.1</span> Overview</a></li>
+  <li><a href="#design-columns" id="toc-design-columns" class="nav-link" data-scroll-target="#design-columns"><span class="header-section-number">2.2</span> Design Columns</a>
+  <ul class="collapse">
+  <li><a href="#conditions" id="toc-conditions" class="nav-link" data-scroll-target="#conditions"><span class="header-section-number">2.2.1</span> Conditions</a></li>
+  <li><a href="#sequences" id="toc-sequences" class="nav-link" data-scroll-target="#sequences"><span class="header-section-number">2.2.2</span> Sequences</a></li>
+  <li><a href="#threads" id="toc-threads" class="nav-link" data-scroll-target="#threads"><span class="header-section-number">2.2.3</span> Threads</a></li>
+  </ul></li>
+  <li><a href="#video" id="toc-video" class="nav-link" data-scroll-target="#video"><span class="header-section-number">2.3</span> Video</a></li>
+  <li><a href="#best-practices" id="toc-best-practices" class="nav-link" data-scroll-target="#best-practices"><span class="header-section-number">2.4</span> Best Practices</a></li>
+  <li><a href="#useful-links" id="toc-useful-links" class="nav-link" data-scroll-target="#useful-links"><span class="header-section-number">2.5</span> Useful Links</a></li>
   </ul>
 </nav>
     </div>
@@ -193,17 +212,197 @@ div.csl-indent {
 
 </header>
 
-<p>This section describes how to generate a feed’s content.</p>
+<p>The DICE app was designed to fit into a consumer researcher’s typical workflow where participants are recruited (e.g., via Prolific) before they are exposed to stimuli and survey items (e.g., in Qualtrics). The key procedural difference in using the DICE app (compared to software such as Adobe Photoshop or Microsoft Powerpoint) is that the stimuli are not configured graphically but tabularly: the DICE app requires researchers to configure a csv file that provides information on each post, such as the actual content, engagement metrics, and the corresponding username. The app then loops through that file (while filtering for conditions) to display each row as a separate post embedded in an interactive feed. The advantage of this procedural difference is that while it requires the same amount of information as the graphical configuration, it is less time consuming and less error prone because the software handles the graphical representation consistently. In addition, the tabular configuration is more accessible as researchers are trained to work with csv, as opposed to Photoshop files.</p>
+<section id="overview" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">2.1</span> Overview</h2>
+<p><a href="https://www.dice-app.org/static/sample_feed.csv">Here</a>, we provide a configuration csv file that serves as a template for researchers who configure their first set of stimuli. In <a href="#tbl-template">Table&nbsp;<span>2.1</span></a>, we display and describe an exemplary row of this template containing social media posts on the Yosemite National Park in California. The first column in <a href="#tbl-template">Table&nbsp;<span>2.1</span></a> describes a configuration column’s scope, that is, whether it defines how, when and to whom a post is displayed (<code>design</code>), contains a post’s actual content or engagement metrics such as the number of likes the post has received (<code>post</code>), or whether it describes a post’s author (<code>user</code>). The second column lists all of the input csv file’s required configuration columns.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> We then describe the configuration columns’ data types, provide examplary values, and describe them in more detail.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-template" class="anchored">
+<table class="table table-sm table-striped small">
+<caption>Table&nbsp;2.1: Description of Input csv File</caption>
+<colgroup>
+<col style="width: 2%">
+<col style="width: 6%">
+<col style="width: 2%">
+<col style="width: 26%">
+<col style="width: 61%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Scope</th>
+<th style="text-align: left;">Column</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Example</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">design</td>
+<td style="text-align: left;">condition</td>
+<td style="text-align: left;">text</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">Unique identifier for the condition (e.g., group A or B). The app will create the same number of conditions and randomly assign participants to them.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">design</td>
+<td style="text-align: left;">sequence</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Defines the order in which posts are displayed (ascending). If missing, random integers will be assigned, leading to between-subject randomization.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">design</td>
+<td style="text-align: left;">commented_post</td>
+<td style="text-align: left;">boolean</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">If 1, this post will be displayed at the top of the feed while all other posts are displayed as comments of this post.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">post</td>
+<td style="text-align: left;">doc_id</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Unique identifier for each post in each condition.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">post</td>
+<td style="text-align: left;">datetime</td>
+<td style="text-align: left;">text</td>
+<td style="text-align: left;">01.03.22 06:00</td>
+<td style="text-align: left;">The time a post was published, formatted as dd.mm.yyyy hh:mm:ss.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">post</td>
+<td style="text-align: left;">text</td>
+<td style="text-align: left;">text</td>
+<td style="text-align: left;">Just experienced the most incredible sunrise… #Yosemite #NatureLovers</td>
+<td style="text-align: left;">Content of the post. Can contain hashtags, emojis, and URLs.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">post</td>
+<td style="text-align: left;">media</td>
+<td style="text-align: left;">text</td>
+<td style="text-align: left;">https://images.unsplash.com/photo-1472396961693…</td>
+<td style="text-align: left;">URL to a publicly available image or GIF. We recommend using compressed formats like .webp or hosting images on platforms such as Unsplash or GitHub.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">post</td>
+<td style="text-align: left;">alt_text</td>
+<td style="text-align: left;">text</td>
+<td style="text-align: left;">Sunset illuminates Half Dome…</td>
+<td style="text-align: left;">Optional description of the media element for accessibility purposes.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">post</td>
+<td style="text-align: left;">likes</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">15</td>
+<td style="text-align: left;">Number of likes the post has received.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">post</td>
+<td style="text-align: left;">reposts</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">Number of reposts the post has received.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">post</td>
+<td style="text-align: left;">replies</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">Number of replies the post has received.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">post</td>
+<td style="text-align: left;">sponsored</td>
+<td style="text-align: left;">boolean</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">If 1, the post will be displayed as a sponsored post.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">post</td>
+<td style="text-align: left;">target</td>
+<td style="text-align: left;">text</td>
+<td style="text-align: left;">https://example.com</td>
+<td style="text-align: left;">URL of the landing page for sponsored posts. If sponsored = 1, this URL will be displayed as the target for the advertisement.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">user</td>
+<td style="text-align: left;">username</td>
+<td style="text-align: left;">text</td>
+<td style="text-align: left;">NatureFanatic</td>
+<td style="text-align: left;">The username of the post’s author.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">user</td>
+<td style="text-align: left;">handle</td>
+<td style="text-align: left;">text</td>
+<td style="text-align: left;">NatureFanatic88</td>
+<td style="text-align: left;">The handle of the post’s author, automatically prefixed by an @ symbol.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">user</td>
+<td style="text-align: left;">user_description</td>
+<td style="text-align: left;">text</td>
+<td style="text-align: left;">Lover of all things nature…</td>
+<td style="text-align: left;">A brief description or bio of the user, displayed when hovering over the user’s profile.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">user</td>
+<td style="text-align: left;">user_image</td>
+<td style="text-align: left;">text</td>
+<td style="text-align: left;">https://images.unsplash.com/photo-1522506209496…</td>
+<td style="text-align: left;">URL to the user’s profile picture. Similar to media, we recommend using stock images or hosting them on platforms such as GitHub, preferably in compressed formats.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">user</td>
+<td style="text-align: left;">user_followers</td>
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">4523</td>
+<td style="text-align: left;">Number of followers the user has.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="design-columns" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="design-columns"><span class="header-section-number">2.2</span> Design Columns</h2>
+<p>Before <a href="#fig-tutorial-1">Video&nbsp;<span>2.1</span></a> describes the columns in more detail, we focus on the design columns and describe how researchers can configure them to implement their experimental designs.</p>
+<section id="conditions" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="conditions"><span class="header-section-number">2.2.1</span> Conditions</h3>
+<p>Researchers can leverage the <code>condition</code> configuration column to set up between-subjects designs by assigning the respective rows with N different values (e.g., “treatment 1”, “treatment 2”, …, “treatment N”). The DICE app will then count the number on unique values and create N different treatment groups. When launching a study, participants will then be assigned to these groups randomly and uniformly such that the group sizes do not differ in expectation. In case study 2, we show how we leveraged this variable to create two conditions that contain two different sets of nineteen organic posts but share the same sponsored post. As each row can only be assigned to one condition, this required us to enter the sponsored post twice within the configuration file: both versions contained the same post and user configurations and only differed with respect to their <code>condition</code>. Similarly, if researchers want to display the same set of organic posts in N conditions, then they have to enter N copies of that set of posts and adjust the <code>condition</code> column accordingly.</p>
+</section>
+<section id="sequences" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="sequences"><span class="header-section-number">2.2.2</span> Sequences</h3>
+<p>Another important configuration column is <code>sequence</code>. It defines the order in which posts are displayed and gives researchers control over the order in which posts are displayed. Explicit sequences can be useful to study ordering and ranking of social media posts. Researchers can, for instance, use the user interactions measured in a previous study to rank the by engagement to approximate a platform’s recommender systems. Importantly, this column is special as the DICE app replaces missing values with random numbers for each participant individually. This is a feature we leveraged in both of our case studies: in case study 2, we only defined the sequence of the sponsored post such that it was always displayed in fifth position. The <code>sequence</code> configuration column was not assigned to any of the organic posts. Hence, each participant experienced a different sequence of organic posts. In case study 1, we left that <code>sequence</code> column empty for every post to randomize the order of both sponsored and organic posts. This resulted in a diverse set of sequences that we exploited to study primacy effects in ad recall.</p>
+</section>
+<section id="threads" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="threads"><span class="header-section-number">2.2.3</span> Threads</h3>
+<p>Finally, the <code>commented_post</code> configuration column is interesting for researches who want to investigate discussions as it changes the social media feed’s appearance slightly. If one post is assigned to a <code>1</code> in this column, this post will serve as a “parent post” whereas all other posts will be displayed a comments of that parent post.</p>
+</section>
+</section>
+<section id="video" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="video"><span class="header-section-number">2.3</span> Video</h2>
+<p>Here, we describe the configuration of the stimuli we used in our <a href="./cases.html#sec-brand-safety-case">brand safety case study</a> (see <a href="cases.html#sec-brand-safety-case"><span>Section&nbsp;1.2</span></a>) in detail.</p>
 <div id="fig-tutorial-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/lx_akVasq7I" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 <figcaption class="figure-caption">Figure&nbsp;2.1: DICE: csv file configuration</figcaption>
 </figure>
 </div>
-<section id="useful-links" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="useful-links"><span class="header-section-number">2.1</span> Useful links</h2>
+</section>
+<section id="best-practices" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="best-practices"><span class="header-section-number">2.4</span> Best Practices</h2>
+<p>You will likely create your own images. To include them in your feed, you need to host them somewhere publicly. We usually use Github for these purposes. We learnt that it makes a lot of sense to compress the images you are using such that your stimuli are less affected by slow internet connections on your participants’ side. In addition, it helps to use an image format that is optimized for web usage. We made good experiences with the <a href="https://developers.google.com/speed/webp">.webp</a> format. There are many <a href="https://cloudconvert.com/webp-converter">online converters</a> and even <a href="https://pillow.readthedocs.io/en/stable/reference/Image.html">python modules</a> available.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+</section>
+<section id="useful-links" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="useful-links"><span class="header-section-number">2.5</span> Useful Links</h2>
 <p>We created a set of synthetic users, where we matched <a href="https://www.usna.edu/Users/cs/nchamber/data/twitternames/">actual usernames and handles</a> <span class="citation" data-cites="McKelveyEtAl_2017">(see <a href="references.html#ref-McKelveyEtAl_2017" role="doc-biblioref">McKelvey et al. 2017</a>)</span> with stock images (from <a href="https://unsplash.com/">unsplash.com</a>) and some synthetic, LLM-generated information. In addition, there are web sources available. Visit our Github repository for more information (url will be provided after review). Also see <a href="https://generated.photos/datasets/academic">generated.photos</a> and their academic data for user images and <a href="https://www.behindthename.com/random/">behindthename.com</a> for user names.</p>
-<p>You will likely create your own images. To include them in your feed, you need to host them somewhere publicly. We usually use Github for these purposes. We learnt that it makes a lot of sense to compress the images you are using such that your stimuli are less affected by slow internet connections on your participants’ side. In addition, it helps to use an image format that is optimized for web usage. We made good experiences with the <a href="https://developers.google.com/speed/webp">.webp</a> format. There are many <a href="https://cloudconvert.com/webp-converter">online converters</a> and even <a href="https://pillow.readthedocs.io/en/stable/reference/Image.html">python modules</a> available.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
@@ -215,7 +414,8 @@ McKelvey, Kevin, Peter Goutzounis, Stephen da Cruz, and Nathanael Chambers. 2017
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>See our repository (url provided after review) for more details on the technical implementation.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Researchers can change the order of these columns as they want. In addition, they can add additional columns for internal purposes. We recommend, to document a post’s source (i.e., a url) if a post was scraped or copied from social media or an ad library.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>See our repository (url provided after review) for more details on the technical implementation.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

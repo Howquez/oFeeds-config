@@ -1,6 +1,60 @@
 # Stimuli
 
-This section describes how to generate a feed's content.
+```{r install_packages}
+#| warning: false
+#| output: false
+
+options(repos = c(CRAN = "https://cran.r-project.org")) 
+
+
+if (!requireNamespace("groundhog", quietly = TRUE)) {
+    install.packages("groundhog")
+    library("groundhog")
+}
+
+pkgs <- c("magrittr", "data.table", "knitr", "kableExtra", "stringr")
+
+groundhog::groundhog.library(pkg = pkgs,
+                             date = "2024-10-01")
+
+rm(pkgs)
+```
+
+The DICE app was designed to fit into a consumer researcher's typical workflow where participants are recruited (e.g., via Prolific) before they are exposed to stimuli and survey items (e.g., in Qualtrics). The key procedural difference in using the DICE app (compared to software such as Adobe Photoshop or Microsoft Powerpoint) is that the stimuli are not configured graphically but tabularly: the DICE app requires researchers to configure a csv file that provides information on each post, such as the actual content, engagement metrics, and the corresponding username. The app then loops through that file (while filtering for conditions) to display each row as a separate post embedded in an interactive feed. The advantage of this procedural difference is that while it requires the same amount of information as the graphical configuration, it is less time consuming and less error prone because the software handles the graphical representation consistently. In addition, the tabular configuration is more accessible as researchers are trained to work with csv, as opposed to Photoshop files. 
+
+## Overview
+
+[Here](https://www.dice-app.org/static/sample_feed.csv), we provide a configuration csv file that serves as a template for researchers who configure their first set of stimuli. In @tbl-template, we display and describe an exemplary row of this template containing social media posts on the Yosemite National Park in California. The first column in @tbl-template describes a configuration column's scope, that is, whether it defines how, when and to whom a post is displayed (`design`), contains a post's actual content or engagement metrics such as the number of likes the post has received (`post`), or whether it describes a post's author (`user`). The second column lists all of the input csv file's required configuration columns.^[Researchers can change the order of these columns as they want. In addition, they can add additional columns for internal purposes. We recommend, to document a post's source (i.e., a url) if a post was scraped or copied from social media or an ad library.] We then describe the configuration columns' data types, provide examplary values, and describe them in more detail.
+
+```{r}
+#| warning: false
+#| label: tbl-template 
+#| tbl-cap: Description of Input csv File
+
+input  <- data.table::fread(file = "input_data.csv")
+
+kable(input)
+```
+
+## Design Columns
+
+Before [Video @fig-tutorial-1] describes the columns in more detail, we focus on the design columns and describe how researchers can configure them to implement their experimental designs.
+
+### Conditions
+
+Researchers can leverage the `condition` configuration column to set up between-subjects designs by assigning the respective rows with N different values (e.g., "treatment 1", "treatment 2", ..., "treatment N"). The DICE app will then count the number on unique values and create N different treatment groups. When launching a study, participants will then be assigned to these groups randomly and uniformly such that the group sizes do not differ in expectation. In case study 2, we show how we leveraged this variable to create two conditions that contain two different sets of nineteen organic posts but share the same sponsored post. As each row can only be assigned to one condition, this required us to enter the sponsored post twice within the configuration file: both versions contained the same post and user configurations and only differed with respect to their `condition`. Similarly, if researchers want to display the same set of organic posts in N conditions, then they have to enter N copies of that set of posts and adjust the `condition` column accordingly. 
+
+### Sequences
+
+Another important configuration column is `sequence`. It defines the order in which posts are displayed and gives researchers control over the order in which posts are displayed. Explicit sequences can be useful to study ordering and ranking of social media posts. Researchers can, for instance, use the user interactions measured in a previous study to rank the by engagement to approximate a platform's recommender systems. Importantly, this column is special as the DICE app replaces missing values with random numbers for each participant individually. This is a feature we leveraged in both of our case studies: in case study 2, we only defined the sequence of the sponsored post such that it was always displayed in fifth position. The `sequence` configuration column was not assigned to any of the organic posts. Hence, each participant experienced a different sequence of organic posts. In case study 1, we left that `sequence` column empty for every post to randomize the order of both sponsored and organic posts. This resulted in a diverse set of sequences that we exploited to study primacy effects in ad recall.
+
+### Threads
+
+Finally, the `commented_post` configuration column is interesting for researches who want to investigate discussions as it changes the social media feed's appearance slightly. If one post is assigned to a `1` in this column, this post will serve as a "parent post" whereas all other posts will be displayed a comments of that parent post.
+
+## Video
+
+Here, we describe the configuration of the stimuli we used in our [brand safety case study](cases.qmd#sec-brand-safety-case)  (see  @sec-brand-safety-case) in detail.
 
 ::: {#fig-tutorial-1}
 
@@ -10,8 +64,10 @@ DICE: csv file configuration
 
 :::
 
-## Useful links
-
-We created a set of synthetic users, where we matched [actual usernames and handles](https://www.usna.edu/Users/cs/nchamber/data/twitternames/) [see @McKelveyEtAl_2017] with stock images (from [unsplash.com](https://unsplash.com/)) and some synthetic, LLM-generated information. In addition, there are web sources available. Visit our Github repository for more information (url will be provided after review). Also see [generated.photos](https://generated.photos/datasets/academic) and their academic data for user images and [behindthename.com](https://www.behindthename.com/random/) for user names. 
+## Best Practices
 
 You will likely create your own images. To include them in your feed, you need to host them somewhere publicly. We usually use Github for these purposes. We learnt that it makes a lot of sense to compress the images you are using such that your stimuli are less affected by slow internet connections on your participants' side. In addition, it helps to use an image format that is optimized for web usage. We made good experiences with the [.webp](https://developers.google.com/speed/webp) format. There are many [online converters](https://cloudconvert.com/webp-converter) and even [python modules](https://pillow.readthedocs.io/en/stable/reference/Image.html) available.^[See our repository (url provided after review) for more details on the technical implementation.]
+
+## Useful Links
+
+We created a set of synthetic users, where we matched [actual usernames and handles](https://www.usna.edu/Users/cs/nchamber/data/twitternames/) [see @McKelveyEtAl_2017] with stock images (from [unsplash.com](https://unsplash.com/)) and some synthetic, LLM-generated information. In addition, there are web sources available. Visit our Github repository for more information (url will be provided after review). Also see [generated.photos](https://generated.photos/datasets/academic) and their academic data for user images and [behindthename.com](https://www.behindthename.com/random/) for user names. 

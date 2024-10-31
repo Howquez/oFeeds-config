@@ -1,4 +1,58 @@
 # Data
 
-We created the [shiny-app](https://dice-app.shinyapps.io/DICE-Preprocessing/) to pre-process the raw data which is tabular but also contains columns with JSON data.
+```{r install_packages}
+#| warning: false
+#| output: false
+
+options(repos = c(CRAN = "https://cran.r-project.org")) 
+
+
+if (!requireNamespace("groundhog", quietly = TRUE)) {
+    install.packages("groundhog")
+    library("groundhog")
+}
+
+pkgs <- c("magrittr", "data.table", "knitr", "kableExtra", "stringr")
+
+groundhog::groundhog.library(pkg = pkgs,
+                             date = "2024-10-01")
+
+rm(pkgs)
+```
+
+We created the [shiny-app](https://dice-app.shinyapps.io/DICE-Preprocessing/) to pre-process the raw data (which is tabular but also contains columns with JSON formatted data to describe the participants$\times$post-level observations).
+
+The shiny-app requires you to upload your raw DICE data and transforms its wide to a long format. It then provides a download-button. Below, we show both the raw (wide) as well as the processed (long) data of [Case Study 1](cases.qmd#sec-positioning-case). Doing so, we anonymize the Prolific IDs (called participant labels).
+
+## Processed Data
+
+```{r read_data}
+
+raw <- fread(file = "../../oFeeds/studies/meme_feed/data/raw/all_apps_wide_2024-10-15.csv", 
+             na.strings = "",
+             nrows = 7)
+participants_in_raw_data <- raw[, unique(participant.label)]
+
+processed <- fread(file = "../../oFeeds/studies/meme_feed/data/raw/DICE-processed-2024-10-15.csv", 
+                   na.strings = "")[participant_label %in% participants_in_raw_data]
+```
+
+```{r processed_data}
+
+processed[, participant_label := str_trunc(string = participant_label, width = 8, side = "left")]
+setorder(x = processed, participant_label)
+
+kable(processed[35:45])
+```
+
+## Raw Data
+
+```{r raw_data}
+
+raw[, participant.label := str_trunc(string = participant.label, width = 8, side = "left")]
+raw[, participant.tweets := NULL]
+setorder(x = raw, participant.label)
+kable(raw[1:2])
+```
+
 

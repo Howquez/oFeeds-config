@@ -3,16 +3,19 @@ project:
   output-dir: "../templates/docs/"
 
 book:
-  title: "DICE Documentation"
+  title: "Documentation"
   date: "10/30/2024"
   chapters:
     - index.qmd
     - cases.qmd
     - stimuli.qmd
     - dice-app.qmd
-    - deployment.qmd
     - data.qmd
+    - deployment.qmd
     - references.qmd
+  navbar: 
+    logo: "dice-logo.png"
+    logo-href: https://www.dice-app.org/
 
 bibliography: references.bib
 

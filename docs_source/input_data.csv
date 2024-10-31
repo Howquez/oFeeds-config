@@ -1,0 +1,19 @@
+Scope	Column	Type	Example	Description
+design	condition	text	A	Unique identifier for the condition (e.g., group A or B). The app will create the same number of conditions and randomly assign participants to them.
+design	sequence	numeric	1	Defines the order in which posts are displayed (ascending). If missing, random integers will be assigned, leading to between-subject randomization.
+design	commented_post	boolean	0	If 1, this post will be displayed at the top of the feed while all other posts are displayed as comments of this post.
+post	doc_id	numeric	1	Unique identifier for each post in each condition.
+post	datetime	text	01.03.22 06:00	The time a post was published, formatted as dd.mm.yyyy hh:mm:ss.
+post	text	text	Just experienced the most incredible sunrise... #Yosemite #NatureLovers	Content of the post. Can contain hashtags, emojis, and URLs.
+post	media	text	https://images.unsplash.com/photo-1472396961693...	URL to a publicly available image or GIF. We recommend using compressed formats like .webp or hosting images on platforms such as Unsplash or GitHub.
+post	alt_text	text	Sunset illuminates Half Dome...	Optional description of the media element for accessibility purposes.
+post	likes	numeric	15	Number of likes the post has received.
+post	reposts	numeric	6	Number of reposts the post has received.
+post	replies	numeric	2	Number of replies the post has received.
+post	sponsored	boolean	0	If 1, the post will be displayed as a sponsored post.
+post	target	text	https://example.com	URL of the landing page for sponsored posts. If sponsored = 1, this URL will be displayed as the target for the advertisement.
+user	username	text	NatureFanatic	The username of the post's author.
+user	handle	text	NatureFanatic88	The handle of the post's author, automatically prefixed by an @ symbol.
+user	user_description	text	Lover of all things nature...	A brief description or bio of the user, displayed when hovering over the user's profile.
+user	user_image	text	https://images.unsplash.com/photo-1522506209496...	URL to the user's profile picture. Similar to media, we recommend using stock images or hosting them on platforms such as GitHub, preferably in compressed formats.
+user	user_followers	numeric	4523	Number of followers the user has.

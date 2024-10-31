@@ -1,6 +1,6 @@
 # Case Studies
 
-## Case Study 1: When Do Users Remember Ads? Dwell Time Outperforms Position in Explaining Recall
+## Case Study 1: When Do Users Remember Ads? Dwell Time Outperforms Position in Explaining Recall {#sec-positioning-case}
 
 ```{r install_packages}
 #| warning: false
@@ -384,7 +384,7 @@ The random participant effects $u_i$ are justified by the experimental design, a
 
 
 
-## Case Study 2: When Does Context Harm Brands? Manipulating Feed Composition to Study Brand Safety
+## Case Study 2: When Does Context Harm Brands? Manipulating Feed Composition to Study Brand Safety {#sec-brand-safety-case}
 
 
 ```{r read_brazil_data}
