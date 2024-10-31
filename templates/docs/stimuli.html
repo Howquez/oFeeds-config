@@ -186,9 +186,16 @@ div.csl-indent {
   <li><a href="#sequences" id="toc-sequences" class="nav-link" data-scroll-target="#sequences"><span class="header-section-number">2.2.2</span> Sequences</a></li>
   <li><a href="#threads" id="toc-threads" class="nav-link" data-scroll-target="#threads"><span class="header-section-number">2.2.3</span> Threads</a></li>
   </ul></li>
-  <li><a href="#video" id="toc-video" class="nav-link" data-scroll-target="#video"><span class="header-section-number">2.3</span> Video</a></li>
-  <li><a href="#best-practices" id="toc-best-practices" class="nav-link" data-scroll-target="#best-practices"><span class="header-section-number">2.4</span> Best Practices</a></li>
-  <li><a href="#useful-links" id="toc-useful-links" class="nav-link" data-scroll-target="#useful-links"><span class="header-section-number">2.5</span> Useful Links</a></li>
+  <li><a href="#image-requirements" id="toc-image-requirements" class="nav-link" data-scroll-target="#image-requirements"><span class="header-section-number">2.3</span> Image Requirements</a>
+  <ul class="collapse">
+  <li><a href="#hosting-your-own-images" id="toc-hosting-your-own-images" class="nav-link" data-scroll-target="#hosting-your-own-images"><span class="header-section-number">2.3.1</span> Hosting Your Own Images</a></li>
+  <li><a href="#getting-raw-image-urls" id="toc-getting-raw-image-urls" class="nav-link" data-scroll-target="#getting-raw-image-urls"><span class="header-section-number">2.3.2</span> Getting Raw Image URLs</a></li>
+  <li><a href="#verifying-your-urls" id="toc-verifying-your-urls" class="nav-link" data-scroll-target="#verifying-your-urls"><span class="header-section-number">2.3.3</span> Verifying Your URLs</a></li>
+  </ul></li>
+  <li><a href="#manual" id="toc-manual" class="nav-link" data-scroll-target="#manual"><span class="header-section-number">2.4</span> Manual</a></li>
+  <li><a href="#best-practices" id="toc-best-practices" class="nav-link" data-scroll-target="#best-practices"><span class="header-section-number">2.5</span> Best Practices</a></li>
+  <li><a href="#archiving-for-review" id="toc-archiving-for-review" class="nav-link" data-scroll-target="#archiving-for-review"><span class="header-section-number">2.6</span> Archiving for Review</a></li>
+  <li><a href="#useful-links" id="toc-useful-links" class="nav-link" data-scroll-target="#useful-links"><span class="header-section-number">2.7</span> Useful Links</a></li>
   </ul>
 </nav>
     </div>
@@ -386,8 +393,25 @@ div.csl-indent {
 <p>Finally, the <code>commented_post</code> configuration column is interesting for researches who want to investigate discussions as it changes the social media feed’s appearance slightly. If one post is assigned to a <code>1</code> in this column, this post will serve as a “parent post” whereas all other posts will be displayed a comments of that parent post.</p>
 </section>
 </section>
-<section id="video" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="video"><span class="header-section-number">2.3</span> Video</h2>
+<section id="image-requirements" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="image-requirements"><span class="header-section-number">2.3</span> Image Requirements</h2>
+<p>The DICE app does not host images directly. Instead, you must provide direct links (raw URLs) to your images hosted elsewhere. These URLs should point directly to the image file itself, not to a webpage containing the image.</p>
+<p>What is a Raw Image URL? A raw image URL points directly to the image file and typically ends with a file extension like <code>.jpg</code>, <code>.png</code>, <code>.gif</code>, or preferably <code>.webp</code>. These URLs provide direct access to the image file without any surrounding webpage elements. For instance, a raw GitHub image URL might look like <code>https://raw.githubusercontent.com/username/repository/main/images/example.jpg</code>, while an Imgur URL might be <code>https://i.imgur.com/abcd123.png</code>, and a Giphy URL could be <code>https://media.giphy.com/media/abc123/giphy.gif</code>.</p>
+<section id="hosting-your-own-images" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="hosting-your-own-images"><span class="header-section-number">2.3.1</span> Hosting Your Own Images</h3>
+<p>Several platforms can host your images for use with DICE. GitHub offers a straightforward approach: upload images to a public repository and use the raw URL that starts with <code>raw.githubusercontent.com</code>. Imgur provides another popular option as an image hosting service that readily provides direct image links. Cloud storage services like AWS S3 or Google Cloud Storage can also work well, though you’ll need to ensure public access is enabled.</p>
+</section>
+<section id="getting-raw-image-urls" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="getting-raw-image-urls"><span class="header-section-number">2.3.2</span> Getting Raw Image URLs</h3>
+<p>The process of obtaining a raw URL varies by platform. On GitHub, navigate to your uploaded image and click the “Raw” button - the resulting URL in your browser will start with raw.githubusercontent.com. When using services like Imgur, you can usually right-click on the uploaded image and select “Copy image address” or a similar option. The key is ensuring your URL ends with an image extension (<code>.jpg</code>, <code>.png</code>, etc.).</p>
+</section>
+<section id="verifying-your-urls" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="verifying-your-urls"><span class="header-section-number">2.3.3</span> Verifying Your URLs</h3>
+<p>You can easily test whether your image URL is correct by pasting it directly into a browser’s address bar. If the browser shows only the image itself, without any surrounding webpage elements, the URL is suitable for use with DICE. This simple verification step can save time troubleshooting later.</p>
+</section>
+</section>
+<section id="manual" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="manual"><span class="header-section-number">2.4</span> Manual</h2>
 <p>Here, we describe the configuration of the stimuli we used in our <a href="./cases.html#sec-brand-safety-case">brand safety case study</a> (see <a href="cases.html#sec-brand-safety-case"><span>Section&nbsp;1.2</span></a>) in detail.</p>
 <div id="fig-tutorial-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -396,12 +420,19 @@ div.csl-indent {
 </figure>
 </div>
 </section>
-<section id="best-practices" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="best-practices"><span class="header-section-number">2.4</span> Best Practices</h2>
-<p>You will likely create your own images. To include them in your feed, you need to host them somewhere publicly. We usually use Github for these purposes. We learnt that it makes a lot of sense to compress the images you are using such that your stimuli are less affected by slow internet connections on your participants’ side. In addition, it helps to use an image format that is optimized for web usage. We made good experiences with the <a href="https://developers.google.com/speed/webp">.webp</a> format. There are many <a href="https://cloudconvert.com/webp-converter">online converters</a> and even <a href="https://pillow.readthedocs.io/en/stable/reference/Image.html">python modules</a> available.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<section id="best-practices" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="best-practices"><span class="header-section-number">2.5</span> Best Practices</h2>
+<p>Image optimization plays a crucial role in your study’s performance. Compressing your images before hosting them ensures faster loading times for participants. Web-optimized formats like <a href="https://developers.google.com/speed/webp">.webp</a> often provide the best balance of quality and performance. There are many <a href="https://cloudconvert.com/webp-converter">online converters</a> and even <a href="https://pillow.readthedocs.io/en/stable/reference/Image.html">python modules</a> available.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>It’s crucial to understand that directly linking to images from social media platforms like X (formerly Twitter) may lead to problems: if a user updates their profile picture or deletes a post, the image URL will break and your study’s stimuli will be incomplete. Instead, download any images you want to use from social media and host them on a platform you control, such as GitHub. This ensures your stimuli remain stable throughout your study’s duration.</p>
+<p>Remember to maintain a backup of all images and verify that your image URLs remain publicly accessible throughout your research period. This approach provides the most reliable way to ensure your study’s integrity over time.</p>
+<p>You will likely create your own images. To include them in your feed, you need to host them somewhere publicly. We usually use Github for these purposes. We learnt that it makes a lot of sense to compress the images you are using such that your stimuli are less affected by slow internet connections on your participants’ side. In addition, it helps to use an image format that is optimized for web usage. We made good experiences with the <a href="https://developers.google.com/speed/webp">.webp</a> format.</p>
 </section>
-<section id="useful-links" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="useful-links"><span class="header-section-number">2.5</span> Useful Links</h2>
+<section id="archiving-for-review" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="archiving-for-review"><span class="header-section-number">2.6</span> Archiving for Review</h2>
+<p>For academic documentation and review purposes, it’s valuable to create permanent archives of your experimental feeds. Services like <a href="https://perma.cc/">perma.cc</a> or the <a href="https://archive.org/">Internet Archive’s Wayback Machine</a> can capture and preserve your feeds exactly as they appeared during the study. These archives serve as reliable references for reviewers and future researchers, ensuring that your experimental stimuli remain accessible even if the original hosting platforms change or links break over time. When writing up your research, you can include these permanent archive links in your methodology section or supplementary materials.</p>
+</section>
+<section id="useful-links" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="useful-links"><span class="header-section-number">2.7</span> Useful Links</h2>
 <p>We created a set of synthetic users, where we matched <a href="https://www.usna.edu/Users/cs/nchamber/data/twitternames/">actual usernames and handles</a> <span class="citation" data-cites="McKelveyEtAl_2017">(see <a href="references.html#ref-McKelveyEtAl_2017" role="doc-biblioref">McKelvey et al. 2017</a>)</span> with stock images (from <a href="https://unsplash.com/">unsplash.com</a>) and some synthetic, LLM-generated information. In addition, there are web sources available. Visit our Github repository for more information (url will be provided after review). Also see <a href="https://generated.photos/datasets/academic">generated.photos</a> and their academic data for user images and <a href="https://www.behindthename.com/random/">behindthename.com</a> for user names.</p>
 
 
