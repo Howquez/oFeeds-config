@@ -1,4 +1,4 @@
-# Data
+# Data {#sec-data}
 
 ```{r install_packages}
 #| warning: false
@@ -20,11 +20,10 @@ groundhog::groundhog.library(pkg = pkgs,
 rm(pkgs)
 ```
 
-We created the [shiny-app](https://dice-app.shinyapps.io/DICE-Preprocessing/) to pre-process the raw data (which is tabular but also contains columns with JSON formatted data to describe the participants$\times$post-level observations).
+We created the [shiny-app](https://dice-app.shinyapps.io/DICE-Preprocessing/) to pre-process the raw data (which is tabular but also contains columns with JSON formatted data to describe the participant$\times$post-level observations).
 
-The shiny-app requires you to upload your raw DICE data and transforms its wide to a long format. It then provides a download-button. Below, we show both the raw (wide) as well as the processed (long) data of [Case Study 1](cases.qmd#sec-positioning-case). Doing so, we anonymize the Prolific IDs (called participant labels).
+The shiny-app requires you to upload your raw DICE data and transforms its wide to a long format. It then provides a download-button. Below, we briefly describe the raw data before we turn our attention to the output of the shiny-app, that is, the processed data. In both sections, we use the data collected in [Case Study 1](cases.qmd#sec-positioning-case) and anonymize the Prolific IDs (called participant labels).
 
-## Processed Data
 
 ```{r read_data}
 
@@ -37,17 +36,15 @@ processed <- fread(file = "../../oFeeds/studies/meme_feed/data/raw/DICE-processe
                    na.strings = "")[participant_label %in% participants_in_raw_data]
 ```
 
-```{r processed_data}
-
-processed[, participant_label := str_trunc(string = participant_label, width = 8, side = "left")]
-setorder(x = processed, participant_label)
-
-kable(processed[35:45])
-```
-
 ## Raw Data
 
+While creating an experimental session, the DICE web app returns session code such as `r5fbdbr1`, for instance. It will also create a url containing that session code (e.g., `https://ibt-hsg.herokuapp.com/SessionStartLinks/r5fbdbr1`) directing you to yout [oTree interface](https://otree.readthedocs.io/en/latest/admin.html), where you can monitor the session or download the data. After clicking on the `Data` tab, you can download her raw data by clicking on the `Plain` button in the bottom right of her screen. This will generate a csv file called `all_apps_wide_YYYY-MM-DD.csv`.
+
+This data follows oTree's [conventions](https://otree.readthedocs.io/en/latest/conceptual_overview.html#object-hierarchy) as displayed in @tbl-raw.^[In @tbl-raw, we removed a column called `participant.tweets` as it reports all the information displayed in the feed for every participant. We would advise you to delete that column too as it decreases the file size considerably (if you work with long feeds).] 
+
 ```{r raw_data}
+#| label: tbl-raw
+#| tbl-cap: Excerpt of Raw Data Analyzed in Case Study 1
 
 raw[, participant.label := str_trunc(string = participant.label, width = 8, side = "left")]
 raw[, participant.tweets := NULL]
@@ -55,4 +52,51 @@ setorder(x = raw, participant.label)
 kable(raw[1:2])
 ```
 
+## Processed Data
+
+The data we show below has a nested structure as it shows observations on the participant$\times$post-level.
+
+```{r processed_data}
+
+processed[, participant_label := str_trunc(string = participant_label, width = 8, side = "left")]
+setorder(x = processed, participant_label)
+processed[, touch_capability := as.logical(touch_capability)]
+processed[, seconds_in_viewport := as.numeric(seconds_in_viewport)]
+
+kable(processed[35:45])
+```
+
+@tbl-codebook-processed presents a code-book that describes the variables presented above.
+
+```{r}
+#| warning: false
+#| label: tbl-codebook-processed 
+#| tbl-cap: Codebook of Processed Data
+
+codebook_processed  <- data.table::fread(file = "codebook_processed.csv")
+
+kable(codebook_processed)
+```
+
+
+## Additional Processing
+
+Importantly, none of the two datasets presented here contains any self-reports. To generate you final dataset which includes behavioral measures, the stimuli, as well as self-reports, we advise you to merge the processed data with two other data sources. First, merge the shiny app's output with your survey data using the `participant_label` as a key. Because the DICE app passes that ID to your survey tool, both datasets have these information. Second, merge that data with you stimuli csv (see @sec-stimuli) based on the `doc_id` and `condition`, if applicable.
+
+Using R and the `{data.table}` package, this process looks as follows:
+
+```{r}
+#| echo: true
+#| eval: false
+
+output <- data.table::merge.data.table(x = dice,
+                                       y = qualtrics,
+                                       by = "participant_label")
+
+final <- data.table::merge.data.table(x = output,
+                          y = stimuli,
+                          by = c("doc_id", "condition"))
+
+setorder(final, participant_code, displayed_sequence)
+```
 

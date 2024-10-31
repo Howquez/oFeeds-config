@@ -14,14 +14,14 @@ book:
     - deployment.qmd
     - references.qmd
   navbar: 
-    logo: "dice-logo.png"
+    logo: "dice-logo-white.png"
     logo-href: https://www.dice-app.org/
 
 bibliography: references.bib
 
 format:
   html:
-    theme: cosmo
+    theme: journal
     execute:
       echo: false
       warning: false

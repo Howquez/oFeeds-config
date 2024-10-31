@@ -1,4 +1,4 @@
-# Deploy DICE yourself
+# Deploy DICE yourself {#sec-deployment}
 
 Don't worry if this guide looks complicated at first glance—it's actually much simpler than it might appear! Even if you're not familiar with using the terminal or command prompt, you'll find that the process is straightforward and easy to follow. The commands you'll be using are simple, and you'll be guided through each step. Remember, many researchers who aren't computer experts use oTree successfully every day. So take a deep breath, follow along, and you'll have your experiment up and running in no time!
 

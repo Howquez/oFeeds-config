@@ -115,11 +115,11 @@
 
                         <div class="mb-3">
                             <label for="external_name" class="form-label">External study name</label>
-                            <input type="text" class="form-control" id="external_name" value="" placeholder="A study about ice cream" required>
+                            <input type="text" class="form-control" id="external_name" value="" placeholder="A Social Media Study" required>
                         </div>
                         <div class="mb-3">
                             <label for="internal_name" class="form-label">Internal study name (not visible to participants)</label>
-                            <input type="text" class="form-control" id="internal_name" value="" placeholder="My ice cream study" required>
+                            <input type="text" class="form-control" id="internal_name" value="" placeholder="Social Media Study Pilot" required>
                         </div>
                     </form>
                 </div>
@@ -144,7 +144,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="participant_number" class="form-label">Specify the Number of Rows in Database</label>
-                            <input type="number" class="form-control w-100" id="participant_number" aria-describedby="participant_help" value="1" min="0">
+                            <input type="number" class="form-control w-100" id="participant_number" aria-describedby="participant_help" value="1" min="0" max="600">
                             <div id="participant_help" class="form-text">
                                 Please specify the desired number of participants and account for attrition:
                                 Each participation uses one slot, regardless of whether the participant completes the survey.
@@ -205,7 +205,7 @@
                             </div>
                         </div>
 
-                        <div class="form-check form-switch">
+                        <div class="form-check form-switch" style="display: none">
                             <input class="form-check-input" type="checkbox" role="switch" id="display_skyscraper" disabled>
                             <label class="form-check-label" for="display_skyscraper">Display  Skyskraper Banner Ads</label>
                         </div>

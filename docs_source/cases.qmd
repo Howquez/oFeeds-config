@@ -1,4 +1,4 @@
-# Case Studies
+# Case Studies {#sec-cases}
 
 ## Case Study 1: When Do Users Remember Ads? Dwell Time Outperforms Position in Explaining Recall {#sec-positioning-case}
 
