@@ -7,13 +7,6 @@
     <list default="true" id="30b5c7ea-e441-4fbc-8322-3516ac5cd1b3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs_source/_quarto.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docs_source/_quarto.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs_source/cases.qmd" beforeDir="false" afterPath="$PROJECT_DIR$/docs_source/cases.qmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs_source/cover.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs_source/data.qmd" beforeDir="false" afterPath="$PROJECT_DIR$/docs_source/data.qmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs_source/deployment.qmd" beforeDir="false" afterPath="$PROJECT_DIR$/docs_source/deployment.qmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs_source/dice-app.qmd" beforeDir="false" afterPath="$PROJECT_DIR$/docs_source/dice-app.qmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs_source/index.qmd" beforeDir="false" afterPath="$PROJECT_DIR$/docs_source/index.qmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs_source/references.bib" beforeDir="false" afterPath="$PROJECT_DIR$/docs_source/references.bib" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs_source/stimuli.qmd" beforeDir="false" afterPath="$PROJECT_DIR$/docs_source/stimuli.qmd" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/docs/cases.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/cases.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/docs/data.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/data.html" afterDir="false" />
@@ -24,7 +17,6 @@
       <change beforePath="$PROJECT_DIR$/templates/docs/search.json" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/search.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/docs/site_libs/bootstrap/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/site_libs/bootstrap/bootstrap.min.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/docs/stimuli.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/stimuli.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,7 +148,7 @@
       <workItem from="1720715890677" duration="209000" />
       <workItem from="1727246874057" duration="923000" />
       <workItem from="1727851279572" duration="9808000" />
-      <workItem from="1729952591856" duration="3404000" />
+      <workItem from="1729952591856" duration="4021000" />
     </task>
     <servers />
   </component>
