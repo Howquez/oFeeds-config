@@ -6,17 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="30b5c7ea-e441-4fbc-8322-3516ac5cd1b3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs_source/_quarto.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docs_source/_quarto.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs_source/stimuli.qmd" beforeDir="false" afterPath="$PROJECT_DIR$/docs_source/stimuli.qmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docs/cases.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/cases.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docs/data.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/data.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docs/deployment.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/deployment.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docs/dice-app.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/dice-app.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docs/references.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/references.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docs/search.json" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/search.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docs/site_libs/bootstrap/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/site_libs/bootstrap/bootstrap.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/docs/stimuli.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/docs/stimuli.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs_source/data.qmd" beforeDir="false" afterPath="$PROJECT_DIR$/docs_source/data.qmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,7 +139,7 @@
       <workItem from="1720715890677" duration="209000" />
       <workItem from="1727246874057" duration="923000" />
       <workItem from="1727851279572" duration="9808000" />
-      <workItem from="1729952591856" duration="4021000" />
+      <workItem from="1729952591856" duration="6133000" />
     </task>
     <servers />
   </component>
@@ -156,7 +147,7 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/oFeeds_config$feed_configurator.coverage" NAME="feed_configurator Coverage Results" MODIFIED="1730391570185" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/oFeeds_config$feed_configurator.coverage" NAME="feed_configurator Coverage Results" MODIFIED="1731340828296" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/feed_configurator$feed_configurator.coverage" NAME="feed_configurator Coverage Results" MODIFIED="1704012830462" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

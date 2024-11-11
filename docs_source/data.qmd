@@ -38,7 +38,7 @@ processed <- fread(file = "../../oFeeds/studies/meme_feed/data/raw/DICE-processe
 
 ## Raw Data
 
-While creating an experimental session, the DICE web app returns session code such as `r5fbdbr1`, for instance. It will also create a url containing that session code (e.g., `https://ibt-hsg.herokuapp.com/SessionStartLinks/r5fbdbr1`) directing you to yout [oTree interface](https://otree.readthedocs.io/en/latest/admin.html), where you can monitor the session or download the data. After clicking on the `Data` tab, you can download her raw data by clicking on the `Plain` button in the bottom right of her screen. This will generate a csv file called `all_apps_wide_YYYY-MM-DD.csv`.
+While creating an experimental session, the DICE web app returns session code such as `r5fbdbr1`, for instance. It will also create a url containing that session code (e.g., `https://ibt-hsg.herokuapp.com/SessionStartLinks/r5fbdbr1`) directing you to you [oTree interface](https://otree.readthedocs.io/en/latest/admin.html), where you can monitor the session or download the data. After clicking on the `Data` tab, you can download the raw data by clicking on the `Plain` button in the bottom right of her screen. This will generate a csv file called `all_apps_wide_YYYY-MM-DD.csv`.
 
 This data follows oTree's [conventions](https://otree.readthedocs.io/en/latest/conceptual_overview.html#object-hierarchy) as displayed in @tbl-raw.^[In @tbl-raw, we removed a column called `participant.tweets` as it reports all the information displayed in the feed for every participant. We would advise you to delete that column too as it decreases the file size considerably (if you work with long feeds).] 
 
