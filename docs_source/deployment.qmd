@@ -1,14 +1,13 @@
 # Deploy DICE yourself {#sec-deployment}
 
-Don't worry if this guide looks complicated at first glance—it's actually much simpler than it might appear! Even if you're not familiar with using the terminal or command prompt, you'll find that the process is straightforward and easy to follow. The commands you'll be using are simple, and you'll be guided through each step. Remember, many researchers who aren't computer experts use oTree successfully every day. So take a deep breath, follow along, and you'll have your experiment up and running in no time!
-
-What's more, oTree has a large and active user community, which brings several advantages:
+The deployment process, while comprehensive, is designed to be accessible to researchers of all technical backgrounds. The step-by-step instructions that follow are structured to guide users through each stage of the deployment process, regardless of their familiarity with terminal or command-line interfaces. The commands are straightforward, and detailed guidance is provided throughout. It's worth noting that oTree has been successfully implemented by numerous researchers across various disciplines, many of whom began with limited technical expertise.
+Importantly, oTree has a large and active user community, which brings several advantages:
 
 1. **Extensive Documentation**: oTree is well-documented, with comprehensive guides and tutorials available online.
-2. **Community Support**: There's an active forum where you can ask questions and get help from experienced users.
-3. **AI Assistance**: Because of its popularity and well-documented nature, generative AI tools can provide reliable assistance with oTree-related queries.
+2. **Community Support**: There's an active [forum](https://www.otreehub.com/forum/) where you can ask questions and get help from experienced users.
+3. **AI Assistance**: Because of its popularity and well-documented nature, generative AI tools can provide assistance with oTree-related queries.
 
-Whether you prefer reading documentation, asking the community, or using AI tools, help is always at hand. Hence, we are confident that you'll have your experiment up and running in no time!
+The combination of detailed documentation, community resources, and technological support ensures that researchers can efficiently implement their experimental protocols. These resources are designed to facilitate a smooth deployment process, enabling researchers to focus on their experimental objectives rather than technical challenges.
 
 ## Prerequisites
 

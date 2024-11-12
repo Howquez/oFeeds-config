@@ -10,8 +10,9 @@ book:
     - stimuli.qmd
     - dice-app.qmd
     - data.qmd
-    - deployment.qmd
     - cases.qmd
+    - deployment.qmd
+    - extensions.qmd
     - references.qmd
   navbar: 
     logo: "dice-logo-white.png"

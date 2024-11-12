@@ -69,7 +69,7 @@ The process of obtaining a raw URL varies by platform. On GitHub, navigate to yo
 You can easily test whether your image URL is correct by pasting it directly into a browser's address bar. If the browser shows only the image itself, without any surrounding webpage elements, the URL is suitable for use with DICE. This simple verification step can save time troubleshooting later.
 
 
-## Manual
+## Video Tutorial
 
 Here, we describe the configuration of the stimuli we used in our [brand safety case study](cases.qmd#sec-brand-safety-case)  (see  @sec-brand-safety-case) in detail.
 
@@ -97,7 +97,7 @@ You will likely create your own images. To include them in your feed, you need t
 
 For academic documentation and review purposes, it's valuable to create permanent archives of your experimental feeds. Services like [perma.cc](https://perma.cc/) or the [Internet Archive's Wayback Machine](https://archive.org/) can capture and preserve your feeds exactly as they appeared during the study. These archives serve as reliable references for reviewers and future researchers, ensuring that your experimental stimuli remain accessible even if the original hosting platforms change or links break over time. When writing up your research, you can include these permanent archive links in your methodology section or supplementary materials.
 
-## Useful Resources
+## Public Stimuli Resources & Databases
 
 We created a set of synthetic users, where we matched [actual usernames and handles](https://www.usna.edu/Users/cs/nchamber/data/twitternames/) [see @McKelveyEtAl_2017] with stock images (from [unsplash.com](https://unsplash.com/)) and some synthetic, LLM-generated information. Also see [generated.photos](https://generated.photos/datasets/academic) and their academic data for user images and [behindthename.com](https://www.behindthename.com/random/) for user names. 
 

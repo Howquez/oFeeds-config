@@ -37,7 +37,7 @@ function liveRecv(data) {
     var paragraph_2 = document.createElement('p');
     paragraph_2.textContent = "1. Please write the session code ('" + data.code + "') or the URL (displayed above) down. They are unique to the session you just created and they are the only route for you to monitor the session's progress and to download your data, eventually.";
 
-    var link = document.createElement('a');
+    /*var link = document.createElement('a');
     link.href = data.admin_url;
     link.textContent = data.admin_url;
     link.setAttribute('target', '_blank');
@@ -46,7 +46,50 @@ function liveRecv(data) {
     alertDiv.appendChild(paragraph_1);
     alertDiv.appendChild(subtitle);
     paragraph_1.appendChild(link);
+    alertDiv.appendChild(paragraph_2);*/
+
+    var urlDisplay = document.createElement('div');
+    urlDisplay.className = 'input-group mb-3';
+
+    var urlInput = document.createElement('input');
+    urlInput.type = 'text';
+    urlInput.className = 'form-control';
+    urlInput.value = data.admin_url;
+    urlInput.setAttribute('readonly', true);
+
+    var viewButton = document.createElement('button');
+    viewButton.className = 'btn btn-primary';
+    viewButton.innerHTML = '<i class="bi bi-eye"></i> View Session';
+    viewButton.onclick = function(e) {
+        e.preventDefault();  // Prevent any default behavior
+        e.stopPropagation(); // Stop event from bubbling up
+        var modal = new bootstrap.Modal(document.getElementById('sessionModal'));
+        document.getElementById('session-iframe').src = data.admin_url;
+        modal.show();
+    };
+
+    urlDisplay.appendChild(urlInput);
+    urlDisplay.appendChild(viewButton);
+
+    alertDiv.appendChild(title);
+    alertDiv.appendChild(paragraph_1);
+    alertDiv.appendChild(subtitle);
+    paragraph_1.appendChild(urlDisplay);
     alertDiv.appendChild(paragraph_2);
+
+    function copySessionUrl() {
+        var urlInput = document.getElementById('sessionUrl');
+        urlInput.select();
+        document.execCommand('copy');
+
+        // Optional: Show a tooltip or some feedback that the URL was copied
+        var copyButton = urlInput.nextElementSibling;
+        var originalText = copyButton.innerHTML;
+        copyButton.innerHTML = '<i class="bi bi-check"></i> Copied!';
+        setTimeout(function() {
+            copyButton.innerHTML = originalText;
+        }, 2000);
+    }
 
     if (recruitment_platform === 'Prolific' && data.session_wide_url) {
         var modifiedSessionWideUrl = data.session_wide_url +
