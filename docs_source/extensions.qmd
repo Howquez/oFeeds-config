@@ -1,12 +1,12 @@
-# Extensions {.unnumbered}
+# Extensions
 
 ![DICE extensions](dice-extensions.png)
 
-Beyond Twitter or LinkedIn-style feeds, the app could be adapted to study various social media formats or, more broadly, other digital platforms. We have developed preliminary versions of news and shopping feeds using the DICE app’s framework, demonstrating its flexibility and customizability.
+Beyond social media (e.g., Twitter or LinkedIn-style) feeds, the app could be adapted to study various social media formats or, more broadly, other digital platforms. We have developed preliminary versions of news and shopping feeds using the DICE app’s framework, demonstrating its flexibility and customizability.
 
 You can download the corresponding `*.otreezip` files below. The [Deployment](deployment.qmd#sec-deploy) chapter provides guidance for hosting these apps either locally or on your own server.
 
 <a href="https://www.dice-app.org/static/extension-news-feed.otreezip" class="btn btn-outline-primary btn-sm" role="button">Download News Feed</a>
 <a href="https://www.dice-app.org/static/extension-shopping-feed.otreezip" class="btn btn-outline-primary btn-sm" role="button">Download Shopping Feed</a>
 
-We hope to feature more DICE extensions developed by the research community in the future.
+We hope to feature more DICE extensions (such as a review platform, for instance) developed by the research community in the future.

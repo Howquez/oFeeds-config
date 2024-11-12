@@ -212,9 +212,9 @@
   {
     "objectID": "extensions.html",
     "href": "extensions.html",
-    "title": "Extensions",
+    "title": "6  Extensions",
     "section": "",
-    "text": "Beyond Twitter or LinkedIn-style feeds, the app could be adapted to study various social media formats or, more broadly, other digital platforms. We have developed preliminary versions of news and shopping feeds using the DICE app’s framework, demonstrating its flexibility and customizability.\nYou can download the corresponding *.otreezip files below. The Deployment chapter provides guidance for hosting these apps either locally or on your own server.\nDownload News Feed Download Shopping Feed\nWe hope to feature more DICE extensions developed by the research community in the future."
+    "text": "Beyond social media (e.g., Twitter or LinkedIn-style) feeds, the app could be adapted to study various social media formats or, more broadly, other digital platforms. We have developed preliminary versions of news and shopping feeds using the DICE app’s framework, demonstrating its flexibility and customizability.\nYou can download the corresponding *.otreezip files below. The Deployment chapter provides guidance for hosting these apps either locally or on your own server.\nDownload News Feed Download Shopping Feed\nWe hope to feature more DICE extensions (such as a review platform, for instance) developed by the research community in the future."
   },
   {
     "objectID": "references.html",
