@@ -451,7 +451,9 @@
                 <h5 class="modal-title" id="sessionModalLabel">Session View</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body p-0">
+            <div class="modal-body p-0 position-relative">
+                <!-- Add covering box -->
+                <div class="position-absolute bg-white" style="height: 60px; width: 100%; z-index: 1000;"></div>
                 <iframe id="session-iframe" style="width: 100%; height: 100%; border: none;" title="Session View"></iframe>
             </div>
         </div>
