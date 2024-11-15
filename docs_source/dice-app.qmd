@@ -2,15 +2,11 @@
 
 We developed the [DICE web-app](https://www.dice-app.org/) for researchers to launch a study without any coding and without [hosting the oTree app yourself](deployment.qmd#sec-deployment). This section guides you through the process step by step.
 
-## Testing vs. Final Configuration
-
-We created this selection for you to create a trimmed down process of launching a study if you only create it for testing purposes. Hence, you can select `Testing` to skip some of the configuration steps while creating a study link for 20 participants.
-
 ## Meta Information
 
 We ask you to provide some information about yourself and the study you intend to run. The DICE app uses these information to provide participants with contact information if any questions occur. In addition, the DICE app displays an external study name. The internal name only serves internal documentation purposes for yourself.
 
-## Recruitment
+## Participant Recruitment
 
 As of today, we optimized the DICE app for Prolific. However, the DICE app can also create generic URLs that can be used for any other recruitment platform or strategy. In any case, you need to specify the number of rows in a database that will be created specifically for your study. Each row can be assumed by one participant. If there is attrition, that is, if a participant enters the study but leaves before finishing it, his or her row in the database will be taken and cannot be overwritten by other participants. Hence, you should consider attrition while specifying the number of rows in the database as participants who try to enter the experiment after all slots (rows in the database) are used, will receive an error message.
 
@@ -53,7 +49,7 @@ Your CSV file uses a special character to separate different pieces of data (lik
 ### Hashtag
 Enter the term you want participants to see in the search bar of your simulated social media interface. Using a hashtag or a username creates a more authentic social media experience, as it mimics how users typically search for content on platforms like Twitter. This search term will appear pre-filled in the interface's search bar when participants start the study.
 
-## Briefing
+## Participant Briefing
 
 The briefing field allows you to create instructions that participants will see before they interact with the social media feed. This is where you provide context, tasks, or any other important information participants need to know.
 
