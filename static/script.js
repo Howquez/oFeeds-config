@@ -1,5 +1,36 @@
-
 var globalSessionCode;
+var quill; // Declare quill globally to access it throughout the code
+
+// Initialize Quill when document is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Quill with configuration to avoid mutation events
+    quill = new Quill('#quill-editor', {
+        theme: 'snow',
+        modules: {
+            toolbar: [
+                ['bold', 'italic', 'underline'],
+                [{ 'header': [1, 2, 3, 4, 5, false] }],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                ['clean']
+            ]
+        },
+        placeholder: 'Write your briefing here...',
+        bounds: document.querySelector('#editor-container'),
+        scrollingContainer: document.querySelector('#editor-container'),
+        readOnly: false,
+        strict: true,
+        preserveWhitespace: true
+    });
+
+    // Add other event listeners
+    document.getElementById('createSessionBtn').addEventListener('click', sendValue);
+    var checkBox = document.getElementById('display_skyscraper');
+    var adCard = document.getElementById('adCard');
+
+    checkBox.addEventListener('change', function() {
+        adCard.style.display = this.checked ? 'block' : 'none';
+    });
+});
 
 // This function is called when the server sends back a response
 function liveRecv(data) {
@@ -37,17 +68,6 @@ function liveRecv(data) {
     var paragraph_2 = document.createElement('p');
     paragraph_2.textContent = "1. Please write the session code ('" + data.code + "') or the URL (displayed above) down. They are unique to the session you just created and they are the only route for you to monitor the session's progress and to download your data, eventually.";
 
-    /*var link = document.createElement('a');
-    link.href = data.admin_url;
-    link.textContent = data.admin_url;
-    link.setAttribute('target', '_blank');
-
-    alertDiv.appendChild(title);
-    alertDiv.appendChild(paragraph_1);
-    alertDiv.appendChild(subtitle);
-    paragraph_1.appendChild(link);
-    alertDiv.appendChild(paragraph_2);*/
-
     var urlDisplay = document.createElement('div');
     urlDisplay.className = 'input-group mb-3';
 
@@ -76,20 +96,6 @@ function liveRecv(data) {
     alertDiv.appendChild(subtitle);
     paragraph_1.appendChild(urlDisplay);
     alertDiv.appendChild(paragraph_2);
-
-    function copySessionUrl() {
-        var urlInput = document.getElementById('sessionUrl');
-        urlInput.select();
-        document.execCommand('copy');
-
-        // Optional: Show a tooltip or some feedback that the URL was copied
-        var copyButton = urlInput.nextElementSibling;
-        var originalText = copyButton.innerHTML;
-        copyButton.innerHTML = '<i class="bi bi-check"></i> Copied!';
-        setTimeout(function() {
-            copyButton.innerHTML = originalText;
-        }, 2000);
-    }
 
     if (recruitment_platform === 'Prolific' && data.session_wide_url) {
         var modifiedSessionWideUrl = data.session_wide_url +
@@ -126,36 +132,28 @@ function liveRecv(data) {
 
         alertDiv.appendChild(explanatoryText);
         alertDiv.appendChild(inputGroup);
-    }
 
-    // Show the completion code section if Prolific was chosen
-    if (recruitment_platform === 'Prolific') {
         // Show the completion code section
         var stepThreeTitle = document.createElement('p');
         stepThreeTitle.textContent = '3. Prolific provides a completion code. Please enter (and submit) the completion code such that (only eligible) respondents can confirm their participation at the end of your study.';
 
-        // Create a Bootstrap input group
         var inputGroup2 = document.createElement('div');
         inputGroup2.className = 'input-group mb-3';
 
-        // Include the input field for the completion code
         var completionCodeInput = document.createElement('input');
         completionCodeInput.type = 'text';
         completionCodeInput.className = 'form-control';
         completionCodeInput.id = 'completionCode';
         completionCodeInput.placeholder = 'Enter Completion Code';
 
-        // Include the button to submit the completion code
         var submitCodeButton = document.createElement('button');
         submitCodeButton.className = 'btn btn-primary';
         submitCodeButton.textContent = 'Submit Code';
         submitCodeButton.onclick = function() { submitCompletionCode(); };
 
-        // Append the input and button to the input group
         inputGroup2.appendChild(completionCodeInput);
         inputGroup2.appendChild(submitCodeButton);
 
-        // Append the new elements to the alert div
         alertDiv.appendChild(stepThreeTitle);
         alertDiv.appendChild(inputGroup2);
     }
@@ -167,6 +165,9 @@ function sendValue() {
     var createSessionBtn = document.getElementById('createSessionBtn');
     createSessionBtn.innerHTML = '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Loading...';
     createSessionBtn.disabled = true;
+
+    // Get the HTML content from Quill
+    let html_briefing = quill.root.innerHTML;
 
     let title = document.getElementById('title').value;
     let full_name = document.getElementById('name').value;
@@ -180,10 +181,9 @@ function sendValue() {
     let survey_url = document.getElementById('survey_url').value;
     let dwell_threshold = document.getElementById('dwell_threshold').value;
     let search_term = document.getElementById('search_term').value;
-    let sort_by = "sequence"; //document.getElementById('sort_by').value;
-    let condition_col = "condition"; // document.getElementById('condition_col').value;
+    let sort_by = "sequence";
+    let condition_col = "condition";
     let display_skyscraper = document.getElementById('display_skyscraper').checked;
-    let html_briefing = document.getElementById('html_briefing').value;
 
     // Perform CSV validation before creating a session
     fetch('/validate_csv', {
@@ -254,7 +254,7 @@ function submitCompletionCode() {
         },
         body: JSON.stringify({
             completion_code: completionCode,
-            session_code: globalSessionCode // Include the stored session_code
+            session_code: globalSessionCode
         }),
     })
     .then(response => response.json())
@@ -263,13 +263,11 @@ function submitCompletionCode() {
         completionAlertDiv.className = 'alert alert-success my-4';
         alertDiv.className = 'alert alert-success mt-4 mb-5 shadow';
 
-        // Add a line break before the button
         let lineBreak1 = document.createElement('br');
         let lineBreak2 = document.createElement('br');
         completionAlertDiv.appendChild(lineBreak1);
         completionAlertDiv.appendChild(lineBreak2);
 
-        // Add the Create Replication Package button
         let replicationButton = document.createElement('button');
         replicationButton.id = 'createReplicationPackageBtn';
         replicationButton.type = 'button';
@@ -287,27 +285,14 @@ function submitCompletionCode() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('createSessionBtn').addEventListener('click', sendValue);
-    var checkBox = document.getElementById('display_skyscraper');
-    var adCard = document.getElementById('adCard');
-
-    checkBox.addEventListener('change', function () {
-        adCard.style.display = this.checked ? 'block' : 'none';
-    });
-});
-
-
 function retrieveSessionData(event) {
-    event.preventDefault(); // Prevent the form from submitting the traditional way
+    event.preventDefault();
     const sessionCode = document.getElementById('sessionCodeInput').value;
     if (sessionCode) {
-        // Call your Flask backend with the session code
         fetch(`/api/sessions/${sessionCode}`)
             .then(response => response.json())
             .then(data => {
-                console.log(data); // Handle the response data
-                // Display data or initiate download of data as needed
+                console.log(data);
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -316,7 +301,6 @@ function retrieveSessionData(event) {
         alert('Please enter a session code.');
     }
 }
-
 
 function createReplicationPackage() {
     let contentUrl = document.getElementById('content_url').value;
@@ -363,4 +347,3 @@ function createReplicationPackage() {
     })
     .catch(error => console.error('Error:', error));
 }
-

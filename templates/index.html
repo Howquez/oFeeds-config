@@ -7,11 +7,15 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 </head>
 <body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <script src="{{ url_for('static', filename='script.js') }}"></script>
 <script src="{{ url_for('static', filename='smooth_scrolling.js') }}"></script>
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 {#<script src="{{ url_for('static', filename='config_goals.js') }}"></script>#}
 
 <nav class="navbar fixed-top border-bottom bg-white bg-opacity-75 border-opacity-50">
@@ -29,11 +33,11 @@
     </div>
 </nav>
 
-<div class="px-4 pt-5 mt-5 text-center border-bottom">
-    <h1 class="display-4 fw-bold text-body-emphasis">DICE</h1>
+<div class="px-4 pt-5 mt-5 text-center border-bottom bg-white">
+    <h1 class="display-3 fw-bold text-body-emphasis">DICE</h1>
     <div class="col-lg-6 mx-auto">
-        <p class="lead mb-4">
-            Create Digital In-Context Experiments (DICE) to mimic social media{#, news or shopping#} feeds with experimental control and without a single line of code. Simply configure your stimuli, distribute them (e.g., via Prolific) and append a questionnaire.</p>
+        <h3 class="mb-4" style="font-family: 'Source Serif Pro', serif; color: #404040;">
+            Create Digital In-Context Experiments (DICE) to mimic social media{#, news or shopping#} feeds with experimental control and without a single line of code. Simply configure your stimuli, distribute them (e.g., via Prolific) and append a questionnaire.</h3>
         <div class = "d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
             <a class= "btn btn-outline-secondary btn-lg px-4" href="https://ibt-hsg.herokuapp.com/demo" target="_blank" role="button"> Demo </a>
             {#<a class="btn btn-outline-secondary btn-lg px-4" href="#configureStudySection">Configure a Study</a>#}
@@ -43,9 +47,9 @@
             <a class="btn btn-danger btn-lg px-4" href="https://www.youtube.com/watch?v=lx_akVasq7I&list=PLZ-soW8YjcdezgGILvI4dmQU2lpl0cAC0" target="_blank"><i class="bi bi-play-fill"></i>Watch Tutorial</a>
         </div>
     </div>
-    <div class="overflow-hidden" style="max-height: 40vh;">
-        <div class="container px-5">
-            <img src="{{ url_for('static', filename='screenshot.png') }}" class="img-fluid border-0 mb-4" alt="Example image" width="700" height="500" loading="lazy">
+    <div class="overflow-hidden" style="max-height: 70vh;">
+        <div class="container">
+            <img src="{{ url_for('static', filename='screenshot.webp') }}" class="img-fluid border-0 mb-4" alt="Example image" width="700" height="500">
         </div>
     </div>
 </div>
@@ -54,14 +58,14 @@
     <div class="container my-3 py-3">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <h2 class="display-5 mt-4 text-center">Configure a Study</h2>
-                <p class="lead text-center">
+                {#<h2 class="display-5 mt-4 text-center">Configure a Study</h2>#}
+                <h3 style="font-family: 'Source Serif Pro', serif; color: #404040;">
                     In just a few clicks, you can create and customize stimuli for your social media experiment.
                     No coding required.
                     The following form walks you through the process of creating accessing your own DICE session.
                     {#To start, choose <code>Testing</code> if you are in the development phase and want to quickly create and test a set of stimuli, as this option will skip some of the detailed configuration steps.
                     Choose <code>Final Configuration</code> once you tested your stimuli and want to configure your final experiment.#}
-                </p>
+                </h3>
                 {#<div id="scrollPrompt" class="text-center">
                     <div class="text-muted mb-2">
                         Scroll to explore
@@ -82,7 +86,7 @@
         </div>
     </div>
 
-    <div class= "container-md my-5">
+    <div class= "container-md mb-5 mt-3">
     <div class= "row justify-content-center">
         <div class= "col-lg-8 col-md-10">
 
@@ -267,14 +271,13 @@
                             The whole page is skipped if you leave this field empty.
                         </small>
                     </p>
-                    <form>
-                        <div class="mb-3">
-                            <label for="html_briefing" class="form-label">Provide Briefing (in HTML)</label>
-                            <textarea class="form-control border-light border-3" id="html_briefing" name="html_briefing" rows="6" aria-describedby="briefing_help"><h5>This could be your briefing</h5><p>Use HTML syntax to format your content to your liking.</p></textarea>
-                            <div id="briefing_help" class="form-text">
-                            </div>
+                    <div id="editor-container">
+                        <div id="quill-editor">
+                            <h2>This could be your briefing</h2>
+                            <p>Use the toolbar above to <u>format</u> your content.</p>
                         </div>
-                    </form>
+                    </div>
+
                 </div>
             </div>
 
