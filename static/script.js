@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 ['bold', 'italic', 'underline'],
                 [{ 'header': [1, 2, 3, 4, 5, false] }],
                 [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                [{ 'color': [] }, { 'background': [] }],
                 ['clean']
             ]
         },
