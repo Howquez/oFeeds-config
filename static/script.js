@@ -168,7 +168,7 @@ function sendValue() {
     createSessionBtn.disabled = true;
 
     // Get the HTML content from Quill
-    let html_briefing = quill.root.innerHTML;
+    let html_briefing = quill.getText().trim() === '' ? '' : quill.root.innerHTML;
 
     let title = document.getElementById('title').value;
     let full_name = document.getElementById('name').value;
