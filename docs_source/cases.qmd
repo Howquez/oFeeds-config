@@ -1,5 +1,11 @@
 # Case Studies {#sec-cases}
 
+We conducted two studies to demonstrate DICE as a research tool and its empirical capabilities. These studies serve three purposes: (1) demonstrating how researchers can implement DICE studies in practice, (2) showcasing the platform’s unique behavioral tracking capabilities, and (3) illustrating the frontend participant experience and researcher workflow in the backend of DICE. The first case study examines competitive advertising environments where multiple brands in the same product category compete for user attention within a feed. By tracking attention patterns across multiple sponsored posts, this study illustrates how DICE’s behavioral tracking capabilities allow to examine the relationship between the specific feed position of a post, user attention, and brand recall when brands compete with both organic and competing sponsored posts. The second case study illustrates DICE’s ability to maintain tight experimental control over feed composition to study context effects (here, we focus on the topical issue of brand safety concerns, i.e., how surrounding content can negatively affect brand perceptions on social media).
+
+Together, these two illustrative studies show DICE’s capability to test research
+questions that are difficult to study with existing paradigms while maintaining high
+experimental control, high ecological validity, and access to detailed behavioral data.
+
 ## Case Study 1: When Do Users Remember Ads? Dwell Time Outperforms Position in Explaining Recall {#sec-positioning-case}
 
 ```{r install_packages}
@@ -71,6 +77,22 @@ scale_fill_custom_2d <- function() {
 set.seed(42)
 ```
 
+```{r helpers}
+
+# Create function to get effect size stats
+get_effect_size <- function(data) {
+  es <- effectsize::cohens_d(brand_attitude ~ condition, 
+                            data = data, 
+                            pooled_sd = FALSE)
+  list(
+    d = round(es$Cohens_d, 3),
+    ci_low = round(es$CI_low, 3),
+    ci_high = round(es$CI_high, 3),
+    n = nrow(data)
+  )
+}
+```
+
 ```{r read_meme_data}
 data <- fread(file = "../../oFeeds/studies/meme_feed/data/processed/meme-feed-data.csv", na.strings = "")
 stimuli_1  <- fread(file = "../templates/docs/data/case-study-1/9gag.csv", na.strings = "")
@@ -95,38 +117,10 @@ Aiming to create ecologically valid stimuli, we populated our experimental feed 
  `r data[, length(unique(participant_label))]`
 young American participants ($M_{age}$=`r data[, sprintf(fmt = "%.2f", mean(age, na.rm = TRUE))]` years; `r data[, round(100*mean(female, na.rm = TRUE))]`% female) from Prolific and selected consumer electronics advertisements from established brands (i.e., Apple, Bose, Nintendo, Samsung, Whoop) retrieved from Facebook's Ad Library--a publicly accessible database that archives advertisements running across Meta's platforms. The selected sponsored posts showed natural variation in their characteristics, reflecting the diversity of ads users encounter in their daily social media use. This approach aligns with recent methodological work on stimulus sampling [@SimonsohnEtAl_2024] which demonstrates that in studies focused on a single manipulated variable (a sponsored post's position in our case), using diverse stimuli helps ensure effects are not driven by idiosyncratic characteristics of any particular advertisement, increasing both internal and ecological validity.
 
-```{r}
-sample_n <- 15
-```
+@fig-design-1 provides sampled screenshots to illustrating the fully randomized positioning of sponsored and organic content in the study. 
 
-@fig-design provides a visual representation of our experimental design, specifically illustrating the randomization of sponsored post positions across participants. The figure plots the position in feed against `r as.english(sample_n)` randomly sampled participants, with different colors representing the five brands. @fig-design demonstrates how the sponsored posts' positions were randomly distributed throughout the feed, ensuring that each participant encountered the five advertisements in a unique sequence with no systematic patterns in the placement of any particular brand's advertisements.
+![Exemplary DICE Feeds from Case Study 1](figures-cs1-design.png){#fig-design-1}
 
-```{r}
-#| results: asis
-#| warning: false
-#| label: fig-design 
-#| fig-cap: Randomized Placement of Sponsored Posts Across Participants' Feeds
-
-sample_n <- 15
-sampled_ids <- sample(x = data[, unique(participant_label)],
-                      size = sample_n, 
-                      replace = FALSE)
-ggplot(data = data[!is.na(brand) & participant_label %in% sampled_ids],
-       mapping = aes(x = participant_label, y = displayed_sequence, fill = brand)) +
-  geom_hline(yintercept = 1) +
-  geom_hline(yintercept = 40) +
-  geom_tile() +
-  labs(y = "Position in Feed", x = "Sampled Participants", fill = "Brand") +
-  scale_x_discrete(position = "top", labels = seq(from = 1, to = sample_n, by = 1)) +
-  scale_y_reverse(limits = c(41, 0), expand = c(0, NA), breaks = c(1, 20, 40)) +
-  # scale_fill_manual(values = wes_palette("FantasticFox1")) +
-  scale_fill_tron() +
-  layout +
-  theme(# axis.text.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        panel.grid.major.y = element_blank(),
-        legend.position = "bottom")
-```
 
 ### Procedure
 
@@ -142,7 +136,7 @@ share_tablet  <- round(100 * subset[device_type == "Tablet",
 
 Participants browsed the simulated feed on their own devices
 (`r share_desktop`% Desktop, `r share_mobile`% Mobile, and `r share_tablet`% Tablet), allowing for unobtrusive measurement of dwell time for each post. 
-After scrolling through the feed, we redirected participants to a Qualtrics survey in which they first provided demographic information as a filler task. Subsequently, we measured whether participants recalled seeing the ads by the five brands in the feed. Specifically, we measured cued recall for which we showed participants a list of twenty brands from different categories and asked them to indicate whether they recalled seeing them [see, e.g., @CampbellKeller_2003; @SimonovVallettiVeiga_2024]. We also included a no-recall option. Finally, participants read a debriefing and were redirected to Prolific.
+After scrolling through the feed, we redirected participants to a Qualtrics survey in which they first provided demographic information as a filler task. Subsequently, we measured whether participants recalled seeing the ads by the five brands in the feed. Specifically, we measured cued recall for which we showed participants a list of twenty brands from different categories and asked them to indicate whether they recalled seeing them [see, e.g., @CampbellKeller_2003; @SimonovVallettiVeiga_2024]. We also included a no-recall option. The results for both recall measures were highly consistent; we report the cued recall results in the manuscript for parsimony (the results for unaided recall are included on our [OSF repository](https://osf.io/2xs5c/?view_only=4bf95d2a2c8449218b5fa7cd288f626a)). Finally, participants read a debriefing and were redirected to Prolific.
 
 
 ### Stimuli
@@ -177,112 +171,10 @@ Our dataset comprises `r subset[, length(unique(participant_label))]` participan
 
 #### Variables
 
-We present summary statistics for our final sample, both for participant-level observations and self-reports as well as for user interaction data at the participant $\times$ sponsored post level (see @tbl-summary-participant-level and @tbl-summary-post-participant-level, respectively). [Merge the tables and create sub-headings or panels.]
-
-```{r summary_tables}
-summary_2  <- subset[sponsored == 1,
-                   .(`Position in Feed` = displayed_sequence,
-                     Likes = liked,
-                     Replies = hasReply,
-                     `Seconds in Viewport` = seconds_in_viewport,
-                     `log(Seconds in Viewport)` = log_dwell_time,
-                     `Post Height` = height,
-                     `Dwell Time` = log_dwell_pixel)]
-
-summary_1 <- subset[,
-                    .(participant_label,
-                      Age = age, 
-                      Female = female, 
-                      Desktop = is_desktop,
-                      `Recall Apple` = cued_apple, 
-                      `.. Bose` = cued_bose, 
-                      `.. Nintendo` = cued_nintendo, 
-                      `.. Samsung` = cued_samsung, 
-                      `.. Whoop` = cued_whoop)] %>% unique()
-```
+Position in feed (subsequently referred to only as “position”) is our main independent variable. Because we randomized the order in which the content appeared (i.e., position acts as a within-subject factor) and because we excluded observations positioned at the beginning and the end of the feed, we observe a sample mean of `r sprintf(fmt = "%.2f",  subset[sponsored == 1, mean(displayed_sequence)])` as well as a minimum and maximum of `r round(subset[sponsored == 1, min(displayed_sequence)])` and `r round(subset[sponsored == 1, max(displayed_sequence)])`, respectively. As, we randomly manipulated the position in which each post was displayed exogenously between subjects, each sequence in which participants browsed through ads was unique.
 
 ```{r}
-#| warning: false
-#| label: tbl-summary-participant-level 
-#| tbl-cap: Summary Statistics on the Participant-Level
-
-# stargazer(summary_1,
-#           header = FALSE, 
-#           type = "html",
-#           digits = 2)
-
-# Table 1: Participant-Level Summary Statistics
-stats_list <- list()
-
-# Function to calculate summary statistics
-calc_stats <- function(x) {
-  c(N = length(x),
-    Mean = mean(x, na.rm = TRUE),
-    `St. Dev.` = sd(x, na.rm = TRUE),
-    Min = min(x, na.rm = TRUE),
-    Max = max(x, na.rm = TRUE))
-}
-
-# Calculate statistics for each column in summary_1
-cols <- c("Age", "Female", "Desktop", "Recall Apple", ".. Bose", 
-          ".. Nintendo", ".. Samsung", ".. Whoop")
-
-participant_stats <- rbindlist(lapply(cols, function(col) {
-  as.list(calc_stats(summary_1[[col]]))
-}), idcol = "Statistic")
-
-setnames(participant_stats, "Statistic", "Statistic")
-participant_stats[, Statistic := cols]
-
-# Format first table
-kable(participant_stats,
-      format = "html",
-      caption = "Summary Statistics on the Participant-Level",
-      align = c('l', 'r', 'r', 'r', 'r', 'r'),
-      digits = 2) %>%
-  kable_styling(bootstrap_options = c("striped", "hover"),
-                full_width = FALSE)
-
-
-```
-
-```{r}
-#| warning: false
-#| label: tbl-summary-post-participant-level 
-#| tbl-cap: Summary Statistics on the Sponsored Post x Participant-Level
-
-# stargazer(summary_2,
-#           header = FALSE,
-#           type = "html",
-#           digits = 3)
-
-# Table 2: Sponsored Post x Participant-Level Summary Statistics
-cols <- c("Position in Feed", "Likes", "Replies", "Seconds in Viewport",
-          "log(Seconds in Viewport)", "Post Height", "Dwell Time")
-
-post_stats <- rbindlist(lapply(cols, function(col) {
-  as.list(calc_stats(summary_2[[col]]))
-}), idcol = "Statistic")
-
-setnames(post_stats, "Statistic", "Statistic")
-post_stats[, Statistic := cols]
-
-# Format second table
-kable(post_stats,
-      format = "html",
-      caption = "Summary Statistics on the Sponsored Post x Participant-Level",
-      align = c('l', 'r', 'r', 'r', 'r', 'r'),
-      digits = 3) %>%
-  kable_styling(bootstrap_options = c("striped", "hover"),
-                full_width = FALSE)
-```
-
-##### Position in Feed
-
-Position in Feed describes our independent variable. Because we randomized the order in which the content appeared (i.e., Position in Feed acts as a within-subject factor) and because we excluded observations positioned at the beginning and the end of the feed, we observe a sample mean of `r sprintf(fmt = "%.2f",  subset[sponsored == 1, mean(displayed_sequence)])` as well as a minimum and maximum of `r round(subset[sponsored == 1, min(displayed_sequence)])` and `r round(subset[sponsored == 1, max(displayed_sequence)])`, respectively. As, we randomly manipulated the position in which each post was displayed exogenously between subjects, each sequence in which participants browsed through ads was unique.
-
-```{r}
-#| eval: true
+#| eval: false
 #| label: fig-brand-order
 #| fig-cap: "Distribution of Sponsored Post Impressions by Position in Feed and Brand across All Participants"
 #| fig-cap-location: top
@@ -302,7 +194,7 @@ ggplot(data = tmp,
   geom_vline(xintercept = 3, alpha = 0.25) +
   geom_vline(xintercept = 38, alpha = 0.25) +
   layout +
-  labs(y = "Number of Sponsored Impressions", x = "Position in Feed") +
+  labs(y = "Number of Sponsored Impressions", x = "Position") +
   theme(panel.grid.major.y = element_blank(),
         strip.background =element_rect(fill="#FFFFFF"),
         axis.line.x = element_blank())
@@ -310,34 +202,15 @@ ggplot(data = tmp,
 
 In @fig-brand-order, each line represents the number of times a sponsored post for a specific brand appeared at each position across all participants. As the placements were fully randomized, we observed some random variability that naturally fluctuates around the expected value of 7.5 impressions per position (as indicated by dashed lines).^[This expectation is based on each of the 5 sponsored posts being shown once per participant (N=300) in a feed of 40 positions, leading to an average of $\frac{300}{40} = 7.5$ for each brand's ad placement across all positions.] Taken together, this suggests that randomization within the DICE app was effective.
 
+We measured dwell times as the number of seconds at least 50 percent of a post’s pixels were visible on screen. We log-transformed the raw dwell times to reduce skewness. Unlike Case Study 2, where we focused on a single post (i.e., the KLM ad), the focal posts of interest (i.e., ads) in this Case Study vary in their post height. Thus, and as described in the “Behavioral Data” section of the DICE App Implementation, we normalized our dwell time measure by dividing it by post height to control for differently sized posts (i.e., the height in pixels of the corresponding sponsored post on a participant’s screen).
 
-##### Visibility Measures
-
-The variable Seconds in Viewport we report in @tbl-summary-post-participant-level describes the number of seconds in which at least 50 percent of a post's pixels were visible on screen (sample mean is `r sprintf(fmt = "%.2f",  subset[sponsored == 1, mean(seconds_in_viewport)])` seconds), which we log-transform to reduce skewness. To calculate our Dwell Time measure we use throughout the analyses in this case study, we then divide it by Post Height, that is, the height in which the corresponding sponsored post was displayed on a participant's screen as this variable varies within participants and between sponsored posts. The resulting Dwell Time has a sample mean of `r sprintf(fmt = "%.3f",  subset[sponsored == 1, mean(log_dwell_pixel)])` with a Fisher-Pearson skewness of `r subset[sponsored == 1, round(digits = 2, skewness(log_dwell_pixel))]`, which is considered as approximately symmetric [@Bulmer_1979].
-
-
-##### Reactions
-
-We measured reactions such as likes and replies to individual posts. In the full sample (which includes organic posts), we observe
+We also tracked actual reactions to the content such as likes and replies to individual posts. In the full sample featuring both organic and sponsored posts, we observed
 `r subset[has_liked_any == TRUE, length(unique(participant_label))]`
 (`r subset[has_replied_any == TRUE, length(unique(participant_label))]`)
-participants who liked (replied to) any post in the feed. Considering sponsored posts only, however, we only count
+participants who liked (replied to) any post in the feed. These numbers are obviously lower for sponsored posts (ads shown in the feed) with 
 `r subset[has_liked_sponsored == TRUE, length(unique(participant_label))]`
 (`r subset[has_replied_sponsored == TRUE, length(unique(participant_label))]`)
-participants who liked (replied to) at least one post, which is why we do not consider these explicit engagement metrics in our analyses.
-
-##### Recall
-
-```{r}
-rc_1 <- sprintf(fmt = "%.2f", 100 * summary_1[, mean(`.. Nintendo`)])
-rc_2 <- sprintf(fmt = "%.2f", 100 * summary_1[, mean(`.. Whoop`)])
-```
-
-
-@tbl-summary-participant-level shows that recall varied by brand. Between
-`r rc_1`% (Nintendo) and
-`r rc_2`% (Whoop)
-recalled seeing the sponsored post. Only `r subset[recalled_brand_cued == FALSE, .N, by = participant_label][N == 5, .N]` participants indicated that they did not remember seeing any sponsored post.
+participants liked (replied to) at least one sponsored post or ad. Given the low incident rate, we did not analyze these likes and comments any further.
 
 @tbl-show-data-1 shows an excerpt of the processed data to illustrate its nested (i.e., "long") structure.
 
@@ -370,18 +243,139 @@ kable(tmp[35:45])
 ```
 
 
-### Analysis
+### Empirical Model
 
-To estimate the impact of ad positioning on brand recall in social media feeds, we employed a mixed-effects logistic regression model with brand fixed effects to account for the binary nature of recall outcome (recalled vs. not recalled) while considering the hierarchical structure of our data: multiple observations nested within participants and ads. The model can be expressed as:
+To estimate the impact of ad positioning on brand recall in social media feeds, we employed a mixed-effects logistic regression model with brand fixed effects to account for the binary nature of recall outcome (recalled vs. not recalled) while considering the hierarchical structure of our data: multiple observations nested within participants and ads. We assume a binomial distribution as each observation represents a single trial with two possible outcomes (recalled vs. not recalled), where $p_{ij}$ represents the probability of participant $i$ recalling brand $j$:
 
 $$
-\log\left(\frac{p_{ij}}{1-p_{ij}}\right) = a + \mathbf{x}_{ij} \mathbf{b} + \sum_{k=1}^{K-1} \gamma_k Brand_k + u_i + \epsilon_{ij}
+\text{recall}_{ij} \sim \text{Binomial}(1, p_{ij})
 $$
 
-where $p_{ij}$ is the probability of brand recall for the $i$-th participant and $j$-th observation, $a$ is the intercept, $\mathbf{x}_{ij}$ is a vector of continuous predictors (position in feed and dwell time) with corresponding coefficient vector $\mathbf{b}$. The term $\gamma_k$ represents the fixed effects for each brand $k$ (with one Apple serving as the reference category), and $u_i$ captures the fixed effects for each participant. Finally, $\epsilon{ij}$ represents the idiosyncratic error term for participant $i$ and observation $j$.
+We estimated the effect of ad positioning on recall and captured between-participant heterogeneity through random intercepts while controlling for brand fixed effects:
 
-The random participant effects $u_i$ are justified by the experimental design, as the random assignment of ad positions ensures zero correlation between participant characteristics and the explanatory variables. Brand effects are treated as fixed parameters rather than random effects, allowing for potential correlation between brand characteristics and key explanatory variables such as dwell time.
+$$
+\text{logit}(p_{ij}) = a + a_i + \mathbf{x}_{ij} \mathbf{b} + \sum_{j=1}^{J-1} \gamma_j \text{Brand}_j
+$$
 
+where $a$ is the global intercept, $a_i$ is the participant-specific random intercept, $\mathbf{x}_{ij}$ is a vector of continuous predictors (e.g., position and dwell time) with corresponding coefficient vector $\mathbf{b}$, and $\gamma_j$ represents the fixed effects for each brand $j$ (with Apple serving as the reference category). The random participant effects $a_i$ follows from our experimental design, given that the random assignment of ad positions ensures zero correlation between participant characteristics and the explanatory variables. Brand effects are treated as fixed parameters rather than random effects, allowing for potential correlation between brand characteristics and positioning.
+
+The random participant effects $a_i$ follows from our experimental design, given that the random assignment of ad positions ensures zero correlation between participant characteristics and the explanatory variables. Brand effects are treated as fixed parameters rather than random effects, allowing for potential correlation between brand characteristics and core explanatory variables such as dwell time.
+
+Finally, for better comparability between models, we z-standardized all explanatory variables. The regression coefficients effects on the dependent variable are therefore quantified in standard deviations. This allowed us to compare the relative effect sizes between regression models. Because of the logit link, the odds ratio is $100 \times (e^{\beta} - 1)$, which gives the percentage change in the odds of recall.
+
+
+### Results
+
+We found a significant negative effect of position on recall ($\beta_1 = -0.207$, $SE = 0.028$, $p < 0.001$; see Model 1 in @tbl-mixed-effects), suggesting a primacy effect such that the further up (down) in a feed an ad is displayed, the more (less) participants recall seeing the ad. We also examined potential non-linear effects of position (i.e., to assess whether especially the beginning and end of a feed promotes ad recall) by adding a quadratic term, but found no statistically significant effect. 
+
+As shown in Model 2 in @tbl-mixed-effects, we found that the individual dwell time of a user predicts ad recall ($\beta_3$ = 0.714, p < 0.001). More importantly, we also found that the dwell time devoted to is the actual attention devoted to an ad beyond was a stronger predictor of recall than just its position in a feed. Specifically, Model 3, including both position and dwell time, found that the effect of position becomes non-significant ($\beta_1$ = -0.104, p > 0.05), while the dwell time coefficient remains unchanged and significant ($\beta_3$ = 0.694, p < 0.001). The minimal change in the Akaike information criterion when adding the position coefficients between Model 2 and Model 3 suggests that including ad position does not improve the model’s fit to the data. This supports the notion that dwell time is the more proximal factor in predicting ad recall. Our results also suggest that position may not provide significant additional explanatory power once dwell time is accounted for.
+
+```{r}
+#| eval: true
+#| warning: false
+#| label: tbl-mixed-effects
+#| tbl-cap: Estimates of Recall as a Function of Ad Position and Dwell Time
+#| results: asis
+
+tmp <- copy(subset[sponsored == 1])
+
+tmp[, log_dwell_pixel := scale(log_dwell_pixel)]
+tmp[, displayed_sequence := scale(displayed_sequence)]
+tmp[, age := scale(age)]
+
+glmer_0 <- glmer(recalled_brand_cued ~ displayed_sequence + 
+                   (1|participant_label) + brand,
+                 data = tmp,
+                 family = binomial(link = "logit"))
+
+glmer_1 <- glmer(recalled_brand_cued ~ displayed_sequence + I(displayed_sequence^2) + 
+                   (1|participant_label) + brand,
+                 data = tmp,
+                 family = binomial(link = "logit"))
+
+glmer_2 <- glmer(recalled_brand_cued ~ log_dwell_pixel + 
+                   (1|participant_label) + brand,
+                 data = tmp,
+                 family = binomial(link = "logit"))
+
+glmer_3 <- glmer(recalled_brand_cued ~ displayed_sequence + I(displayed_sequence^2) + log_dwell_pixel + brand + 
+                   (1|participant_label),
+                 data = tmp,
+                 family = binomial(link = "logit"))
+
+glmer_4 <- glmer(recalled_brand_cued ~ displayed_sequence + log_dwell_pixel +
+                   (1|participant_label) + (1|brand),
+                 data = tmp,
+                 family = binomial(link = "logit"))
+
+stargazer(glmer_1, glmer_2, glmer_3,
+          dep.var.caption  = "log(Odds Ratio)",
+          dep.var.labels   = c("Recall", "log(Dwell Time) per Pixel"),
+          # model.names = TRUE,
+          omit = "brand",
+          covariate.labels = c("Position",
+                               "(Position)²",
+                               "Dwell Time"),
+          add.lines = list(c("Brand Fixed Effects", "Yes", "Yes", "Yes")),
+          omit.stat = c("bic", "ll"),
+          star.cutoffs = c(0.05, 0.01, 0.001),
+          font.size = "scriptsize",
+          notes = c("Standard errors in parentheses.",
+                    # "The reported dwell time measure captures", 
+                    # "log(seconds a post was visible) per vertical pixel.",
+                    "Explanatory variables are z-standardized."),
+          notes.align = "l",
+          type = "html",
+          df = FALSE,
+          header = FALSE)
+```
+
+
+Ad recall also significantly varied across brands. @fig-by-brand (Panel A) visualizes the relationship between dwell time and position across the five brands in our study. We observe a consistent negative relationship between position and dwell time across all brands, with posts placed later in the feed receiving less attention. 
+
+```{r}
+p4 <- ggplot(data = subset[sponsored == 1], 
+       mapping = aes(x = displayed_sequence, y = log_dwell_pixel, 
+                     col = brand)) +
+  geom_smooth(method = "lm", formula = "y ~ x", se = FALSE) +
+  coord_cartesian(ylim = c(-0.001, 0.005)) +
+  scale_x_continuous(limits = c(1, 40), expand = c(0, NA), breaks = c(3, 10, 20, 30, 38)) +
+  geom_vline(xintercept = 3, alpha = 0.25) +
+  geom_vline(xintercept = 38, alpha = 0.25) +
+  scale_colour_tron() +
+  layout +
+  labs(title = "B", y = "Dwell Time", x = "Position", col = "Brand")
+```
+
+```{r}
+p6 <- ggplot(data = subset[sponsored == 1], 
+       mapping = aes(x = log_dwell_pixel, y = as.numeric(recalled_brand_cued),
+                     col = brand)) +
+  geom_smooth(method = "glm", 
+              method.args = list(family = "binomial"),
+              formula = "y ~ x", se = FALSE) +
+  scale_colour_tron() +
+  scale_x_continuous(breaks = c(-0.02, 0, 0.02)) +
+  layout +
+  labs(title = "C", y = "Recall", x = "Dwell Time", col = "Brand")
+```
+
+
+```{r}
+#| label: fig-by-brand
+#| fig-cap: "Ad Position, Dwell Time, and Recall Across Brands"
+#| fig-cap-location: top
+
+(p4 + p6 + plot_layout(guides = "collect")) & theme(legend.position = "bottom")
+
+```
+
+However, we also find that Apple and Nintendo generated significantly higher dwell time than all other brands (see the parallel upward shift of the regression line compared to Bose, Samsung, and Whoop). Panel B further shows how dwell time predicts recall probability consistently across all brands. The positive slope of all curves in Panel B indicates that increased dwell time enhances recall probability across all brands consistently, even for less familiar brands like Whoop. This suggests that while brands may differ in their baseline dwell time due to potential familiarity differences, we find a highly consistent empirical regularity of how dwell time ultimately predicts recall. 
+
+
+### Discussion
+
+Our second study demonstrates two core capabilities of DICE while demonstrating additional substantive insights about advertising effectiveness on social media. First, we demonstrate that dwell time is a stronger predictor of ad recall than the mere position of an ad, showing how DICE’s behavioral tracking data can uncover attention mechanisms that are difficult to study with existing paradigms. Second, Study 2 demonstrates how researchers can effectively combine behavioral engagement data with self-reports from conventional survey measures (e.g., participant recall of branded content). Combined with Study 1, we demonstrate several potential uses of the behavioral engagement data generated by the DICE app, ranging from basic data quality to proxies for attention explain downstream outcomes (e.g., ad recall). 
 
 
 ## Case Study 2: When Does Context Harm Brands? Manipulating Feed Composition to Study Brand Safety {#sec-brand-safety-case}
@@ -415,7 +409,7 @@ We demonstrate this capability by examining brand safety in social media adverti
 
 ### Experimental Design
 
-To examine how brand-(un)safe contexts affect brand perceptions, we created two social media feeds that were identical in structure but varied in their content surrounding a sponsored post. Both feeds contained the same number of organic posts and one identical sponsored post, with the only difference being the thematic focus of the organic content.
+To examine how brand-(un)safe contexts affect brand perceptions, we created two social media feeds that were identical in structure but varied in their content surrounding a sponsored post. @fig-design-2 displays exemplary screenshots of the implementation in DICE: both feeds contained the same number of organic posts and one identical sponsored post, with the only difference being the thematic focus of the organic content.
 
 To ensure ecological validity, we populated our experimental feeds with actual tweets covering Brazil: one feed featured coverage of severe flooding that claimed at least 95 lives [@Buschschlueter_2024], while the other contained typical Brazil-related content including Madonna's free concert in Rio de Janeiro, soccer matches, and travel experiences. This approach mirrors real-world scenarios where automated ad placement systems, operating primarily on keywords (e.g., "Brazil"), might place the same ad in vastly different contextual environments.
 
@@ -423,6 +417,7 @@ The sponsored post, a fictitious KLM advertisement promoting flights to Brazil, 
 
 To control for position effects identified in Case Study 1, we placed KLM's sponsored post in fifth position in both conditions. While this position remained constant, we randomized the sequence of organic posts between subjects to ensure any effects weren't driven by specific content adjacencies.
 
+![Exemplary DICE Feeds from Case Study 2](figures-cs2-design.png){#fig-design-2}
 
 ### Procedure
 
@@ -444,8 +439,7 @@ alpha <- psych::alpha(x = short[, .(brand_att_1, brand_att_2, brand_att_3)])
 ```
 
 As in the first case study, participants browsed the simulated feed on their own devices
-(`r share_desktop`% Desktop, `r share_mobile`% Mobile, and `r share_tablet`% Tablet). After scrolling through the feed, we redirected participants to a Qualtrics survey in which they first provided demographic information as a filler task. Subsequently, we measured whether participants recalled seeing the ads by the five brands in the feed. Specifically, we measured cued recall for which we showed participants a list of ten brands and asked them to indicate indicate which ones they remembered seeing. We also included a no-recall option to reduce false positives. 
-To assess brand perceptions, participants then evaluated their attitudes toward KLM using three seven-point scales  (1 = "Negative/Unfavorable/Dislike" and 7 = "Positive/Favorable/Like"; $\alpha$ = `r round(alpha$total$raw_alpha, digits = 2)`). Subsequently, participants indicated their awareness of the Brazil flooding situation before reading a debriefing and being redirected to Prolific.
+(`r share_desktop`% desktop, `r share_mobile`% mobile, and `r share_tablet`% tablet). After scrolling through the feed, we redirected participants to a Qualtrics survey in which they first provided demographic information as a filler task. Next, we measured participants' brand perceptions by assessing their attitude toward KLM using three seven-point scales  (1 = "Negative/Unfavorable/Dislike" and 7 = "Positive/Favorable/Like"; $\alpha$ = `r round(alpha$total$raw_alpha, digits = 2)`). Finally, we assessed participants' awareness of the Brazil flooding before debriefing the study and redirected them to the recruitment platform (Prolific). We provide our stimuli, materials, data, and analysis code on the [Open Science Framework](https://osf.io/2xs5c/?view_only=4bf95d2a2c8449218b5fa7cd288f626a). 
 
 ### Stimuli
 
@@ -578,3 +572,295 @@ tmp <- short[,
 
 kable(tmp[35:45])
 ```
+
+### Results
+
+```{r main_effect}
+
+lm_main <- lm(brand_attitude ~ condition, data = short)
+model_summary <- summary(lm_main)
+
+beta <- model_summary$coefficients[2, 1]  # F-statistic value
+se   <- model_summary$coefficients[2, 2]  # SE
+t_value <- model_summary$coefficients[2, 3]  
+f_value <- model_summary$fstatistic[1]  # F-statistic value
+f_df1 <- model_summary$fstatistic[2]    # degrees of freedom for the model
+f_df2 <- model_summary$fstatistic[3]    # degrees of freedom for the residuals
+p_value <- pf(f_value, f_df1, f_df2, lower.tail = FALSE)  # p-value from F-statistic
+cohensD <- round(effectsize::cohens_d(brand_attitude ~ condition, data = short, pooled_sd = FALSE)$Cohens_d, digits = 3)
+```
+
+```{r mod_reg}
+short[, log_time_spent := log(time_spent_on_page - seconds_in_viewport)]
+
+lm_x1 <- lm(brand_attitude ~ log_dwell_time * condition, data = short)
+lm_x2 <- lm(brand_attitude ~ log_time_spent * condition, data = short)
+lm_x3 <- lm(brand_attitude ~ log_dwell_time * condition + condition * log_time_spent, data = short)
+
+
+model_summary <- summary(lm_x1)
+mod_beta <- model_summary$coefficients[4, 1]
+mod_se   <- model_summary$coefficients[4, 2]  # SE
+mod_t_value <- model_summary$coefficients[4, 3]  # t
+mod_p_value <- model_summary$coefficients[, "Pr(>|t|)"][4]  # p
+
+lm_x3 <- lm(brand_attitude ~ log_dwell_time * condition + condition * log_time_spent, data = short)
+
+model_summary <- summary(lm_x3)
+mod_beta_2 <- model_summary$coefficients[5, 1]  
+mod_se_2   <- model_summary$coefficients[5, 2]  # SE
+mod_t_value_2 <- model_summary$coefficients[5, 3]  # t
+mod_p_value_2 <- model_summary$coefficients[, "Pr(>|t|)"][5]  # p
+```
+
+We found significantly more negative brand attitudes toward KLM in the unsafe feed condition ($M_u = `r short[condition == "inappropriate", round(mean(brand_attitude, na.rm = TRUE), digits = 3)]`$, $SD_u = `r short[condition == "inappropriate", round(sd(brand_attitude, na.rm = TRUE), digits = 3)]`$) were significantly less favorable than in the safe feed
+($M_s = `r short[condition == "appropriate", round(mean(brand_attitude, na.rm = TRUE), digits = 3)]`$, 
+$SD_s = `r short[condition == "appropriate", round(sd(brand_attitude, na.rm = TRUE), digits = 3)]`$,
+$\beta = `r round(beta, digits = 3)`$, 
+$SE = `r round(se, digits = 3)`$, 
+$t  = `r round(t_value, digits = 3)`$, 
+$p = `r sprintf("%.3f", p_value)`$, 
+$d = `r cohensD`$).
+
+DICE’s user interaction data further allows us to test whether this negative effect of unsafe content is conditional on the extent of attention that users devote to processing content in their feed. To further explore the interplay between context and brand attitudes, we examined whether the dwell time of the KLM ad (i.e., how long the sponsored post was inside the user’s viewport) moderated the previously reported main effect. An OLS regression revealed a statistically significant interaction between the brand safety context manipulation and dwell time 
+($\beta = `r round(mod_beta, digits = 3)`$, 
+$SE = `r sprintf(fmt = "%.3f", mod_se)`$, 
+$t = `r round(mod_t_value, digits = 3)`$, 
+$p = `r sprintf(fmt = "%.3f", mod_p_value)`$), 
+such that the negative effect of an unsafe context on brand attitude was more pronounced when participants spent more time viewing the sponsored post. In contrast, the effect was much smaller for participants who did not spend much time on the sponsored post. This moderation is robust to alternative model specifications where we repeated the same analysis while controlling for the dwell time dedicated to all organic posts
+($\beta = `r round(mod_beta_2, digits = 3)`$, 
+$SE = `r sprintf(fmt = "%.3f", mod_se_2)`$, 
+$t = `r round(mod_t_value_2, digits = 3)`$, 
+$p = `r sprintf(fmt = "%.3f", mod_p_value_2)`$).
+We show this moderation in Panel A of @fig-moderation-effects. In addition, we also show how the effect size varies as a function of the absolute dwell times in seconds  (see Panel B, Figure 6) to further illustrate this interaction effect. 
+
+```{r johnson_neyman}
+
+q_95 <- short[, quantile(x = log_dwell_time, probs = 0.95, na.rm = TRUE)]
+q_05 <- short[, quantile(x = log_dwell_time, probs = 0.05, na.rm = TRUE)]
+
+# Find Johnson Neyman through simulation
+
+sub <- short[is.finite(log_dwell_time)]
+tmp <- data.table(log_dwell_time = seq(from = min(sub$log_dwell_time, 
+                                                           na.rm = TRUE),
+                                       to = max(sub$log_dwell_time, 
+                                                         na.rm = TRUE),
+                                       length.out = 100),
+                  condition = rep(x = c("appropriate", "inappropriate"),
+                                  each = 100))
+
+lm_jn <- lm(brand_attitude ~ log_dwell_time * condition, data = sub)
+
+predictions <- predict(lm_jn, newdata = tmp, interval = "confidence")
+
+tmp[, c("fit", "lwr", "upr") := as.data.table(predictions)]
+
+appropriate <- tmp[condition == "appropriate"]
+inappropriate <- tmp[condition == "inappropriate"]
+
+non_overlap_point <- which(appropriate$lwr > inappropriate$upr)
+
+jn_point <- appropriate$log_dwell_time[non_overlap_point[1]-1]
+jn_seconds <- round(exp(jn_point), digits = 2)
+```
+
+
+```{r}
+sub[condition == "inappropriate", condition := "Unsafe"]
+sub[condition == "appropriate", condition := "Safe"]
+p1 <- ggplot(data = sub,
+       mapping = aes(x = log_dwell_time,
+                     y = brand_attitude,
+                     fill = condition,
+                     col = condition)) +
+  geom_rect(aes(xmin = -Inf, xmax = jn_point, ymin = -Inf, ymax = Inf),
+            fill = "#cccccc", col = NA, alpha = 0.05) + 
+  geom_vline(xintercept = jn_point, lty = 2) +
+  geom_smooth(method = "lm", formula = "y ~ x") +
+  layout +
+  labs(x = "log(Dwell Time)",
+       y = "Brand Attitude",
+       # title = "Moderating Effect of Dwell Time on Brand Attitude",
+       # caption = paste0("Johnson-Neyman-Interval indicated by grey area.
+       #                  Its cutoff (indicated by the dashed vertical line) translates to exp(",
+       #                  round(jn_point, digits = 2), ") = ",
+       # jn_seconds,
+       # " seconds.
+       # The x-axis ranges from the 5th to the 95th percentile of the distribution."),
+       color = "",
+       fill = "",
+       title = "A") +
+  scale_y_continuous(limits = c(1, NA), breaks = c(1, 2, 3, 4, 5, 6), expand = c(0, NA)) +
+  scale_x_continuous(expand = c(0, 0)) +
+  coord_cartesian(xlim = c(q_05, q_95)) +
+  scale_fill_custom_2d() +
+  scale_color_custom_2d() +
+  # scale_color_manual(values = c(appropriate = c_teal, inappropriate = c_orange)) +
+  # scale_fill_manual(values = c(appropriate = c_teal, inappropriate = c_orange)) +
+  layout +
+  theme(legend.position = "bottom")
+  
+```
+
+```{r}
+# Create all dwell columns in one step (keeping this from before)
+dwell_thresholds <- 1:11
+short[, paste0("dwell_", dwell_thresholds) := 
+        lapply(dwell_thresholds, function(x) as.integer(seconds_in_viewport >= x))]
+
+# Create results table
+results <- rbindlist(lapply(c(0, dwell_thresholds), function(x) {
+  if(x == 0) {
+    label <- "All data"
+    data <- short
+  } else {
+    label <- paste("≥", x, "seconds")
+    data <- short[get(paste0("dwell_", x)) == 1]
+  }
+  
+  stats <- get_effect_size(data)
+  
+  data.table(
+    threshold = label,
+    n = stats$n,
+    cohens_d = stats$d,
+    ci_low = stats$ci_low,
+    ci_high = stats$ci_high
+  )
+}))
+
+# add percentage of total sample
+total_n <- short[, .N]
+results[, pct_sample := round(n/total_n * 100, 1)]
+
+# order factors
+results[, threshold := factor(threshold, 
+                            levels = c("All data", paste("≥", 1:11, "seconds")),
+                            ordered = TRUE)]
+
+# Order columns as desired
+setcolorder(results, c("threshold", "n", "pct_sample", "cohens_d", "ci_low", "ci_high"))
+```
+
+```{r}
+# Create specified time bins
+short[, time_bin := cut(seconds_in_viewport,
+                       breaks = c(0, 0.5, 1, 2, 4, 6, 8, 12, Inf),
+                       labels = c("0-0.5", "0.5-1", "1-2", "2-4", "4-6", 
+                                "6-8", "8-12", ">12"),
+                       right = FALSE)]
+
+# Calculate effect sizes for each bin
+results_het <- rbindlist(lapply(c("all", levels(short$time_bin)), function(bin) {
+  if(bin == "all") {
+    label <- "Overall"
+    data <- short
+  } else {
+    label <- bin
+    data <- short[time_bin == bin]
+  }
+  
+  stats <- get_effect_size(data)
+  
+  data.table(
+    bin = label,
+    n = stats$n,
+    cohens_d = stats$d,
+    ci_low = stats$ci_low,
+    ci_high = stats$ci_high
+  )
+}))
+
+# Add percentage of total sample
+results_het[, pct_sample := round(n/total_n * 100, 1)]
+
+# Order factors (keeping "All data" first)
+results_het[, bin := factor(bin, 
+                          levels = c("Overall", 
+                                   c("0-0.5", "0.5-1", "1-2", "2-4", "4-6", 
+                                     "6-8", "8-12", ">12")),
+                          ordered = TRUE)]
+
+results_het[, positive_sign := as.factor(ifelse(test = ci_low > 0, yes = -1, no = 0))]
+
+# Plot
+p2 <- ggplot(data = results_het[bin != "Overall"],
+       mapping = aes(x = bin, y = cohens_d)) +
+  layout +
+  geom_hline(yintercept = 0, col = "grey") +
+  geom_point(aes(size = n), col = c_teal) +
+  geom_errorbar(aes(ymin = ci_low, ymax = ci_high), 
+                alpha = 1, width = 0.1, col = c_teal) +
+  geom_point(data = results_het[bin == "Overall"], shape = 18, size = 5, col = "grey") +
+  geom_errorbar(data = results_het[bin == "Overall"],
+                aes(ymin = ci_low, ymax = ci_high),
+                alpha = 1, width = 0.1, col = "grey") +
+  
+  labs(y = "Cohen's D", 
+       x = "Dwell Time (in Seconds)", 
+       size = "N",
+       title = "B") +
+  theme(panel.grid.major.x = element_line(colour = "grey",
+                                          linewidth = 0.1),
+        panel.grid.major.y = element_blank(),
+        legend.position = "bottom") +
+  coord_flip() +
+  guides(color = "none") +
+  scale_color_custom_2d()
+```
+
+```{r}
+#| label: fig-moderation-effects
+#| fig-cap: "Moderation of the Effect of Context on Brand Attitudes by Dwell Time"
+#| fig-cap-location: top
+
+p1 + p2
+```
+
+Additionally, researchers could also consider using the dwell time measures as a screening device. @fig-screener illustrates how the effect size varies as a function of using different thresholds (i.e., minimum dwell times) for excluding participants. These analyses are consistent with the moderation results reported previously as the effect sizes increases with more restrictive minimum dwell times.
+
+
+```{r}
+#| label: fig-screener
+#| fig-cap: "Using Dwell Time To Screen Study Participants"
+#| fig-cap-location: top
+
+results[, seconds := as.numeric(gsub("≥ |seconds|All data", "", threshold))]
+results[threshold == "All data", seconds := 0]
+
+# use weighted regression to account for varying sample sizes
+quad_model <- lm(cohens_d ~ seconds + I(seconds^2), 
+                 data = results,
+                 weights = n) # weighting by sample size
+# summary(quad_model)
+
+# fitted curve
+pred_data <- data.table(
+  seconds = seq(0, max(results$seconds), length.out = 100)
+)
+pred_data[, cohens_d_pred := predict(quad_model, newdata = pred_data)]
+
+# plot
+ggplot(data = results) +
+  layout +
+  geom_point(aes(x = seconds, y = cohens_d, size = n),
+             alpha = 1, col = c_teal) +
+  geom_errorbar(aes(x = seconds, ymin = ci_low, ymax = ci_high),
+                alpha = 1, col = c_teal) +
+  geom_line(data = pred_data,
+            aes(x = seconds, y = cohens_d_pred),
+            color = c_teal, linetype = "dashed") +
+  scale_y_continuous(limits = c(0, 1), expand = c(0, NA), breaks = c(0.25, 0.5, 0.75)) +
+  scale_x_continuous(breaks = seq(from = 0, to = max(results$seconds), by = 1)) +
+  labs(y = "Cohen's D", 
+       x = "Minimum Dwell Time Restriction (in Seconds)", 
+       size = "Sample Size")
+```
+
+
+### Discussion
+
+Our first study demonstrates DICE’s ability to test relevant and difficult-to-study context effects with high experimental control. We also show how the behavioral data generated by the DICE app allows researchers to better understand how attention (as proxied through dwell times) affects brand perceptions, showcasing DICE’s capacity to reveal behavioral mechanisms that are difficult to study with existing paradigms. From a substantive perspective, the findings provide experimental support for brand safety concerns and demonstrate that contextual misplacements can actively harm brand perceptions. 
+
+On a methodological level, our first study demonstrates how researchers can manipulate not just single social media posts but entire feed compositions and how DICE’s behavioral data can serve multiple methodological purposes: using dwell time data as a moderator to assess the strength of an effect (i.e., showing that the negative effect of unsafe feeds increases with enhanced dwell time) or as a data quality or attention check (i.e., demonstrating variation in effect sizes due to different thresholds for filtering out participants that did not properly engage with the focal post). Using the behavioral tracking data for moderation analyses and data quality checks serves as a practical example of how dwell time data can be used as an unobtrusive proxy to measure _manipulation intensity_ [@KrefeldSchwabSugermanJohnson_2024].
