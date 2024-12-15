@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Documentation",
     "section": "",
-    "text": "DICE combines the control of experimental research with more realistic stimuli that are inspired by social media platforms. The DICE app (which is based on the powerful oTree framework Chen, Schonger, and Wickens 2016) enables you to create realistic social media feeds with customizable content while supporting between-subjects experimental designs. It provides precise dwell time tracking for engagement measurement and integrates seamlessly with popular survey platforms like Qualtrics. For participant recruitment, DICE works smoothly with Prolific, and all collected data is available in convenient formats for analysis.\n\n\nGetting started with the DICE app is straightforward. Visit dice-app.org to access the web interface. You’ll need to create your stimulus configuration in a CSV file, for which we provide a template. After uploading your CSV to a public repository like GitHub, you can use DICE’s web interface to configure and launch your study. The platform handles participant management and data collection automatically.\n\n\n\nOur documentation follows the natural workflow of creating and running a DICE experiment:\nThe Stimuli chapter forms the foundation, showing you how to create and configure your social media feed content using a CSV file. This structured approach ensures precise control over your experimental manipulations while maintaining the authentic feel of social media.\nOnce your stimuli are ready, the Launch a Study chapter guides you through the DICE web interface at dice-app.org. You’ll learn how to configure your experiment, integrate with survey platforms like Qualtrics, and manage participant recruitment through Prolific.\nThe Data chapter then explains how to work with the data DICE collects, including dwell time measurements and user interactions. You’ll learn about data structure, processing, and how to combine DICE data with your survey responses.\nWe’ve included two detailed Case Studies that demonstrate DICE’s capabilities in real research scenarios: one investigating ad recall and position effects, and another examining brand safety in social media advertising. For researchers interested in advanced implementations, the Deployment chapter provides guidance for hosting DICE on your own servers.\n\n\n\nIf you need assistance with DICE, you have several options available:\n\nExplore the documentation chapters\nReview the case studies for practical examples\nVisit our GitHub repository for additional resources\nContact the DICE team for technical support\n\n\n\n\n\n\nChen, Daniel L., Martin Schonger, and Chris Wickens. 2016. “oTree—an Open-Source Platform for Laboratory, Online, and Field Experiments.” Journal of Behavioral and Experimental Finance 9: 88–97. https://doi.org/doi.org/10.1016/j.jbef.2015.12.001."
+    "text": "Preface\nDICE combines the control of experimental research with more realistic stimuli that are inspired by social media platforms. The DICE app (which is based on the powerful oTree framework Chen, Schonger, and Wickens 2016) enables you to create realistic social media feeds with customizable content while supporting between-subjects experimental designs. It provides precise dwell time tracking for engagement measurement and integrates seamlessly with popular survey platforms like Qualtrics. For participant recruitment, DICE works smoothly with Prolific, and all collected data is available in convenient formats for analysis."
   },
   {
     "objectID": "stimuli.html",
@@ -229,5 +229,33 @@
     "title": "4  Case Studies",
     "section": "",
     "text": "This expectation is based on each of the 5 sponsored posts being shown once per participant (N=300) in a feed of 40 positions, leading to an average of \\(\\frac{300}{40} = 7.5\\) for each brand’s ad placement across all positions.↩︎"
+  },
+  {
+    "objectID": "stimuli.html#footnotes",
+    "href": "stimuli.html#footnotes",
+    "title": "1  Stimuli",
+    "section": "",
+    "text": "Researchers can change the order of these columns as they want. In addition, they can add additional columns for internal purposes. We recommend, to document a post’s source (i.e., a url) if a post was scraped or copied from social media or an ad library.↩︎\nSee our repository (url provided after review) for more details on the technical implementation.↩︎"
+  },
+  {
+    "objectID": "index.html#quickstart",
+    "href": "index.html#quickstart",
+    "title": "Documentation",
+    "section": "Quickstart",
+    "text": "Quickstart\nGetting started with the DICE app is straightforward. Visit dice-app.org to access the web interface. You’ll need to create your stimulus configuration in a CSV file, for which we provide a template. After uploading your CSV to a public repository like GitHub, you can use DICE’s web interface to configure and launch your study. The platform handles participant management and data collection automatically."
+  },
+  {
+    "objectID": "index.html#documentation-overview",
+    "href": "index.html#documentation-overview",
+    "title": "Documentation",
+    "section": "Documentation Overview",
+    "text": "Documentation Overview\nOur documentation follows the natural workflow of creating and running a DICE experiment:\nThe Stimuli chapter forms the foundation, showing you how to create and configure your social media feed content using a CSV file. This structured approach ensures precise control over your experimental manipulations while maintaining the authentic feel of social media.\nOnce your stimuli are ready, the Launch a Study chapter guides you through the DICE web interface at dice-app.org. You’ll learn how to configure your experiment, integrate with survey platforms like Qualtrics, and manage participant recruitment through Prolific.\nThe Data chapter then explains how to work with the data DICE collects, including dwell time measurements and user interactions. You’ll learn about data structure, processing, and how to combine DICE data with your survey responses.\nWe’ve included two detailed Case Studies that demonstrate DICE’s capabilities in real research scenarios: one investigating ad recall and position effects, and another examining brand safety in social media advertising. For researchers interested in advanced implementations, the Deployment chapter provides guidance for hosting DICE on your own servers."
+  },
+  {
+    "objectID": "index.html#getting-help",
+    "href": "index.html#getting-help",
+    "title": "Documentation",
+    "section": "Getting Help",
+    "text": "Getting Help\nIf you need assistance with DICE, you have several options available:\n\nExplore the documentation chapters\nReview the case studies for practical examples\nVisit our GitHub repository for additional resources\nContact the DICE team for technical support\n\n\n\n\n\n\nChen, Daniel L., Martin Schonger, and Chris Wickens. 2016. “oTree—an Open-Source Platform for Laboratory, Online, and Field Experiments.” Journal of Behavioral and Experimental Finance 9: 88–97. https://doi.org/doi.org/10.1016/j.jbef.2015.12.001."
   }
 ]
