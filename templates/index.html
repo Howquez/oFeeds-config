@@ -192,7 +192,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="content_url" class="form-label">Provide URL Directing to Your Content</label>
-                            <input type="text" class="form-control" id="content_url" aria-describedby="url_help" value="https://raw.githubusercontent.com/Howquez/DICE/main/software/DICE/DICE/static/data/sample_tweets.csv">
+                            <input type="text" class="form-control" id="content_url" aria-describedby="url_help" value="https://raw.githubusercontent.com/DICE-app/sample-feeds/refs/heads/main/feeds/9gag.csv">
                             <div id="url_help" class="form-text">
                                 Please provide a url directing to your raw, UTF-8 formatted csv file (preferably GitHub or Google Drive).
                                 <a href="{{ url_for('static', filename='sample_feed.csv') }}" download="sample_feed.csv">Click here</a>
@@ -294,7 +294,7 @@
                     <form>
                         <div class="mb-3">
                             <label for="survey_url" class="form-label">Insert Your Survey's URL</label>
-                            <input type="text" class="form-control" id="survey_url" aria-describedby="survey_url_help" value="https://unisg.qualtrics.com/jfe/form/SV_0DnMoLpM0VxjhrM">
+                            <input type="text" class="form-control" id="survey_url" aria-describedby="survey_url_help">
                             <div id="survey_url_help" class="form-text">
                                 Configure this  field, if you want to append a survey to the stimulus.
                                 We'll create a redirect with url parameters to pass both the participant ID as well as
