@@ -186,60 +186,41 @@ function sendValue() {
     let condition_col = "condition";
     let display_skyscraper = document.getElementById('display_skyscraper').checked;
 
-    // Perform CSV validation before creating a session
-    fetch('/validate_csv', {
+    // Directly proceed with creating the session without validation
+    fetch('/create_session', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({content_url: content_url}),
+        body: JSON.stringify({
+            title: title,
+            full_name: full_name,
+            eMail: eMail,
+            study_name: study_name,
+            channel_type: channel_type,
+            participant_number: parseInt(participant_number),
+            content_url: content_url,
+            delimiter: delimiter,
+            recruitment_platform: recruitment_platform,
+            survey_url: survey_url,
+            dwell_threshold: dwell_threshold,
+            search_term: search_term,
+            sort_by: sort_by,
+            condition_col: condition_col,
+            display_skyscraper: display_skyscraper,
+            briefing: html_briefing
+        }),
     })
     .then(response => response.json())
-    .then(data => {
-        if (data.message) {
-            console.log(data.message);
-            // Proceed with creating the session after successful validation
-            fetch('/create_session', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    title: title,
-                    full_name: full_name,
-                    eMail: eMail,
-                    study_name: study_name,
-                    channel_type: channel_type,
-                    participant_number: parseInt(participant_number),
-                    content_url: content_url,
-                    delimiter: delimiter,
-                    recruitment_platform: recruitment_platform,
-                    survey_url: survey_url,
-                    dwell_threshold: dwell_threshold,
-                    search_term: search_term,
-                    sort_by: sort_by,
-                    condition_col: condition_col,
-                    display_skyscraper: display_skyscraper,
-                    briefing: html_briefing
-                }),
-            })
-            .then(response => response.json())
-            .then(sessionData => {
-                liveRecv(sessionData);
-                createSessionBtn.style.display = 'none';
-            })
-            .catch(error => {
-                console.error('Session Creation Error:', error);
-            });
-        } else if (data.error) {
-            alert("Validation Error: " + data.error);
-            createSessionBtn.innerHTML = 'Create Session';
-            createSessionBtn.disabled = false;
-        }
+    .then(sessionData => {
+        liveRecv(sessionData);
+        createSessionBtn.style.display = 'none';
     })
     .catch(error => {
-        console.error('CSV Validation Error:', error);
-        alert("Validation request failed.");
+        console.error('Session Creation Error:', error);
+        createSessionBtn.innerHTML = 'Create Session';
+        createSessionBtn.disabled = false;
+        alert('Error creating session: ' + error.message);
     });
 }
 

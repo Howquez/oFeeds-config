@@ -1,20 +1,46 @@
 from flask import Flask, render_template, request, jsonify, Response, send_from_directory, redirect, url_for
-from pprint import pprint
 import requests
 import pandas as pd
 from io import StringIO
 import json
+import os
+from typing import Dict, Any, Tuple, Optional
 
 app = Flask(__name__)
 
-# Constants for API calls
-SERVER_URL = 'https://ibt-hsg.herokuapp.com'
-REST_KEY = 'Torstrasse25'  # fill this with your actual REST key
+# Constants moved to top and using environment variables
+SERVER_URL = os.getenv('SERVER_URL', 'https://ibt-hsg.herokuapp.com')
+REST_KEY = os.getenv('REST_KEY', 'Torstrasse25')  # Better to use environment variable
+
+
+class APIError(Exception):
+    """Custom exception for API-related errors"""
+
+    def __init__(self, message: str, status_code: int):
+        self.message = message
+        self.status_code = status_code
+        super().__init__(self.message)
+
+
+def call_api(method: str, *path_parts: str, **params: Any) -> Dict:
+    """Enhanced API call function with better error handling"""
+    try:
+        path = '/'.join(str(part) for part in path_parts)
+        url = f'{SERVER_URL}/api/{path}/'
+        headers = {'otree-rest-key': REST_KEY}
+
+        response = requests.request(method, url, json=params, headers=headers)
+        response.raise_for_status()
+        return response.json()
+    except requests.RequestException as e:
+        status_code = e.response.status_code if hasattr(e, 'response') else 500
+        raise APIError(f'Request to "{url}" failed: {str(e)}', status_code)
+
 
 @app.route('/')
 def index():
-    # This route serves the index.html template
     return render_template('index.html')
+
 
 @app.route('/docs/', defaults={'filename': 'index.html'})
 @app.route('/docs/<path:filename>')
@@ -24,166 +50,111 @@ def serve_docs(filename):
     except FileNotFoundError:
         return redirect(url_for('serve_docs', filename='index.html'))
 
-# Helper function to call the external API
-def call_api(method, *path_parts, **params):
-    path_parts = '/'.join(str(part) for part in path_parts)
-    url = f'{SERVER_URL}/api/{path_parts}/'
-    headers = {'otree-rest-key': REST_KEY}
-    resp = method(url, json=params, headers=headers)
-    if not resp.ok:
-        msg = (
-            f'Request to "{url}" failed '
-            f'with status code {resp.status_code}: {resp.text}'
-        )
-        raise Exception(msg)
-    return resp.json()
-
-# Add the CSV validation logic here
-def check_delimiter(content_url, expected_delimiter=';'):
-    try:
-        df = pd.read_csv(content_url, sep=expected_delimiter, engine='python')
-        if df.shape[1] == 1:
-            return False, None
-        return True, df
-    except Exception:
-        return False, None
-
-@app.route('/validate_csv', methods=['POST'])
-def validate_csv():
-    data = request.json
-    content_url = data.get('content_url')
-    expected_delimiter = data.get('delimiter')
-
-    delimiter_ok, df = check_delimiter(content_url, expected_delimiter)
-    if not delimiter_ok:
-        return jsonify({"error": "CSV file seems to use a wrong delimiter."}), 400
-
-    try:
-        required_columns = ['datetime', 'text', 'replies', 'reposts', 'likes', 'media', 'username']
-        if not all(column in df.columns for column in required_columns):
-            return jsonify({"error": "CSV file is missing one or more required columns."}), 400
-
-        pd.to_datetime(df['datetime'])
-        for column in ['replies', 'reposts', 'likes']:
-            if not pd.api.types.is_numeric_dtype(df[column]):
-                return jsonify({"error": f"Column '{column}' contains non-numeric values."}), 400
-
-        return jsonify({"message": "CSV validation passed."})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
 
 @app.route('/create_session', methods=['POST'])
 def create_session():
-    # This route handles the API call based on form data
-    data = request.json
-
-    url_param = 'None'
-    if data.get('recruitment_platform') == 'Prolific':
-        url_param = 'PROLIFIC_PID'
-
     try:
+        data = request.get_json()
+        if not data:
+            return jsonify({"error": "No data provided"}), 400
+
+        url_param = 'PROLIFIC_PID' if data.get('recruitment_platform') == 'Prolific' else 'None'
+
         response = call_api(
-            requests.post,
+            'POST',
             'sessions',
             session_config_name='Twitter',
             num_participants=data.get('participant_number'),
-            modified_session_config_fields=dict(
-                title=data.get('title'),
-                full_name=data.get('full_name'),
-                eMail=data.get('eMail'),
-                study_name=data.get('study_name'),
-                channel_type=data.get('channel_type'),
-                data_path=data.get('content_url'),
-                delimiter=data.get('delimiter'),
-                topics=not data.get('display_skyscraper'),
-                url_param=url_param,
-                survey_link=data.get('survey_url'),
-                dwell_threshold=data.get('dwell_threshold'),
-                search_term=data.get('search_term'),
-                sort_by=data.get('sort_by'),
-                condition_col=data.get('condition_col'),
-                briefing=data.get('briefing')
-            )
+            modified_session_config_fields={
+                'title': data.get('title'),
+                'full_name': data.get('full_name'),
+                'eMail': data.get('eMail'),
+                'study_name': data.get('study_name'),
+                'channel_type': data.get('channel_type'),
+                'data_path': data.get('content_url'),
+                'delimiter': data.get('delimiter'),
+                'topics': not data.get('display_skyscraper'),
+                'url_param': url_param,
+                'survey_link': data.get('survey_url'),
+                'dwell_threshold': data.get('dwell_threshold'),
+                'search_term': data.get('search_term'),
+                'sort_by': data.get('sort_by'),
+                'condition_col': data.get('condition_col'),
+                'briefing': data.get('briefing')
+            }
         )
-        # print(response)
         return jsonify(response)
+    except APIError as e:
+        return jsonify({"error": str(e)}), e.status_code
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 
 @app.route('/submit_completion_code', methods=['POST'])
 def submit_completion_code():
-    data = request.json
-    print("Received data:", data)  # Print the received data
-
-    completion_code = data.get('completion_code')
-    session_code = data.get('session_code')
-
     try:
-        # Use the call_api function to process the completion_code and session_code
-        api_response = call_api(
-            requests.post,
+        data = request.get_json()
+        if not data or not all(k in data for k in ['completion_code', 'session_code']):
+            return jsonify({"error": "Missing required fields"}), 400
+
+        response = call_api(
+            'POST',
             'session_vars',
-            session_code,
-            vars=dict(completion_code=completion_code)
+            data['session_code'],
+            vars=dict(completion_code=data['completion_code'])
         )
 
-        # Construct the response
-        response = {
+        return jsonify({
             "status": "success",
-            "api_response": api_response,  # The response from the external API
-            "completion_code": completion_code,
-            "session_code": session_code
-        }
-        print("Response data:", response)  # Print the response data
-
-        return jsonify(response)
+            "api_response": response,
+            "completion_code": data['completion_code'],
+            "session_code": data['session_code']
+        })
+    except APIError as e:
+        return jsonify({"error": str(e)}), e.status_code
     except Exception as e:
-        error_response = {"error": str(e)}
-        print("Error response:", error_response)  # Print the error response
-
-        return jsonify(error_response), 500
+        return jsonify({"error": str(e)}), 500
 
 
 @app.route('/api/sessions/<session_code>')
 def get_session_data(session_code):
     try:
-        data = call_api(requests.get, 'sessions', session_code)
-        # You may need to process data here before sending it to the frontend
-        # return jsonify(data)
-        pprint(data)
+        data = call_api('GET', 'sessions', session_code)
+        return jsonify(data)
+    except APIError as e:
+        return jsonify({"error": str(e)}), e.status_code
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 
 @app.route('/create_replication_package', methods=['POST'])
 def create_replication_package():
-    data = request.json
-    csv_url = data['content_url']
-    configurations = data.get('configurations', {})
-
     try:
-        response = requests.get(csv_url)
+        data = request.get_json()
+        if not data or 'content_url' not in data:
+            return jsonify({"error": "Missing required fields"}), 400
+
+        response = requests.get(data['content_url'])
         response.raise_for_status()
-        csv_data = pd.read_csv(StringIO(response.text), delimiter=data.get('delimiter'))
 
-        replication_package = {
-            "configurations": configurations,
+        csv_data = pd.read_csv(StringIO(response.text), delimiter=data.get('delimiter', ';'))
+
+        package_json = json.dumps({
+            "configurations": data.get('configurations', {}),
             "csv_data": csv_data.to_dict(orient='records')
-        }
+        }, indent=4)
 
-        package_json = json.dumps(replication_package, indent=4)
-
-        download_filename = 'replication_package.json'
-        response = Response(package_json, mimetype='application/json')
-        response.headers['Content-Disposition'] = f'attachment; filename={download_filename}'
-
+        response = Response(
+            package_json,
+            mimetype='application/json',
+            headers={'Content-Disposition': 'attachment; filename=replication_package.json'}
+        )
         return response
     except requests.RequestException as e:
-        return jsonify({'status': 'error', 'message': 'Failed to fetch CSV data: ' + str(e)})
+        return jsonify({'error': f'Failed to fetch CSV data: {str(e)}'}), 500
     except Exception as e:
-        return jsonify({'status': 'error', 'message': 'An error occurred: ' + str(e)})
+        return jsonify({'error': f'An error occurred: {str(e)}'}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)
-
