@@ -167,6 +167,12 @@ function sendValue() {
     createSessionBtn.innerHTML = '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Loading...';
     createSessionBtn.disabled = true;
 
+    // Clear any previous error messages
+    let errorMessageElement = document.getElementById('errorMessage');
+    if (errorMessageElement) {
+        errorMessageElement.remove();
+    }
+
     // Get the HTML content from Quill
     let html_briefing = quill.getText().trim() === '' ? '' : quill.root.innerHTML;
 
@@ -211,16 +217,37 @@ function sendValue() {
             briefing: html_briefing
         }),
     })
-    .then(response => response.json())
+    .then(response => {
+        // Check if the response is successful
+        if (!response.ok) {
+            return response.json().then(errorData => {
+                throw new Error(errorData.error || 'Unknown error occurred');
+            });
+        }
+        return response.json();
+    })
     .then(sessionData => {
         liveRecv(sessionData);
         createSessionBtn.style.display = 'none';
     })
     .catch(error => {
         console.error('Session Creation Error:', error);
+
+        // Reset button state
         createSessionBtn.innerHTML = 'Create Session';
         createSessionBtn.disabled = false;
-        alert('Error creating session: ' + error.message);
+
+        // Create and display error message
+        let errorDiv = document.createElement('div');
+        errorDiv.id = 'errorMessage';
+        errorDiv.className = 'alert alert-danger mt-3';
+        errorDiv.textContent = error.message || 'Error creating session';
+
+        // Insert the error message before the button
+        createSessionBtn.parentNode.insertBefore(errorDiv, createSessionBtn);
+
+        // Scroll to the error message
+        errorDiv.scrollIntoView({ behavior: 'smooth' });
     });
 }
 
