@@ -58,6 +58,12 @@ def create_session():
         if not data:
             return jsonify({"error": "No data provided"}), 400
 
+        # Participant Number Validation (max of 400)
+        participant_number = data.get('participant_number')
+        if participant_number is None or not isinstance(participant_number,
+                                                        int) or participant_number < 1 or participant_number > 400:
+            return jsonify({"error": "Participant number must be between 1 and 400"}), 400
+
         url_param = 'PROLIFIC_PID' if data.get('recruitment_platform') == 'Prolific' else 'None'
 
         response = call_api(
