@@ -1,10 +1,11 @@
 var globalSessionCode;
-var quill; // Declare quill globally to access it throughout the code
+var quillBriefing; // Quill instance for briefing
+var quillConsent;  // Quill instance for consent form
 
-// Initialize Quill when document is loaded
+// Initialize both Quill editors when document is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Quill with configuration to avoid mutation events
-    quill = new Quill('#quill-editor', {
+    // Initialize briefing editor
+    quillBriefing = new Quill('#quill-editor-briefing', {
         theme: 'snow',
         modules: {
             toolbar: [
@@ -16,8 +17,28 @@ document.addEventListener('DOMContentLoaded', function() {
             ]
         },
         placeholder: 'Write your briefing here...',
-        bounds: document.querySelector('#editor-container'),
-        scrollingContainer: document.querySelector('#editor-container'),
+        bounds: document.querySelector('#editor-container-briefing'),
+        scrollingContainer: document.querySelector('#editor-container-briefing'),
+        readOnly: false,
+        strict: true,
+        preserveWhitespace: true
+    });
+
+    // Initialize consent form editor
+    quillConsent = new Quill('#quill-editor-consent', {
+        theme: 'snow',
+        modules: {
+            toolbar: [
+                ['bold', 'italic', 'underline'],
+                [{ 'header': [1, 2, 3, 4, 5, false] }],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                [{ 'color': [] }, { 'background': [] }],
+                ['clean']
+            ]
+        },
+        placeholder: 'Write your consent form here...',
+        bounds: document.querySelector('#editor-container-consent'),
+        scrollingContainer: document.querySelector('#editor-container-consent'),
         readOnly: false,
         strict: true,
         preserveWhitespace: true
@@ -64,10 +85,10 @@ function liveRecv(data) {
     title.append(' created successfully!');
 
     var paragraph_1 = document.createElement('p');
-    paragraph_1.textContent = 'You can visit your session: ';
+    paragraph_1.textContent = 'You can visit your session here: ';
 
     var paragraph_2 = document.createElement('p');
-    paragraph_2.textContent = "1. Please write the session code ('" + data.code + "') or the URL (displayed above) down. They are unique to the session you just created and they are the only route for you to monitor the session's progress and to download your data, eventually.";
+    paragraph_2.textContent = "1. Please write the session code ('" + data.code + "') or the URL (displayed above) down. A session codes is unique to the session you just created and is the only route for you to monitor the session's progress and to download your data, eventually.";
 
     var urlDisplay = document.createElement('div');
     urlDisplay.className = 'input-group mb-3';
@@ -173,8 +194,9 @@ function sendValue() {
         errorMessageElement.remove();
     }
 
-    // Get the HTML content from Quill
-    let html_briefing = quill.getText().trim() === '' ? '' : quill.root.innerHTML;
+    // Get the HTML content from both Quill editors
+    let html_briefing = quillBriefing.getText().trim() === '' ? '' : quillBriefing.root.innerHTML;
+    let html_consent = quillConsent.getText().trim() === '' ? '' : quillConsent.root.innerHTML;
 
     let title = document.getElementById('title').value;
     let full_name = document.getElementById('name').value;
@@ -214,7 +236,8 @@ function sendValue() {
             sort_by: sort_by,
             condition_col: condition_col,
             display_skyscraper: display_skyscraper,
-            briefing: html_briefing
+            briefing: html_briefing,
+            consent_form: html_consent
         }),
     })
     .then(response => {

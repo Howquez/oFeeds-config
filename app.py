@@ -86,7 +86,8 @@ def create_session():
                 'search_term': data.get('search_term'),
                 'sort_by': data.get('sort_by'),
                 'condition_col': data.get('condition_col'),
-                'briefing': data.get('briefing')
+                'briefing': data.get('briefing'),
+                'consent_form': data.get('consent_form')
             }
         )
         return jsonify(response)

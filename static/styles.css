@@ -11,7 +11,7 @@ body {
     margin-top: 1rem;
 }
 
-#quill-editor {
+#quill-editor-consent #quill-editor-briefing{
     min-height: 200px;
 }
 
