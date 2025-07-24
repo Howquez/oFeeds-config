@@ -1,4 +1,4 @@
-# Stimuli {#sec-stimuli}
+# Generate Stimuli {#sec-stimuli}
 
 ```{r install_packages}
 #| warning: false

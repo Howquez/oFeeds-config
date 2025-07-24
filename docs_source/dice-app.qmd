@@ -51,30 +51,20 @@ Enter the term you want participants to see in the search bar of your simulated 
 
 ## Participant Briefing
 
-The briefing field allows you to create instructions that participants will see before they interact with the social media feed. This is where you provide context, tasks, or any other important information participants need to know.
+This section provides two rich text editors that allow you to create formatted content for your study participants.
 
-Your briefing should be written in HTML format. This gives you control over how your text appears to participants. Here's how you can format your briefing:
+### Consent Form
 
-```
-<h5>Welcome to our Study</h5>
-<p>In this study, you will browse through a social media feed about climate change.</p>
-<p>Please pay attention to the following:</p>
-<ul>
-    <li>Take your time reading each post</li>
-    <li>Notice how people discuss the topic</li>
-</ul>
-<p><strong>Important:</strong> You will be asked questions about these posts later.</p>
-```
+The first editor allows you to create a consent form that participants must agree to before participating in your study. This is particularly important for research conducted through institutional review boards or when ethical compliance is required. You can format your consent text using the toolbar options, including headers, bold text, and other formatting features.
+The consent form typically includes information about the study's purpose, procedures, time commitment, voluntary participation, data privacy measures, and contact information for questions.
 
-Common HTML tags you might use:
+### Study Instructions
 
-- `<h5>` for headlines
-- `<p>` for paragraphs
-- `<strong>` or `<b>` for bold text
-- `<ul>` and `<li>` for bullet points
-- `<br>` for line breaks
+The second editor is where you provide instructions and context for participants before they interact with the social media feed. These instructions could explain what participants will see, what they should do, and any specific guidance about how to engage with the content. Accordingly, your study instructions might include welcome text, task instructions, expectations about timing, and any special considerations for interacting with the social media posts. 
 
-If you leave this field empty, the briefing page will be skipped entirely and participants will go directly to the feed.
+If you leave the study instructions editor empty, participants will skip directly from the consent form to the social media feed. If both editors are empty, participants will go directly to the social media content without any preliminary pages.
+
+The content you create in both editors is stored as part of your study configuration and will be displayed exactly as you format it to all participants in your study.
 
 
 ## Measurement

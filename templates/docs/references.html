@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.132">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Documentation - References</title>
+<title>References – Documentation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -17,14 +17,15 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -38,8 +39,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -55,17 +55,23 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-2180d9982d7c035d3c98108530bcf335.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -74,8 +80,10 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -86,84 +94,92 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a href="https://www.dice-app.org/" class="navbar-brand navbar-brand-logo">
     <img src="./dice-logo-white.png" alt="" class="navbar-logo">
     </a>
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="https://www.dice-app.org/">
     <span class="navbar-title">Documentation</span>
     </a>
   </div>
+        <div class="quarto-navbar-tools tools-end">
+</div>
           <div id="quarto-search" class="" title="Search"></div>
       </div> <!-- /container-fluid -->
     </nav>
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">References</h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./references.html">References</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
     </div>
   </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
-      <div class="mt-2 flex-shrink-0 align-items-center">
-        <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
-        </div>
-      </div>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./stimuli.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Stimuli</span></a>
+  <a href="./stimuli.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Generate Stimuli</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dice-app.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Launch a Study</span></a>
+  <a href="./dice-app.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Launch a Study</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data</span></a>
+  <a href="./data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cases.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Case Studies</span></a>
+  <a href="./cases.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Case Studies</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./deployment.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Deploy DICE yourself</span></a>
+  <a href="./deployment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Deploy DICE yourself</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./extensions.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Extensions</span></a>
+  <a href="./extensions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Extensions</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link active">References</a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
         
     </div>
 <!-- main -->
@@ -171,7 +187,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">References</h1>
+<h1 class="title">References</h1>
 </div>
 
 
@@ -179,76 +195,54 @@ div.csl-indent {
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
 
+
 </header>
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
-<div id="ref-AgarwalHosanagarSmith_2011" class="csl-entry" role="doc-biblioentry">
-Agarwal, Ashish, Kartik Hosanagar, and Michael D. Smith. 2011.
-<span>“Location, Location, Location: An Analysis of Profitability of
-Position in Online Advertising Markets.”</span> <em>Journal of Marketing
-Research</em> 48 (6): 1057–73. <a href="https://doi.org/10.1509/jmr.08.0468">https://doi.org/10.1509/jmr.08.0468</a>.
-</div>
-<div id="ref-AhmadEtAl_2024" class="csl-entry" role="doc-biblioentry">
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-AhmadEtAl_2024" class="csl-entry" role="listitem">
 Ahmad, Wajeeha, Ananya Sen, Charles Eesley, and Erik Brynjolfsson. 2024.
 <span>“Companies Inadvertently Fund Online Misinformation Despite
 Consumer Backlash.”</span> <em>Nature</em> 630: 123–31. <a href="https://doi.org/10.1038/s41586-024-07404-1">https://doi.org/10.1038/s41586-024-07404-1</a>.
 </div>
-<div id="ref-BergerMoeSchweidel_2023" class="csl-entry" role="doc-biblioentry">
-Berger, Jonah, Wendy W. Moe, and David A. Schweidel. 2023. <span>“What
-Holds Attention? Linguistic Drivers of Engagement.”</span> <em>Journal
-of Marketing</em> 87 (5): 793–809. <a href="https://doi.org/10.1177/00222429231152880">https://doi.org/10.1177/00222429231152880</a>.
-</div>
-<div id="ref-Buschschlueter_2024" class="csl-entry" role="doc-biblioentry">
-Buschschlüter, Vanessa. 2024. <span>“Brazil Floods: ’We’ve Never
-Experienced Anything Like It’.”</span> BBC News. <a href="https://web.archive.org/web/20240805170342/https://www.bbc.com/news/articles/cle07g0zzqeo">https://web.archive.org/web/20240805170342/https://www.bbc.com/news/articles/cle07g0zzqeo</a>.
-</div>
-<div id="ref-CampbellKeller_2003" class="csl-entry" role="doc-biblioentry">
+<div id="ref-CampbellKeller_2003" class="csl-entry" role="listitem">
 Campbell, Margaret C., and Kevin Lane Keller. 2003. <span>“<span class="nocase">Brand Familiarity and Advertising Repetition
 Effects</span>.”</span> <em>Journal of Consumer Research</em> 30 (2):
 292–304. <a href="https://doi.org/10.1086/376800">https://doi.org/10.1086/376800</a>.
 </div>
-<div id="ref-oTree" class="csl-entry" role="doc-biblioentry">
+<div id="ref-oTree" class="csl-entry" role="listitem">
 Chen, Daniel L., Martin Schonger, and Chris Wickens. 2016.
 <span>“oTree—an Open-Source Platform for Laboratory, Online, and Field
 Experiments.”</span> <em>Journal of Behavioral and Experimental
 Finance</em> 9: 88–97. <a href="https://doi.org/doi.org/10.1016/j.jbef.2015.12.001">https://doi.org/doi.org/10.1016/j.jbef.2015.12.001</a>.
 </div>
-<div id="ref-FournierSrinivasan_2023" class="csl-entry" role="doc-biblioentry">
+<div id="ref-FournierSrinivasan_2023" class="csl-entry" role="listitem">
 Fournier, Susan, and Shuba Srinivasan. 2023. <span>“Monitoring Marketing
 Sources of Brand Reputation Risk.”</span> <em>NIM Marketing Intelligence
 Review</em> 15 (1): 46–53. <a href="https://doi.org/doi:10.2478/nimmir-2023-0007">https://doi.org/doi:10.2478/nimmir-2023-0007</a>.
 </div>
-<div id="ref-GumGum_2017" class="csl-entry" role="doc-biblioentry">
+<div id="ref-GumGum_2017" class="csl-entry" role="listitem">
 GumGum Inc. 2017. <span>“The New Brand Safety Crisis: A Fractured
 Environment.”</span> GumGum. <a href="https://web.archive.org/web/20220317063148/https://insights.gumgum.com/hubfs/Brand_Safety_GumGum.pdf">https://web.archive.org/web/20220317063148/https://insights.gumgum.com/hubfs/Brand_Safety_GumGum.pdf</a>.
 </div>
-<div id="ref-Instagram_2020" class="csl-entry" role="doc-biblioentry">
-Instagram. 2020. <span>“Instagram Year in Review: How Memes Were the
-Mood of 2020.”</span> <a href="https://web.archive.org/web/20240731100452/https://about.instagram.com/blog/announcements/instagram-year-in-review-how-memes-were-the-mood-of-2020/">https://web.archive.org/web/20240731100452/https://about.instagram.com/blog/announcements/instagram-year-in-review-how-memes-were-the-mood-of-2020/</a>.
-</div>
-<div id="ref-KerwinRostomSterck_2024" class="csl-entry" role="doc-biblioentry">
+<div id="ref-KerwinRostomSterck_2024" class="csl-entry" role="listitem">
 Kerwin, Jason, Nada Rostom, and Olivier Sterck. 2024. <span>“Striking
 the Right Balance: Why Standard Balance Tests over-Reject the Null, and
 How to Fix It.”</span> IZA Discussion Paper 17217. Institute of Labor
 Economics (IZA). <a href="https://www.iza.org/publications/dp/17217/striking-the-right-balance-why-standard-balance-tests-over-reject-the-null-and-how-to-fix-it">https://www.iza.org/publications/dp/17217/striking-the-right-balance-why-standard-balance-tests-over-reject-the-null-and-how-to-fix-it</a>.
 </div>
-<div id="ref-KrefeldSchwabSugermanJohnson_2024" class="csl-entry" role="doc-biblioentry">
-Krefeld-Schwab, Antonia, Eli Rosen Sugerman, and Eric J. Johnson. 2024.
-<span>“Exposing Omitted Moderators: Explaining Why Effect Sizes Differ
-in the Social Sciences.”</span> <em>Proceedings of the National Academy
-of Sciences</em> 121 (12): e2306281121. <a href="https://doi.org/10.1073/pnas.2306281121">https://doi.org/10.1073/pnas.2306281121</a>.
-</div>
-<div id="ref-MalodiaEtAl_2022" class="csl-entry" role="doc-biblioentry">
+<div id="ref-MalodiaEtAl_2022" class="csl-entry" role="listitem">
 Malodia, Suresh, Amandeep Dhir, Anil Bilgihan, Pranao Sinha, and
 Tanishka Tikoo. 2022. <span>“Meme Marketing: How Can Marketers Drive
 Better Engagement Using Viral Memes?”</span> <em>Psychology &amp;
 Marketing</em> 39 (9): 1775–1801. <a href="https://doi.org/10.1002/mar.21702">https://doi.org/10.1002/mar.21702</a>.
 </div>
-<div id="ref-McKelveyEtAl_2017" class="csl-entry" role="doc-biblioentry">
+<div id="ref-McKelveyEtAl_2017" class="csl-entry" role="listitem">
 McKelvey, Kevin, Peter Goutzounis, Stephen da Cruz, and Nathanael
 Chambers. 2017. <span>“Aligning Entity Names with Online Aliases on
 <span>T</span>witter.”</span> In <em>Proceedings of the Fifth
@@ -256,39 +250,36 @@ International Workshop on Natural Language Processing for Social
 Media</em>, edited by Lun-Wei Ku and Cheng-Te Li, 25–35. Valencia,
 Spain: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/W17-1104">https://doi.org/10.18653/v1/W17-1104</a>.
 </div>
-<div id="ref-MurphyHofackerMizerski_2006" class="csl-entry" role="doc-biblioentry">
-Murphy, Jamie, Charles Hofacker, and Richard Mizerski. 2006.
-<span>“Primacy and Recency Effects on Clicking Behavior.”</span>
-<em>Journal of Computer-Mediated Communication</em> 11 (2): 522–35. <a href="https://doi.org/10.1111/j.1083-6101.2006.00025.x">https://doi.org/10.1111/j.1083-6101.2006.00025.x</a>.
-</div>
-<div id="ref-Ordenes_2019" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Ordenes_2019" class="csl-entry" role="listitem">
 Ordenes, Francisco Villarroel, Dhruv Grewal, Stephan Ludwig, Ko De
 Ruyter, Dominik Mahr, and Martin Wetzels. 2019. <span>“Cutting Through
 Content Clutter: How Speech and Image Acts Drive Consumer Sharing of
 Social Media Brand Messages.”</span> <em>Journal of Consumer
 Research</em> 45 (5): 988–1012. <a href="https://doi.org/10.1093/jcr/ucy032">https://doi.org/10.1093/jcr/ucy032</a>.
 </div>
-<div id="ref-Porter_2021" class="csl-entry" role="doc-biblioentry">
-Porter, Jonathan. 2021. <span>“Commentary: Inefficiencies in Digital
-Advertising Markets: Evidence from the Field.”</span> <em>Journal of
-Marketing</em> 85 (1): 30–34. <a href="https://doi.org/10.1177/0022242920970133">https://doi.org/10.1177/0022242920970133</a>.
+<div id="ref-PietersWarlopWedel_2002" class="csl-entry" role="listitem">
+Pieters, Rik, Luk Warlop, and Michel Wedel. 2002. <span>“Breaking
+Through the Clutter: Benefits of Advertisement Originality and
+Familiarity for Brand Attention and Memory.”</span> <em>Management
+Science</em> 48 (6): 765–81. <a href="https://doi.org/10.1287/mnsc.48.6.765.192">https://doi.org/10.1287/mnsc.48.6.765.192</a>.
 </div>
-<div id="ref-SimonovVallettiVeiga_2024" class="csl-entry" role="doc-biblioentry">
-Simonov, Andrey, Tommaso Valletti, and Andre Veiga. 2024.
+<div id="ref-SimonovVallettiVeiga_2025" class="csl-entry" role="listitem">
+Simonov, Andrey, Tommaso Valletti, and Andre Veiga. 2025.
 <span>“Attention Spillovers from News to Ads: Evidence from an
 Eye-Tracking Experiment.”</span> <em>Journal of Marketing Research</em>
-0 (0): 00222437241256900. <a href="https://doi.org/10.1177/00222437241256900">https://doi.org/10.1177/00222437241256900</a>.
+62 (2): 294–315. <a href="https://doi.org/10.1177/00222437241256900">https://doi.org/10.1177/00222437241256900</a>.
 </div>
-<div id="ref-SimonsohnEtAl_2024" class="csl-entry" role="doc-biblioentry">
+<div id="ref-SimonsohnEtAl_2024" class="csl-entry" role="listitem">
 Simonsohn, Uri, Andres Montealegre, and Ioannis Evangelidis. 2024.
 <span>“Stimulus Sampling Reimagined: Designing Experiments with
 Mix-and-Match, Analyzing Results with Stimulus Plots,”</span> February.
 <a href="https://doi.org/10.2139/ssrn.4716832">https://doi.org/10.2139/ssrn.4716832</a>.
 </div>
-<div id="ref-WedelPieters_2000" class="csl-entry" role="doc-biblioentry">
-Wedel, Michel, and Rik Pieters. 2000. <span>“Eye Fixations on
-Advertisements and Memory for Brands: A Model and Findings.”</span>
-<em>Marketing Science</em> 19 (4): 297–312. <a href="https://doi.org/10.1287/mksc.19.4.297.11794">https://doi.org/10.1287/mksc.19.4.297.11794</a>.
+<div id="ref-ZhangEtAl_2008" class="csl-entry" role="listitem">
+Zhang, Zhen, Michael J. Zyphur, and Kristopher J. Preacher. 2008.
+<span>“Testing Multilevel Mediation Using Hierarchical Linear Models:
+Problems and Solutions.”</span> <em>Organizational Research Methods</em>
+12 (4): 695–719. <a href="https://doi.org/10.1177/1094428108327450">https://doi.org/10.1177/1094428108327450</a>.
 </div>
 </div>
 
@@ -322,12 +313,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
     }
-  });
-  clipboard.on('success', function(e) {
+    return false;
+  }
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -336,17 +330,71 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -356,8 +404,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -369,33 +426,286 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./extensions.html" class="pagination-link">
+      <a href="./extensions.html" class="pagination-link" aria-label="Extensions">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Extensions</span></span>
       </a>          
   </div>
@@ -403,6 +713,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 
