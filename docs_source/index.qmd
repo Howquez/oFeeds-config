@@ -10,7 +10,7 @@ Getting started with the DICE app is straightforward. Visit [dice-app.org](https
 
 Our documentation follows the natural workflow of creating and running a DICE experiment:
 
-The [Stimuli](stimuli.qmd#sec-stimuli) chapter forms the foundation, showing you how to create and configure your social media feed content using a CSV file. This structured approach ensures precise control over your experimental manipulations while maintaining the authentic feel of social media.
+The [Stimuli](stimuli.qmd#sec-stimuli) chapter forms the foundation, showing you how to create and configure your social media feed content using a CSV file. This structured approach ensures precise control over your experimental manipulations while approaching an authentic feel of social media.
 
 Once your stimuli are ready, the [Launch a Study](dice-app.qmd#sec-launch) chapter guides you through the DICE web interface at dice-app.org. You'll learn how to configure your experiment, integrate with survey platforms like Qualtrics, and manage participant recruitment through Prolific.
 

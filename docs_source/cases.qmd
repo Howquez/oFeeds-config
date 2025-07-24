@@ -155,7 +155,7 @@ We recruited 982 US-American participants on Prolific ($M_{age} = `r short[, rou
 ### Stimuli
 
 Building on the CSV file structure introduced in Case Study 1, we created a file containing two distinct sets of content: nineteen organic posts for each experimental condition, plus one sponsored post that needed to appear in both feeds. To ensure the sponsored post would appear in both conditions while maintaining DICE's CSV structure, we entered the sponsored post twice in the file - once for each condition. This resulted in a file with forty rows total: nineteen organic posts for each condition plus the sponsored post appearing twice.
-Each post's content was specified in columns such as `<text>` and `<username>`. We used the `<condition>` parameter to distinguish between our "appropriate" (brand-safe) and "inappropriate" (brand-unsafe) feeds, assigning each row (i.e., each post) to its respective condition.
+Each post's content was specified in columns such as `<text>` and `<username>`. We used the `<condition>` parameter to distinguish between our brand-safebrand-unsafe feeds, assigning each row (i.e., each post) to its respective condition.
 Similar to Case Study 1, we left the `<sequence>` column empty for organic posts to enable randomization, with one key exception: the KLM sponsored post was assigned a fixed `<sequence>` value of "5" to ensure consistent positioning across conditions. We marked this post as sponsored using the `<sponsored>` parameter and included a KLM landing page URL in the `<target>` column for participants who clicked on the ad.
 The resulting CSV file was uploaded to an online repository to generate a URL for the DICE app.
 
@@ -232,13 +232,13 @@ balance_fem <- lm(formula = female ~ condition, data = short)
 balance_age <- lm(formula = age ~ condition, data = short)
 
 balance_table <- data.table(variables = c("Mean Age (Years)", "Female (Percent)"),
-                            appropriate = c(short[condition == "appropriate", 
+                            safe = c(short[condition == "safe", 
                                                   mean(age, na.rm = TRUE)],
-                                            short[condition == "appropriate",
+                                            short[condition == "safe",
                                                   mean(female, na.rm = TRUE)]*100),
-                            inappropriate = c(short[condition == "inappropriate", 
+                            unsafe = c(short[condition == "unsafe", 
                                                   mean(age, na.rm = TRUE)],
-                                            short[condition == "inappropriate", 
+                                            short[condition == "unsafe", 
                                                   mean(female, na.rm = TRUE)]*100),
                             difference = c(summary(balance_age)$coefficients[2, 1],
                                            summary(balance_fem)$coefficients[2, 1]*100),
@@ -247,8 +247,8 @@ balance_table <- data.table(variables = c("Mean Age (Years)", "Female (Percent)"
 
 balance_table %>% kable(digits = 3,
                         col.names = c("Covariate",
-                                      "Appropriate",
-                                      "Inappropriate",
+                                      "Safe",
+                                      "Unsafe",
                                       "Difference",
                                       "p-value"))
 

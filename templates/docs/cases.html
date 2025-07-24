@@ -285,7 +285,7 @@ Figure&nbsp;4.1: Exemplary DICE Feeds from Case Study 1
 </section>
 <section id="stimuli" class="level3" data-number="4.1.3">
 <h3 data-number="4.1.3" class="anchored" data-anchor-id="stimuli"><span class="header-section-number">4.1.3</span> Stimuli</h3>
-<p>Building on the CSV file structure introduced in Case Study 1, we created a file containing two distinct sets of content: nineteen organic posts for each experimental condition, plus one sponsored post that needed to appear in both feeds. To ensure the sponsored post would appear in both conditions while maintaining DICE’s CSV structure, we entered the sponsored post twice in the file - once for each condition. This resulted in a file with forty rows total: nineteen organic posts for each condition plus the sponsored post appearing twice. Each post’s content was specified in columns such as <code>&lt;text&gt;</code> and <code>&lt;username&gt;</code>. We used the <code>&lt;condition&gt;</code> parameter to distinguish between our “appropriate” (brand-safe) and “inappropriate” (brand-unsafe) feeds, assigning each row (i.e., each post) to its respective condition. Similar to Case Study 1, we left the <code>&lt;sequence&gt;</code> column empty for organic posts to enable randomization, with one key exception: the KLM sponsored post was assigned a fixed <code>&lt;sequence&gt;</code> value of “5” to ensure consistent positioning across conditions. We marked this post as sponsored using the <code>&lt;sponsored&gt;</code> parameter and included a KLM landing page URL in the <code>&lt;target&gt;</code> column for participants who clicked on the ad. The resulting CSV file was uploaded to an online repository to generate a URL for the DICE app.</p>
+<p>Building on the CSV file structure introduced in Case Study 1, we created a file containing two distinct sets of content: nineteen organic posts for each experimental condition, plus one sponsored post that needed to appear in both feeds. To ensure the sponsored post would appear in both conditions while maintaining DICE’s CSV structure, we entered the sponsored post twice in the file - once for each condition. This resulted in a file with forty rows total: nineteen organic posts for each condition plus the sponsored post appearing twice. Each post’s content was specified in columns such as <code>&lt;text&gt;</code> and <code>&lt;username&gt;</code>. We used the <code>&lt;condition&gt;</code> parameter to distinguish between our brand-safebrand-unsafe feeds, assigning each row (i.e., each post) to its respective condition. Similar to Case Study 1, we left the <code>&lt;sequence&gt;</code> column empty for organic posts to enable randomization, with one key exception: the KLM sponsored post was assigned a fixed <code>&lt;sequence&gt;</code> value of “5” to ensure consistent positioning across conditions. We marked this post as sponsored using the <code>&lt;sponsored&gt;</code> parameter and included a KLM landing page URL in the <code>&lt;target&gt;</code> column for participants who clicked on the ad. The resulting CSV file was uploaded to an online repository to generate a URL for the DICE app.</p>
 <p><a href="#tbl-stimuli-case-1" class="quarto-xref">Table&nbsp;<span>4.1</span></a> shows an excerpt of the exact CSV files we used to create the stimuli for this study. You can download that file <a href="https://raw.githubusercontent.com/Howquez/DICE/refs/heads/main/studies/brand_safety/stimuli/brazil.csv" target="_blank">here</a>.</p>
 <div class="cell">
 <div id="tbl-stimuli-case-1" class="cell quarto-float quarto-figure quarto-figure-center anchored">
@@ -553,8 +553,8 @@ Table&nbsp;4.2: Covariate Balance Across Conditions
 <thead>
 <tr class="header">
 <th style="text-align: left;">Covariate</th>
-<th style="text-align: right;">Appropriate</th>
-<th style="text-align: right;">Inappropriate</th>
+<th style="text-align: right;">Safe</th>
+<th style="text-align: right;">Unsafe</th>
 <th style="text-align: right;">Difference</th>
 <th style="text-align: right;">p-value</th>
 </tr>
@@ -562,15 +562,15 @@ Table&nbsp;4.2: Covariate Balance Across Conditions
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Mean Age (Years)</td>
-<td style="text-align: right;">NaN</td>
-<td style="text-align: right;">NaN</td>
+<td style="text-align: right;">38.848</td>
+<td style="text-align: right;">38.522</td>
 <td style="text-align: right;">-0.326</td>
 <td style="text-align: right;">0.702</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Female (Percent)</td>
-<td style="text-align: right;">NaN</td>
-<td style="text-align: right;">NaN</td>
+<td style="text-align: right;">58.439</td>
+<td style="text-align: right;">54.262</td>
 <td style="text-align: right;">-4.177</td>
 <td style="text-align: right;">0.194</td>
 </tr>
