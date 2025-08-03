@@ -167,6 +167,10 @@ def create_replication_package():
     except Exception as e:
         return jsonify({'error': f'An error occurred: {str(e)}'}), 500
 
+@app.route('/imprint')
+def imprint():
+    return render_template('imprint.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
