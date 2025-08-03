@@ -37,10 +37,10 @@
     <h1 class="display-3 fw-bold text-body-emphasis">DICE</h1>
     <div class="col-lg-6 mx-auto">
         <h3 class="mb-4" style="font-family: 'Source Serif Pro', serif; color: #404040;">
-            Create Digital In-Context Experiments (DICE) to mimic social media{#, news or shopping#} feeds with experimental control and without a single line of code. Simply configure your stimuli, distribute them (e.g., via Prolific) and append a questionnaire.</h3>
+            Create Digital In-Context Experiments (DICE) to mimic social media feeds with experimental control and without a single line of code. Simply configure your stimuli, distribute them (e.g., via Prolific) and append a questionnaire.</h3>
         <div class = "d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
             <a class= "btn btn-outline-secondary btn-lg px-4" href="https://ibt-hsg.herokuapp.com/demo" target="_blank" role="button"> Demo </a>
-            {#<a class="btn btn-outline-secondary btn-lg px-4" href="#configureStudySection">Configure a Study</a>#}
+            <a class="btn btn-outline-secondary btn-lg px-4" href="#configureStudySection">Configure a Study</a>
 {#            <a class="btn btn-outline-secondary btn-lg px-4" href="#dataSection">Data</a>#}
 {#            <a class="btn btn-outline-secondary btn-lg px-4" href="https://github.com/Howquez/DICE?tab=readme-ov-file#-digital-in-context-experiments-dice" target="_blank">Contribute</a>#}
             <a class="btn btn-outline-secondary btn-lg px-4" href="/docs/index.html" target="_blank">Documentation</a>
@@ -90,7 +90,7 @@
     <div class= "row justify-content-center">
         <div class= "col-lg-8 col-md-10">
 
-            <div class="card my-4 border-0 shadow-sm bg-light">
+            <div class="card my-4 border-0 shadow bg-light">
                 <div class="card-body">
                     <h6 class="card-title text-muted mb-3">
                         Returning user? Upload Previous Configuration
@@ -107,8 +107,8 @@
                             <label for="configFileInput" class="form-label">Choose Configuration File</label>
                             <input type="file" class="form-control" id="configFileInput" accept=".json" />
                         </div>
-                        <div class="col-md-4">
-                            <button type="button" class="btn btn-outline-primary w-100" id="loadConfigBtn" onclick="loadConfigurationFile()" disabled>
+                        <div class="col-md-4 mt-4">
+                            <button type="button" class="btn btn-outline-dark w-100" id="loadConfigBtn" onclick="loadConfigurationFile()" disabled>
                                 <i class="bi bi-folder-open"></i> Load Configuration
                             </button>
                         </div>
