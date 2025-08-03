@@ -105,7 +105,7 @@ function liveRecv(data) {
         <strong>Configuration Downloaded:</strong> 
         Your study configuration has been automatically saved as 
         <code>${data.code}_dice_config.json</code>. 
-        Keep this file to easily recreate or modify this study later.
+        Keep this file to easily recreate your study settings later.
     `;
 
     var paragraph_1 = document.createElement('p');
@@ -372,7 +372,10 @@ function createReplicationPackage() {
 
     let data = {
         content_url: contentUrl,
+        delimiter: delimiter, // Add delimiter to replication package
+        session_code: globalSessionCode, // Add session code
         configurations: {
+            session_code: globalSessionCode, // Also include in configurations for clarity
             email: eMail,
             study_name: study_name,
             date_time: new Date(),
@@ -396,7 +399,8 @@ function createReplicationPackage() {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'replication_package.json';
+        // Use session code in filename, similar to config file
+        a.download = `${globalSessionCode}_dice_replication.json`;
         document.body.appendChild(a);
         a.click();
         a.remove();
@@ -405,7 +409,7 @@ function createReplicationPackage() {
     .catch(error => console.error('Error:', error));
 }
 
-// NEW FUNCTIONS FOR CONFIG FILE MANAGEMENT
+// FUNCTIONS FOR CONFIG FILE MANAGEMENT
 
 function generateConfigFile(sessionCode) {
     // Collect all form data
