@@ -165,6 +165,17 @@
                                 are used, cannot do so.
                             </div>
                         </div>
+                        <div class="mb-3">
+                            <label for="url_parameter_name" class="form-label">Participant ID Parameter Name</label>
+                            <input type="text" class="form-control" id="url_parameter_name" aria-describedby="url_param_help" value="PROLIFIC_PID">
+                            <div id="url_param_help" class="form-text">
+                                This is the name used to track participant IDs when they move from your study to your survey.
+                                <strong>For Prolific users:</strong> Leave as "PROLIFIC_PID" (this will automatically appear when you select Prolific above).
+                                <strong>For other platforms:</strong> Enter the parameter name your survey tool expects.
+                                In Qualtrics, this should match your "Embedded Data" field name.
+                                <strong>Example:</strong> If your Qualtrics embedded data field is called "ParticipantID", enter "ParticipantID" here.
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

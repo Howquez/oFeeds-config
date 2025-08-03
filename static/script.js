@@ -52,6 +52,18 @@ document.addEventListener('DOMContentLoaded', function() {
     checkBox.addEventListener('change', function() {
         adCard.style.display = this.checked ? 'block' : 'none';
     });
+
+    // Add event listener for recruitment platform changes
+    var recruitmentPlatform = document.getElementById('recruitment_platform');
+    var urlParameterField = document.getElementById('url_parameter_name');
+
+    recruitmentPlatform.addEventListener('change', function() {
+        if (this.value === 'Prolific') {
+            urlParameterField.value = 'PROLIFIC_PID';
+        } else {
+            urlParameterField.value = 'participant_id'; // Default for other platforms
+        }
+    });
 });
 
 // This function is called when the server sends back a response
@@ -207,6 +219,7 @@ function sendValue() {
     let delimiter = document.getElementById('delimiter').value;
     let content_url = document.getElementById('content_url').value;
     let recruitment_platform = document.getElementById('recruitment_platform').value;
+    let url_parameter_name = document.getElementById('url_parameter_name').value; // NEW FIELD
     let survey_url = document.getElementById('survey_url').value;
     let dwell_threshold = document.getElementById('dwell_threshold').value;
     let search_term = document.getElementById('search_term').value;
@@ -230,6 +243,7 @@ function sendValue() {
             content_url: content_url,
             delimiter: delimiter,
             recruitment_platform: recruitment_platform,
+            url_parameter_name: url_parameter_name, // NEW FIELD
             survey_url: survey_url,
             dwell_threshold: dwell_threshold,
             search_term: search_term,

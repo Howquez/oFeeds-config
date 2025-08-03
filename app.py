@@ -64,7 +64,12 @@ def create_session():
                                                         int) or participant_number < 1 or participant_number > 400:
             return jsonify({"error": "Participant number must be between 1 and 400"}), 400
 
-        url_param = 'PROLIFIC_PID' if data.get('recruitment_platform') == 'Prolific' else 'None'
+        # Get the URL parameter name from the form, with fallback logic
+        url_param = data.get('url_parameter_name', '').strip()
+
+        # If no URL parameter is provided, use default based on recruitment platform
+        if not url_param:
+            url_param = 'PROLIFIC_PID' if data.get('recruitment_platform') == 'Prolific' else 'participant_id'
 
         response = call_api(
             'POST',
@@ -80,7 +85,7 @@ def create_session():
                 'data_path': data.get('content_url'),
                 'delimiter': data.get('delimiter'),
                 'topics': not data.get('display_skyscraper'),
-                'url_param': url_param,
+                'url_param': url_param,  # Use the customizable parameter name
                 'survey_link': data.get('survey_url'),
                 'dwell_threshold': data.get('dwell_threshold'),
                 'search_term': data.get('search_term'),
