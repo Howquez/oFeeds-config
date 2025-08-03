@@ -90,7 +90,34 @@
     <div class= "row justify-content-center">
         <div class= "col-lg-8 col-md-10">
 
+            <div class="card my-4 border-0 shadow-sm bg-light">
+                <div class="card-body">
+                    <h6 class="card-title text-muted mb-3">
+                        Returning user? Upload Previous Configuration
+                    </h6>
+                    <p class="card-text text-muted mb-3">
+                        <small>
+                            Upload a previously downloaded configuration file (e.g., <code>abc123_dice_config.json</code>)
+                            to automatically fill out the form with your previous settings.
+                        </small>
+                    </p>
 
+                    <div class="row align-items-end">
+                        <div class="col-md-8">
+                            <label for="configFileInput" class="form-label">Choose Configuration File</label>
+                            <input type="file" class="form-control" id="configFileInput" accept=".json" />
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-outline-primary w-100" id="loadConfigBtn" onclick="loadConfigurationFile()" disabled>
+                                <i class="bi bi-folder-open"></i> Load Configuration
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Success/error messages will appear here -->
+                    <div id="configLoadMessage" class="mt-3" style="display: none;"></div>
+                </div>
+            </div>
 
             <div id="card1" class="card my-4 border-0 shadow">
                 <div class="card-body">
@@ -205,7 +232,7 @@
                             <label for="content_url" class="form-label">Provide URL Directing to Your Content</label>
                             <input type="text" class="form-control" id="content_url" aria-describedby="url_help" value="https://raw.githubusercontent.com/DICE-app/sample-feeds/refs/heads/main/feeds/9gag.csv">
                             <div id="url_help" class="form-text">
-                                Please provide a url directing to your raw, UTF-8 formatted csv file (preferably GitHub or Google Drive).
+                                Please provide an url directing to your raw, UTF-8 formatted csv file (preferably GitHub or Google Drive).
                                 <a href="{{ url_for('static', filename='sample_feed.csv') }}" download="sample_feed.csv">Click here</a>
                                 to download a sample *.csv file that you can use as a template.
                             </div>
@@ -295,7 +322,7 @@
                             </p>
 
                             <h5>Investigator</h5>
-                            <a style="background-color: black; color: white;">[Enter your contact information such as your name and your email address here.]<a/>
+                            <a style="background-color: black; color: white;">[Enter your contact information such as your name and your email address here.]</a>
                             <br><br>
 
                             <h5>Confidentiality</h5>
@@ -341,6 +368,7 @@
                                 the commercial development of this research.”
                                 </em>
                             </blockquote>
+
                         </div>
                     </div>
 
