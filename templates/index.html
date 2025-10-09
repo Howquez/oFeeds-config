@@ -15,6 +15,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <script src="{{ url_for('static', filename='script.js') }}"></script>
 <script src="{{ url_for('static', filename='smooth_scrolling.js') }}"></script>
+<script src="{{ url_for('static', filename='citations.js') }}"></script>
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 {#<script src="{{ url_for('static', filename='config_goals.js') }}"></script>#}
 
@@ -37,14 +38,18 @@
     <h1 class="display-3 fw-bold text-body-emphasis">DICE</h1>
     <div class="col-lg-6 mx-auto">
         <h3 class="mb-4" style="font-family: 'Source Serif Pro', serif; color: #404040;">
-            Create Digital In-Context Experiments (DICE) to mimic social media feeds with experimental control and without a single line of code. Simply configure your stimuli, distribute them (e.g., via Prolific) and append a questionnaire.</h3>
+            Create Digital In-Context Experiments (DICE) to mimic social media feeds with experimental control and without a single line of code. Simply configure your stimuli, distribute them (e.g., via Prolific) and append a questionnaire.
+        </h3>
         <div class = "d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
             <a class= "btn btn-outline-secondary btn-lg px-4" href="https://ibt-hsg.herokuapp.com/demo" target="_blank" role="button"> Demo </a>
-            <a class="btn btn-outline-secondary btn-lg px-4" href="#configureStudySection">Configure a Study</a>
-{#            <a class="btn btn-outline-secondary btn-lg px-4" href="#dataSection">Data</a>#}
-{#            <a class="btn btn-outline-secondary btn-lg px-4" href="https://github.com/Howquez/DICE?tab=readme-ov-file#-digital-in-context-experiments-dice" target="_blank">Contribute</a>#}
+            <button class="btn btn-outline-secondary btn-lg px-4" data-bs-toggle="modal" data-bs-target="#citationModal">
+                Cite
+            </button>
             <a class="btn btn-outline-secondary btn-lg px-4" href="/docs/index.html" target="_blank">Documentation</a>
-            <a class="btn btn-danger btn-lg px-4" href="https://www.youtube.com/watch?v=lx_akVasq7I&list=PLZ-soW8YjcdezgGILvI4dmQU2lpl0cAC0" target="_blank"><i class="bi bi-play-fill"></i>Watch Tutorial</a>
+            <a class="btn btn-danger btn-lg px-4" href="https://www.youtube.com/watch?v=lx_akVasq7I&list=PLZ-soW8YjcdezgGILvI4dmQU2lpl0cAC0" target="_blank"><i class="bi bi-play-fill"></i> Watch Tutorial</a>
+            <button class="btn btn-outline-secondary btn-lg px-4" data-bs-toggle="modal" data-bs-target="#helpModal">
+                Get Help
+            </button>
         </div>
     </div>
     <div class="overflow-hidden" style="max-height: 70vh;">
@@ -87,184 +92,184 @@
     </div>
 
     <div class= "container-md mb-5 mt-3">
-    <div class= "row justify-content-center">
-        <div class= "col-lg-8 col-md-10">
+        <div class= "row justify-content-center">
+            <div class= "col-lg-8 col-md-10">
 
-            <div class="card my-4 border-0 shadow bg-light">
-                <div class="card-body">
-                    <h6 class="card-title text-muted mb-3">
-                        Returning user? Upload Previous Configuration
-                    </h6>
-                    <p class="card-text text-muted mb-3">
-                        <small>
-                            Upload a previously downloaded configuration file (e.g., <code>abc123_dice_config.json</code>)
-                            to automatically fill out the form with your previous settings.
-                        </small>
-                    </p>
+                <div class="card my-4 border-0 shadow bg-light">
+                    <div class="card-body">
+                        <h6 class="card-title text-muted mb-3">
+                            Returning user? Upload Previous Configuration
+                        </h6>
+                        <p class="card-text text-muted mb-3">
+                            <small>
+                                Upload a previously downloaded configuration file (e.g., <code>abc123_dice_config.json</code>)
+                                to automatically fill out the form with your previous settings.
+                            </small>
+                        </p>
 
-                    <div class="row align-items-end">
-                        <div class="col-md-8">
-                            <label for="configFileInput" class="form-label">Choose Configuration File</label>
-                            <input type="file" class="form-control" id="configFileInput" accept=".json" />
+                        <div class="row align-items-end">
+                            <div class="col-md-8">
+                                <label for="configFileInput" class="form-label">Choose Configuration File</label>
+                                <input type="file" class="form-control" id="configFileInput" accept=".json" />
+                            </div>
+                            <div class="col-md-4 mt-4">
+                                <button type="button" class="btn btn-outline-dark w-100" id="loadConfigBtn" onclick="loadConfigurationFile()" disabled>
+                                    <i class="bi bi-folder-open"></i> Load Configuration
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-md-4 mt-4">
-                            <button type="button" class="btn btn-outline-dark w-100" id="loadConfigBtn" onclick="loadConfigurationFile()" disabled>
-                                <i class="bi bi-folder-open"></i> Load Configuration
-                            </button>
-                        </div>
+
+                        <!-- Success/error messages will appear here -->
+                        <div id="configLoadMessage" class="mt-3" style="display: none;"></div>
                     </div>
-
-                    <!-- Success/error messages will appear here -->
-                    <div id="configLoadMessage" class="mt-3" style="display: none;"></div>
                 </div>
-            </div>
 
-            <div id="card1" class="card my-4 border-0 shadow">
-                <div class="card-body">
-                    <h5 class="card-title h2 mb-0">
-                        1. Meta Information
-                    </h5>
-                    <p class="card-text text-muted">
-                        <small>
-                            Please provide some meta and contact information. The contact information will be displayed in the privacy policy and
-                            on the final debriefing page if you do not direct the participants to a post-stimulus survey.
-                        </small>
-                    </p>
-                    <form>
-                        <div class="mb-3">
-                            <label for="title" class="form-label">Title</label>
-                            <select class="form-select" id="title" aria-describedby="title_help">
-                                <option value="Dr.">Dr.</option>
-                                <option value="Prof.">Prof.</option>
-                                <option value="Ms.">Ms.</option>
-                                <option value="Mr.">Mr.</option>
-                            </select>
-                            <div id="title_help" class="form-text">
+                <div id="card1" class="card my-4 border-0 shadow">
+                    <div class="card-body">
+                        <h5 class="card-title h2 mb-0">
+                            1. Meta Information
+                        </h5>
+                        <p class="card-text text-muted">
+                            <small>
+                                Please provide some meta and contact information. The contact information will be displayed in the privacy policy and
+                                on the final debriefing page if you do not direct the participants to a post-stimulus survey.
+                            </small>
+                        </p>
+                        <form>
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Title</label>
+                                <select class="form-select" id="title" aria-describedby="title_help">
+                                    <option value="Dr.">Dr.</option>
+                                    <option value="Prof.">Prof.</option>
+                                    <option value="Ms.">Ms.</option>
+                                    <option value="Mr.">Mr.</option>
+                                </select>
+                                <div id="title_help" class="form-text">
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="name" aria-describedby="name_help" value="" placeholder="Jane Doe" required>
-                            <div id="name_help" class="form-text">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" aria-describedby="name_help" value="" placeholder="Jane Doe" required>
+                                <div id="name_help" class="form-text">
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="eMail" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="eMail" placeholder="name@example.com" required>
-                        </div>
+                            <div class="mb-3">
+                                <label for="eMail" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="eMail" placeholder="name@example.com" required>
+                            </div>
 
-                        <div class="mb-3">
-                            <label for="external_name" class="form-label">External study name</label>
-                            <input type="text" class="form-control" id="external_name" value="" placeholder="A Social Media Study" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="internal_name" class="form-label">Internal study name (not visible to participants)</label>
-                            <input type="text" class="form-control" id="internal_name" value="" placeholder="Social Media Study Pilot" required>
-                        </div>
-                    </form>
+                            <div class="mb-3">
+                                <label for="external_name" class="form-label">External study name</label>
+                                <input type="text" class="form-control" id="external_name" value="" placeholder="A Social Media Study" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="internal_name" class="form-label">Internal study name (not visible to participants)</label>
+                                <input type="text" class="form-control" id="internal_name" value="" placeholder="Social Media Study Pilot" required>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
 
-            <div id="card2" class="card my-4 border-0 shadow">
-                <div class="card-body">
-                    <h5 class="card-title h2 mb-0">
-                        2. Participant Recruitment
-                    </h5>
-                    <p class="card-text text-muted">
-                        <small>
-                        </small>
-                    </p>
-                    <form>
-                        <div class="mb-3">
-                            <label for="recruitment_platform" class="form-label">Choose Your Recruitment Platform</label>
-                            <select class="form-select" id="recruitment_platform" aria-describedby="recruitment_help">
-                                <option value="Lab">Other Recruitment Platforms</option>
-                                <option value="Prolific" selected>Prolific</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="participant_number" class="form-label">Specify the Number of Rows in Database</label>
-                            <input type="number" class="form-control w-100" id="participant_number" aria-describedby="participant_help" value="3" min="1" max="400">
-                            <div id="participant_help" class="form-text">
-                                Please specify the desired number of participants and account for attrition:
-                                Each participation uses one slot, regardless of whether the participant completes the survey.
-                                Potential participants who try to enter the experiment after all slots (rows in the database)
-                                are used, cannot do so.
+                <div id="card2" class="card my-4 border-0 shadow">
+                    <div class="card-body">
+                        <h5 class="card-title h2 mb-0">
+                            2. Participant Recruitment
+                        </h5>
+                        <p class="card-text text-muted">
+                            <small>
+                            </small>
+                        </p>
+                        <form>
+                            <div class="mb-3">
+                                <label for="recruitment_platform" class="form-label">Choose Your Recruitment Platform</label>
+                                <select class="form-select" id="recruitment_platform" aria-describedby="recruitment_help">
+                                    <option value="Lab">Other Recruitment Platforms</option>
+                                    <option value="Prolific" selected>Prolific</option>
+                                </select>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="url_parameter_name" class="form-label">Participant ID Parameter Name</label>
-                            <input type="text" class="form-control" id="url_parameter_name" aria-describedby="url_param_help" value="PROLIFIC_PID">
-                            <div id="url_param_help" class="form-text">
-                                This is the name used to track participant IDs when they move from your study to your survey.
-                                <strong>For Prolific users:</strong> Leave as "PROLIFIC_PID" (this will automatically appear when you select Prolific above).
-                                <strong>For other platforms:</strong> Enter the parameter name your survey tool expects.
-                                In Qualtrics, this should match your "Embedded Data" field name.
-                                <strong>Example:</strong> If your Qualtrics embedded data field is called "ParticipantID", enter "ParticipantID" here.
+                            <div class="mb-3">
+                                <label for="participant_number" class="form-label">Specify the Number of Rows in Database</label>
+                                <input type="number" class="form-control w-100" id="participant_number" aria-describedby="participant_help" value="3" min="1" max="400">
+                                <div id="participant_help" class="form-text">
+                                    Please specify the desired number of participants and account for attrition:
+                                    Each participation uses one slot, regardless of whether the participant completes the survey.
+                                    Potential participants who try to enter the experiment after all slots (rows in the database)
+                                    are used, cannot do so.
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                            <div class="mb-3">
+                                <label for="url_parameter_name" class="form-label">Participant ID Parameter Name</label>
+                                <input type="text" class="form-control" id="url_parameter_name" aria-describedby="url_param_help" value="PROLIFIC_PID">
+                                <div id="url_param_help" class="form-text">
+                                    This is the name used to track participant IDs when they move from your study to your survey.
+                                    <strong>For Prolific users:</strong> Leave as "PROLIFIC_PID" (this will automatically appear when you select Prolific above).
+                                    <strong>For other platforms:</strong> Enter the parameter name your survey tool expects.
+                                    In Qualtrics, this should match your "Embedded Data" field name.
+                                    <strong>Example:</strong> If your Qualtrics embedded data field is called "ParticipantID", enter "ParticipantID" here.
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
 
-            <div id="card3" class="card my-4 border-0 shadow">
-                <div class="card-body">
-                    <h5 class="card-title h2 mb-0">
-                        3. Layout and Stimulus Embedding
-                    </h5>
-                    <p class="card-text text-muted">
-                        <small>
-                            Please use the following forms to specify the content you want to display in the social media feed and
-                            the way it is displayed.
-                        </small>
-                    </p>
-                    <form>
-                        <div class="mb-3">
-                            <label for="channel_type" class="form-label">Choose Media Platform to Mimic</label>
-                            <select class="form-select" id="channel_type" aria-describedby="title_help">
-                                <option value="Twitter">Twitter</option>
-                                <option value="Linkedin">WIP: Linkedin</option>
-                                <option value="Generic">WIP: Generic</option>
-                                <!-- <option value="Mass_Media">Mass Media</option>-->
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="content_url" class="form-label">Provide URL Directing to Your Content</label>
-                            <input type="text" class="form-control" id="content_url" aria-describedby="url_help" value="https://raw.githubusercontent.com/DICE-app/sample-feeds/refs/heads/main/feeds/9gag.csv">
-                            <div id="url_help" class="form-text">
-                                Please provide an url directing to your raw, UTF-8 formatted csv file (preferably GitHub or Google Drive).
-                                <a href="{{ url_for('static', filename='sample_feed.csv') }}" download="sample_feed.csv">Click here</a>
-                                to download a sample *.csv file that you can use as a template.
+                <div id="card3" class="card my-4 border-0 shadow">
+                    <div class="card-body">
+                        <h5 class="card-title h2 mb-0">
+                            3. Layout and Stimulus Embedding
+                        </h5>
+                        <p class="card-text text-muted">
+                            <small>
+                                Please use the following forms to specify the content you want to display in the social media feed and
+                                the way it is displayed.
+                            </small>
+                        </p>
+                        <form>
+                            <div class="mb-3">
+                                <label for="channel_type" class="form-label">Choose Media Platform to Mimic</label>
+                                <select class="form-select" id="channel_type" aria-describedby="title_help">
+                                    <option value="Twitter">Twitter</option>
+                                    <option value="Linkedin">WIP: Linkedin</option>
+                                    <option value="Generic">WIP: Generic</option>
+                                    <!-- <option value="Mass_Media">Mass Media</option>-->
+                                </select>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="delimiter" class="form-label">Specify Your CSV Delimiter.</label>
-                            <select class="form-select" id="delimiter" aria-describedby="delimiter_help">
-                                <option value=";">Semicolon</option>
-                                <option value=",">Comma</option>
+                            <div class="mb-3">
+                                <label for="content_url" class="form-label">Provide URL Directing to Your Content</label>
+                                <input type="text" class="form-control" id="content_url" aria-describedby="url_help" value="https://raw.githubusercontent.com/DICE-app/sample-feeds/refs/heads/main/feeds/9gag.csv">
+                                <div id="url_help" class="form-text">
+                                    Please provide an url directing to your raw, UTF-8 formatted csv file (preferably GitHub or Google Drive).
+                                    <a href="{{ url_for('static', filename='sample_feed.csv') }}" download="sample_feed.csv">Click here</a>
+                                    to download a sample *.csv file that you can use as a template.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="delimiter" class="form-label">Specify Your CSV Delimiter.</label>
+                                <select class="form-select" id="delimiter" aria-describedby="delimiter_help">
+                                    <option value=";">Semicolon</option>
+                                    <option value=",">Comma</option>
 
-                            </select>
-                            <div id="delimiter_help" class="form-text">
-                                Please select the character that separates the data fields in your CSV file.
+                                </select>
+                                <div id="delimiter_help" class="form-text">
+                                    Please select the character that separates the data fields in your CSV file.
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="search_term" class="form-label">Provide a Term Displayed in Search Bar</label>
-                            <input type="text" class="form-control" id="search_term" aria-describedby="search_help" value="#myHashtag">
-                            <div id="search_help" class="form-text">
-                                Consider using a hashtag as a prefix.
+                            <div class="mb-3">
+                                <label for="search_term" class="form-label">Provide a Term Displayed in Search Bar</label>
+                                <input type="text" class="form-control" id="search_term" aria-describedby="search_help" value="#myHashtag">
+                                <div id="search_help" class="form-text">
+                                    Consider using a hashtag as a prefix.
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-check form-switch" style="display: none">
-                            <input class="form-check-input" type="checkbox" role="switch" id="display_skyscraper" disabled>
-                            <label class="form-check-label" for="display_skyscraper">Display  Skyskraper Banner Ads</label>
-                        </div>
-                    </form>
+                            <div class="form-check form-switch" style="display: none">
+                                <input class="form-check-input" type="checkbox" role="switch" id="display_skyscraper" disabled>
+                                <label class="form-check-label" for="display_skyscraper">Display  Skyskraper Banner Ads</label>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
 
-            {#<div id="card4" class="card my-4 border-0 shadow">
+                {#<div id="card4" class="card my-4 border-0 shadow">
                 <div class="card-body">
                     <h5 class="card-title h2 mb-0">
                         4. Experimental Control
@@ -298,177 +303,177 @@
                 </div>
             </div>#}
 
-            <div id="card5" class="card my-4 border-0 shadow">
-                <div class="card-body">
-                    <h5 class="card-title h2 mb-0">
-                        4. Participant Briefing
-                    </h5>
-                    <p class="card-text text-muted">
-                        <small>
-                            Please use the following two editors to specify (1) the consent form that participants must agree to before participating in your study
-                            as well as (2) the study instructions participants read prior to the feed exposure.
-                        </small>
-                    </p>
+                <div id="card5" class="card my-4 border-0 shadow">
+                    <div class="card-body">
+                        <h5 class="card-title h2 mb-0">
+                            4. Participant Briefing
+                        </h5>
+                        <p class="card-text text-muted">
+                            <small>
+                                Please use the following two editors to specify (1) the consent form that participants must agree to before participating in your study
+                                as well as (2) the study instructions participants read prior to the feed exposure.
+                            </small>
+                        </p>
 
-                    <div id="editor-container-consent" class="mb-4">
-                        <div id="quill-editor-consent">
-                            <h2>Consent Form</h2>
-                            <p>
-                                Within the scope of the study, great importance is attached to compliance with data protection regulations,
-                                the protection of privacy and the confidentiality of the data. We strictly adhere to
-                                all applicable laws and regulations on data protection. With these notes we inform you
-                                about the processing of your personal data and the rights to which you are entitled.
+                        <div id="editor-container-consent" class="mb-4">
+                            <div id="quill-editor-consent">
+                                <h2>Consent Form</h2>
+                                <p>
+                                    Within the scope of the study, great importance is attached to compliance with data protection regulations,
+                                    the protection of privacy and the confidentiality of the data. We strictly adhere to
+                                    all applicable laws and regulations on data protection. With these notes we inform you
+                                    about the processing of your personal data and the rights to which you are entitled.
+                                    <br><br>
+                                </p>
+
+                                <h5>Investigator</h5>
+                                <a style="background-color: black; color: white;">[Enter your contact information such as your name and your email address here.]</a>
                                 <br><br>
-                            </p>
 
-                            <h5>Investigator</h5>
-                            <a style="background-color: black; color: white;">[Enter your contact information such as your name and your email address here.]</a>
-                            <br><br>
+                                <h5>Confidentiality</h5>
+                                <p>
+                                    The data collected in this study will be confidential. No personally identifiable information will be
+                                    collected unless voluntarily provided. Any reports and presentations about the findings from this study
+                                    will not include any information that could identify you. Eventually, results of the analyses may be
+                                    published on an aggregate level in an academic journal. We may share the data we collect in this study
+                                    with other researchers doing future studies – if we share your data, we will not include information
+                                    that could identify you.
+                                </p>
+                                <br><br>
 
-                            <h5>Confidentiality</h5>
-                            <p>
-                                The data collected in this study will be confidential. No personally identifiable information will be
-                                collected unless voluntarily provided. Any reports and presentations about the findings from this study
-                                will not include any information that could identify you. Eventually, results of the analyses may be
-                                published on an aggregate level in an academic journal. We may share the data we collect in this study
-                                with other researchers doing future studies – if we share your data, we will not include information
-                                that could identify you.
-                            </p>
-                            <br><br>
+                                <h5>Withdrawal from the participation or the consent</h5>
+                                <p>
+                                    The participation in this research project is voluntary. You have at all times the right to withdraw
+                                    from participating in the research project, without having to state the reason. You also have the right
+                                    to withdraw your consent which will result in your personal information being removed so that it
+                                    cannot be linked to you anymore. However, if you decide to discontinue your participation you will not
+                                    be remunerated.
+                                </p>
+                                <br><br>
 
-                            <h5>Withdrawal from the participation or the consent</h5>
-                            <p>
-                                The participation in this research project is voluntary. You have at all times the right to withdraw
-                                from participating in the research project, without having to state the reason. You also have the right
-                                to withdraw your consent which will result in your personal information being removed so that it
-                                cannot be linked to you anymore. However, if you decide to discontinue your participation you will not
-                                be remunerated.
-                            </p>
-                            <br><br>
+                                <h5>Individual Rights</h5>
+                                <p>
+                                    You are entitled to ask questions about this project at any time by contacting the above-mentioned
+                                    investigator by e-mail.
 
-                            <h5>Individual Rights</h5>
-                            <p>
-                                You are entitled to ask questions about this project at any time by contacting the above-mentioned
-                                investigator by e-mail.
+                                    You have the right to access and require a copy of your personal data, object to the processing of your
+                                    personal data, have them rectified or deleted. You also have a right to limit the processing of your
+                                    data. You can exercise these rights by contacting the investigator.
+                                </p>
+                                <br><br>
 
-                                You have the right to access and require a copy of your personal data, object to the processing of your
-                                personal data, have them rectified or deleted. You also have a right to limit the processing of your
-                                data. You can exercise these rights by contacting the investigator.
-                            </p>
-                            <br><br>
+                                <h5>
+                                    By agreeing to these terms you consent to the following statement:
+                                </h5>
+                                <blockquote>
+                                    <em>
+                                        "I am 18 years of age or older, I consent/agree to participate in this study, I have read the
+                                        information that explains the use of my data in this research, I understand its contents and agree to
+                                        donate my data for the use of this research, and I will not have any financial benefits that result from
+                                        the commercial development of this research.”
+                                    </em>
+                                </blockquote>
 
-                            <h5>
-                                By agreeing to these terms you consent to the following statement:
-                            </h5>
-                            <blockquote>
-                                <em>
-                                "I am 18 years of age or older, I consent/agree to participate in this study, I have read the
-                                information that explains the use of my data in this research, I understand its contents and agree to
-                                donate my data for the use of this research, and I will not have any financial benefits that result from
-                                the commercial development of this research.”
-                                </em>
-                            </blockquote>
-
-                        </div>
-                    </div>
-
-                    <div id="editor-container-briefing">
-                        <div id="quill-editor-briefing">
-                            <h2>Study Instructions</h2>
-                            <p>You will be shown a social media feed. Please <u>browse</u> through the content naturally.</p>
-                            <p>Take your time to read the posts that you find interesting.</p>
-                        </div>
-                    </div>
-                    <p class="card-text text-muted">
-                        <small>
-                            Note: The whole briefing page is skipped if you leave this field empty.
-                        </small>
-                    </p>
-
-                </div>
-            </div>
-
-            <div id="card6" class="card my-4 border-0 shadow">
-                <div class="card-body">
-                    <h5 class="card-title h2 mb-0">
-                        5. Measurement
-                    </h5>
-                    <p class="card-text text-muted">
-                        <small>
-                            Plese use the following forms to define what you measure and how you measure it.
-                        </small>
-                    </p>
-                    <form>
-                        <div class="mb-3">
-                            <label for="survey_url" class="form-label">Insert Your Survey's URL</label>
-                            <input type="text" class="form-control" id="survey_url" aria-describedby="survey_url_help">
-                            <div id="survey_url_help" class="form-text">
-                                Configure this  field, if you want to append a survey to the stimulus.
-                                We'll create a redirect with url parameters to pass both the participant ID as well as
-                                the completion code (for Prolific). Make sure that your survey tool accepts them
-                                (see <a href="https://researcher-help.prolific.com/hc/en-gb/articles/360009224113-Qualtrics-integration-guide" target="_blank">embedded data documentation</a>
-                                if you are using Qualtrics).Please provide a url directing to your survey. Please don't add any manual url parameters.
-                                If you leave this field empty, the study will close with an end of survey screen that provides
-                                your contact information provided above.
                             </div>
                         </div>
-                        <label for="dwell_threshold" class="form-label">Dwell Time Tracking Threshold</label>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">%</span>
-                            <input type="number" class="form-control" id="dwell_threshold" value="75" min="1" max="100">
-                            <div id="dwell_threshold_help" class="form-text">
-                                This setting determines the visibility threshold for tracking dwell time.
-                                It represents the percentage of a social media post that must be visible to the participant before it's considered "in view".
-                                A lower value (closer to 1%) will track social media posts as soon as they're barely visible,
-                                whereas a higher value (closer to 100%) will only track rows when they're almost fully visible.
+
+                        <div id="editor-container-briefing">
+                            <div id="quill-editor-briefing">
+                                <h2>Study Instructions</h2>
+                                <p>You will be shown a social media feed. Please <u>browse</u> through the content naturally.</p>
+                                <p>Take your time to read the posts that you find interesting.</p>
                             </div>
                         </div>
-                    </form>
+                        <p class="card-text text-muted">
+                            <small>
+                                Note: The whole briefing page is skipped if you leave this field empty.
+                            </small>
+                        </p>
+
+                    </div>
                 </div>
-            </div>
 
-            <div class="card my-4 border-0 shadow" id="adCard" style="display: none;">
-                <div class="card-body">
-                    <h5 class="card-title h2 mb-0">
-                        Skyscraper Banner Ad
-                    </h5>
-                    <p class="card-text text-muted">
-                        <small>
-                        </small>
-                    </p>
+                <div id="card6" class="card my-4 border-0 shadow">
+                    <div class="card-body">
+                        <h5 class="card-title h2 mb-0">
+                            5. Measurement
+                        </h5>
+                        <p class="card-text text-muted">
+                            <small>
+                                Plese use the following forms to define what you measure and how you measure it.
+                            </small>
+                        </p>
+                        <form>
+                            <div class="mb-3">
+                                <label for="survey_url" class="form-label">Insert Your Survey's URL</label>
+                                <input type="text" class="form-control" id="survey_url" aria-describedby="survey_url_help">
+                                <div id="survey_url_help" class="form-text">
+                                    Configure this  field, if you want to append a survey to the stimulus.
+                                    We'll create a redirect with url parameters to pass both the participant ID as well as
+                                    the completion code (for Prolific). Make sure that your survey tool accepts them
+                                    (see <a href="https://researcher-help.prolific.com/hc/en-gb/articles/360009224113-Qualtrics-integration-guide" target="_blank">embedded data documentation</a>
+                                    if you are using Qualtrics).Please provide a url directing to your survey. Please don't add any manual url parameters.
+                                    If you leave this field empty, the study will close with an end of survey screen that provides
+                                    your contact information provided above.
+                                </div>
+                            </div>
+                            <label for="dwell_threshold" class="form-label">Dwell Time Tracking Threshold</label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">%</span>
+                                <input type="number" class="form-control" id="dwell_threshold" value="75" min="1" max="100">
+                                <div id="dwell_threshold_help" class="form-text">
+                                    This setting determines the visibility threshold for tracking dwell time.
+                                    It represents the percentage of a social media post that must be visible to the participant before it's considered "in view".
+                                    A lower value (closer to 1%) will track social media posts as soon as they're barely visible,
+                                    whereas a higher value (closer to 100%) will only track rows when they're almost fully visible.
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
 
-            <button id="createSessionBtn" type="button" class="btn btn-primary">Create Session</button>
-
-            <div id="alertPlaceholder"></div>
-
-            <!-- Completion Code Section -->
-            <div id="completionCodeSection" class="card my-4 border-0 shadow" style="display: none;">
-                <div class="card-body">
-                    <h5 class="card-title h2 mb-0">
-                        6. Completion Code
-                    </h5>
-                    <p class="card-text text-muted">
-                        <small>
-                            Please enter the completion code if you have selected Prolific as your recruitment platform.
-                        </small>
-                    </p>
-                    <form id="completionCodeForm">
-                        <div class="mb-3">
-                            <label for="completionCode" class="form-label">Completion Code</label>
-                            <input type="text" class="form-control" id="completionCode" placeholder="Enter Completion Code">
-                        </div>
-                        <button type="button" class="btn btn-primary" onclick="submitCompletionCode();">Submit Code</button>
-                    </form>
+                <div class="card my-4 border-0 shadow" id="adCard" style="display: none;">
+                    <div class="card-body">
+                        <h5 class="card-title h2 mb-0">
+                            Skyscraper Banner Ad
+                        </h5>
+                        <p class="card-text text-muted">
+                            <small>
+                            </small>
+                        </p>
+                    </div>
                 </div>
+
+                <button id="createSessionBtn" type="button" class="btn btn-primary">Create Session</button>
+
+                <div id="alertPlaceholder"></div>
+
+                <!-- Completion Code Section -->
+                <div id="completionCodeSection" class="card my-4 border-0 shadow" style="display: none;">
+                    <div class="card-body">
+                        <h5 class="card-title h2 mb-0">
+                            6. Completion Code
+                        </h5>
+                        <p class="card-text text-muted">
+                            <small>
+                                Please enter the completion code if you have selected Prolific as your recruitment platform.
+                            </small>
+                        </p>
+                        <form id="completionCodeForm">
+                            <div class="mb-3">
+                                <label for="completionCode" class="form-label">Completion Code</label>
+                                <input type="text" class="form-control" id="completionCode" placeholder="Enter Completion Code">
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="submitCompletionCode();">Submit Code</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="completionAlertPlaceholder"></div>
+
             </div>
-
-            <div id="completionAlertPlaceholder"></div>
-
         </div>
     </div>
-</div>
 </div>
 
 <!--
@@ -556,8 +561,7 @@
                     <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="SA" style="max-width: 1em;max-height:1em;margin-left: .2em;">
                 </li>
                 <li class="mb-2">
-                    <strong>Citation:</strong> Roggenkamp, H. C., Boegershausen, J., & Hildebrand, C. (2025).
-                    Digital In-Context Experiments (DICE). Retrieved from osf.io/jcxvk
+                    <strong>Citation:</strong> Roggenkamp, H., Boegershausen, J., & Hildebrand, C. (2025). EXPRESS: DICE: Advancing Social Media Research through Digital In-Context Experiments. Journal of Marketing, 00222429251371702.
                 </li>
                 <li class="mb-2">No web analytics implemented.</li>
                 <li class="mb-2"><a class="text-secondary" href="{{ url_for('imprint') }}">Imprint</a></li>
@@ -580,6 +584,109 @@
                 <!-- Add covering box -->
                 <div class="position-absolute bg-white" style="height: 60px; width: 100%; z-index: 1000;"></div>
                 <iframe id="session-iframe" style="width: 100%; height: 100%; border: none;" title="Session View"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Citation Modal -->
+<div class="modal fade" id="citationModal" tabindex="-1" aria-labelledby="citationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>
+                    If you use DICE in your research, please cite this paper:
+                </p>
+
+                <!-- Citation Format Selector -->
+                <div class="mb-3">
+                    <label for="citationFormat" class="form-label">Export Citation:</label>
+                    <select class="form-select" id="citationFormat" onchange="updateCitation()">
+                        <option value="bibtex">BibTeX</option>
+                        <option value="apa">APA</option>
+                        <option value="chicago">Chicago</option>
+                        <option value="plaintext">Plain Text</option>
+                        <option value="ris">RIS</option>
+                    </select>
+                </div>
+
+                <!-- Citation Text Area -->
+                <div class="mb-3">
+                    <textarea class="form-control font-monospace" id="citationText" rows="8" readonly></textarea>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="d-flex gap-2 mb-0">
+                    <button class="btn btn-primary" onclick="copyCitation()">
+                        <i class="bi bi-clipboard"></i> Copy
+                    </button>
+                    <button class="btn btn-outline-primary" onclick="downloadCitation()">
+                        <i class="bi bi-download"></i> Download
+                    </button>
+                    <a class="btn btn-outline-secondary ms-auto" href="https://journals.sagepub.com/doi/10.1177/00222429251371702" target="_blank">
+                        <i class="bi bi-box-arrow-up-right"></i> View Paper
+                    </a>
+                </div>
+
+                <!-- Copy Success Message -->
+                <div id="copySuccess" class="alert alert-success" style="display: none;" role="alert">
+                    <i class="bi bi-check-circle"></i> Citation copied to clipboard!
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Help Modal -->
+<div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+
+                <!-- Primary: GitHub Discussions -->
+                <div class="card border-primary mb-3">
+                    <div class="card-header bg-primary text-white">
+                        <i class="bi bi-chat-dots"></i> <strong>Recommended: Community Forum</strong>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="card-title">Ask on GitHub Discussions</h6>
+                        <p class="card-text">
+                            We're building a community forum where you can ask questions, share experiences, and help other DICE users.
+                        </p>
+
+                            <small>
+                                <strong>Why use the forum?</strong>
+                                <ul class="mb-0 mt-2">
+                                    <li>Your question and answer help other researchers</li>
+                                    <li>Searchable archive of solutions</li>
+                                    <li>Faster responses from the community</li>
+                                    <li>We can track and prioritize common issues</li>
+                                </ul>
+                            </small>
+
+                        <p class="text-muted small my-3">
+                            <i class="bi bi-info-circle"></i>
+                            Requires a free GitHub account (recommended for DICE users anyway).
+                        </p>
+
+                        <a href="https://github.com/Howquez/DICE/discussions" target="_blank" class="btn btn-primary">
+                            <i class="bi bi-github"></i> Go to Discussions Forum
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Secondary: Email -->
+                <div class="card border-secondary">
+                    <div class="card-body">
+                        <h6 class="card-title">
+                            <i class="bi bi-envelope"></i> Email
+                        </h6>
+                        <p class="card-text text-muted">
+                            For private or sensitive matters, you can contact us directly via email: hauke.roggenkamp [at] unisg.ch
+                        </p>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
