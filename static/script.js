@@ -144,6 +144,41 @@ function liveRecv(data) {
     paragraph_1.appendChild(urlDisplay);
     alertDiv.appendChild(paragraph_2);
 
+    if (recruitment_platform !== 'Prolific' && data.session_wide_url) {
+    // Get the URL parameter name that was used
+    let urlParamName = document.getElementById('url_parameter_name').value || 'participant_id';
+
+    var modifiedSessionWideUrl = data.session_wide_url +
+                                 '/?participant_label={{PLACEHOLDER}}';
+
+    var explanatoryText = document.createElement('p');
+    explanatoryText.textContent = "2. Copy the following URL and provide it to your recruitment platform. Replace the placeholder with your platform's actual participant ID variable.";
+
+    var inputGroup = document.createElement('div');
+    inputGroup.className = 'input-group mb-3';
+
+    var urlInput = document.createElement('input');
+    urlInput.setAttribute('type', 'text');
+    urlInput.className = 'form-control';
+    urlInput.setAttribute('value', modifiedSessionWideUrl);
+    urlInput.setAttribute('readonly', true);
+
+    var copyButton = document.createElement('button');
+    copyButton.className = 'btn btn-primary';
+    copyButton.setAttribute('type', 'button');
+    copyButton.textContent = 'Copy URL';
+    copyButton.onclick = function() {
+        urlInput.select();
+        document.execCommand('copy');
+    };
+
+    inputGroup.appendChild(urlInput);
+    inputGroup.appendChild(copyButton);
+
+    alertDiv.appendChild(explanatoryText);
+    alertDiv.appendChild(inputGroup);
+}
+
     if (recruitment_platform === 'Prolific' && data.session_wide_url) {
         var modifiedSessionWideUrl = data.session_wide_url +
                                      '/?participant_label={{%PROLIFIC_PID%}}' +
