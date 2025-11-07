@@ -232,6 +232,7 @@ function sendValue() {
     let delimiter = document.getElementById('delimiter').value;
     let content_url = document.getElementById('content_url').value;
     let recruitment_platform = document.getElementById('recruitment_platform').value;
+    let url_parameter_name = document.getElementById('url_parameter_name').value;
     let survey_url = document.getElementById('survey_url').value;
     let dwell_threshold = document.getElementById('dwell_threshold').value;
     let search_term = document.getElementById('search_term').value;
@@ -255,6 +256,7 @@ function sendValue() {
             content_url: content_url,
             delimiter: delimiter,
             recruitment_platform: recruitment_platform,
+            url_parameter_name: url_parameter_name,
             survey_url: survey_url,
             dwell_threshold: dwell_threshold,
             search_term: search_term,
