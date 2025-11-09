@@ -13,6 +13,7 @@
 </head>
 <body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='validation.js') }}"></script>
 <script src="{{ url_for('static', filename='script.js') }}"></script>
 <script src="{{ url_for('static', filename='smooth_scrolling.js') }}"></script>
 <script src="{{ url_for('static', filename='citations.js') }}"></script>
@@ -177,35 +178,38 @@
                         </h5>
                         <p class="card-text text-muted">
                             <small>
+                                Configure where your participants come from and how many can access your study.
                             </small>
                         </p>
                         <form>
                             <div class="mb-3">
-                                <label for="recruitment_platform" class="form-label">Choose Your Recruitment Platform</label>
+                                <label for="recruitment_platform" class="form-label">Recruitment Platform</label>
                                 <select class="form-select" id="recruitment_platform" aria-describedby="recruitment_help">
-                                    <option value="Lab">Other Recruitment Platforms</option>
+                                    <option value="Lab">Other Recruitment Platform</option>
                                     <option value="Prolific" selected>Prolific</option>
                                 </select>
+                                <div id="recruitment_help" class="form-text">
+                                    Select where you're recruiting participants from.
+                                </div>
                             </div>
                             <div class="mb-3">
-                                <label for="participant_number" class="form-label">Specify the Number of Rows in Database</label>
+                                <label for="participant_number" class="form-label">Study Slots</label>
                                 <input type="number" class="form-control w-100" id="participant_number" aria-describedby="participant_help" value="3" min="1" max="400">
                                 <div id="participant_help" class="form-text">
-                                    Please specify the desired number of participants and account for attrition:
-                                    Each participation uses one slot, regardless of whether the participant completes the survey.
-                                    Potential participants who try to enter the experiment after all slots (rows in the database)
-                                    are used, cannot do so.
+                                    How many participants can <em>start</em> your study (maximum 400).
+                                    <strong>Remember:</strong> Some participants may not complete the study, so allocate extra slots to account for dropouts.
+                                    Once this limit is reached, no new participants can join.
+                                    <br> Please get in touch if you intend to run larger studies.
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label for="url_parameter_name" class="form-label">Participant ID Parameter Name</label>
                                 <input type="text" class="form-control" id="url_parameter_name" aria-describedby="url_param_help" value="PROLIFIC_PID">
                                 <div id="url_param_help" class="form-text">
-                                    This is the name used to track participant IDs when they move from your study to your survey.
-                                    <strong>For Prolific users:</strong> Leave as "PROLIFIC_PID" (this will automatically appear when you select Prolific above).
-                                    <strong>For other platforms:</strong> Enter the parameter name your survey tool expects.
-                                    In Qualtrics, this should match your "Embedded Data" field name.
-                                    <strong>Example:</strong> If your Qualtrics embedded data field is called "ParticipantID", enter "ParticipantID" here.
+                                    The name of the URL parameter your recruitment platform uses to pass participant IDs. DICE will capture this ID and forward it to your Qualtrics survey.
+                                    <br><strong>Prolific:</strong> Use "PROLIFIC_PID" (automatically set).
+                                    <br><strong>Lab/Other platforms:</strong> Enter the parameter name your system uses (e.g., "participant_id", "subject_number", "lab_id").
+                                    <br><strong>In Qualtrics:</strong> Create an Embedded Data field with the same name to automatically capture the participant ID.
                                 </div>
                             </div>
                         </form>
@@ -234,6 +238,13 @@
                                 </select>
                             </div>
                             <div class="mb-3">
+                                <label for="search_term" class="form-label">Provide a Term Displayed in Search Bar</label>
+                                <input type="text" class="form-control" id="search_term" aria-describedby="search_help" value="#myHashtag">
+                                <div id="search_help" class="form-text">
+                                    Consider using a hashtag as a prefix.
+                                </div>
+                            </div>
+                            <div class="mb-3">
                                 <label for="content_url" class="form-label">Provide URL Directing to Your Content</label>
                                 <input type="text" class="form-control" id="content_url" aria-describedby="url_help" value="https://raw.githubusercontent.com/DICE-app/sample-feeds/refs/heads/main/feeds/9gag.csv">
                                 <div id="url_help" class="form-text">
@@ -243,23 +254,27 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label for="delimiter" class="form-label">Specify Your CSV Delimiter.</label>
+                                <label for="delimiter" class="form-label">Column Separator <span class="badge bg-secondary" data-delimiter-badge style="opacity: 0; transition: opacity 0.3s;">Auto-Detected</span></label>
                                 <select class="form-select" id="delimiter" aria-describedby="delimiter_help">
-                                    <option value=";">Semicolon</option>
-                                    <option value=",">Comma</option>
-
+                                    <option value=";">Semicolon (;)</option>
+                                    <option value=",">Comma (,)</option>
+                                    <option value="|">Pipe (|)</option>
                                 </select>
                                 <div id="delimiter_help" class="form-text">
-                                    Please select the character that separates the data fields in your CSV file.
+                                    We automatically detect how your columns are separated. If the detected separator looks wrong, you can change it manually.
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label for="search_term" class="form-label">Provide a Term Displayed in Search Bar</label>
-                                <input type="text" class="form-control" id="search_term" aria-describedby="search_help" value="#myHashtag">
-                                <div id="search_help" class="form-text">
-                                    Consider using a hashtag as a prefix.
+                                <div class="input-group">
+                                    <button class="btn btn-success w-100" type="button" onclick="testCSV()"
+                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="Check your CSV structure, column count, and separator before creating your session">
+                                        <i class="bi bi-check-circle"></i> Test CSV
+                                    </button>
                                 </div>
+                                <small class="form-text text-muted mt-2 d-block">Click to verify your CSV file before proceeding.</small>
                             </div>
+                            <div id="csv-preview-container" class="csv-preview-container"></div>
 
                             <div class="form-check form-switch" style="display: none">
                                 <input class="form-check-input" type="checkbox" role="switch" id="display_skyscraper" disabled>
@@ -444,7 +459,7 @@
                     </div>
                 </div>
 
-                <button id="createSessionBtn" type="button" class="btn btn-primary">Create Session</button>
+                <button id="createSessionBtn" type="button" class="btn btn-primary" style="display: none;">Create Session</button>
 
                 <div id="alertPlaceholder"></div>
 

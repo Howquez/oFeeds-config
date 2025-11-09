@@ -4,6 +4,12 @@ var quillConsent;  // Quill instance for consent form
 
 // Initialize both Quill editors when document is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Bootstrap tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+
     // Initialize briefing editor
     quillBriefing = new Quill('#quill-editor-briefing', {
         theme: 'snow',
@@ -245,7 +251,8 @@ function sendValue() {
     console.log('sent');
 
     var createSessionBtn = document.getElementById('createSessionBtn');
-    createSessionBtn.innerHTML = '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Loading...';
+
+    createSessionBtn.innerHTML = '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Creating Session...';
     createSessionBtn.disabled = true;
 
     // Clear any previous error messages
@@ -275,7 +282,6 @@ function sendValue() {
     let condition_col = "condition";
     let display_skyscraper = document.getElementById('display_skyscraper').checked;
 
-    // Directly proceed with creating the session without validation
     fetch('/create_session', {
         method: 'POST',
         headers: {
@@ -322,18 +328,139 @@ function sendValue() {
         createSessionBtn.innerHTML = 'Create Session';
         createSessionBtn.disabled = false;
 
-        // Create and display error message
-        let errorDiv = document.createElement('div');
-        errorDiv.id = 'errorMessage';
-        errorDiv.className = 'alert alert-danger mt-3';
-        errorDiv.textContent = error.message || 'Error creating session';
-
-        // Insert the error message before the button
-        createSessionBtn.parentNode.insertBefore(errorDiv, createSessionBtn);
-
-        // Scroll to the error message
-        errorDiv.scrollIntoView({ behavior: 'smooth' });
+        // Create and display improved error message
+        displaySessionError(error.message || 'Error creating session');
     });
+}
+
+/**
+ * Display a categorized error message with recovery guidance and GitHub support info
+ */
+function displaySessionError(errorMessage) {
+    const createSessionBtn = document.getElementById('createSessionBtn');
+
+    // Categorize the error
+    let errorCategory = 'Session Creation Error';
+    let recoverySteps = [];
+    let errorId = 'session_creation_error';
+
+    if (errorMessage.includes('CSV') || errorMessage.includes('csv')) {
+        errorCategory = 'CSV Data Error';
+        errorId = 'csv_data_error';
+        recoverySteps = [
+            'Check that your CSV URL is correct and accessible',
+            'Verify the CSV file format and delimiter selection',
+            'Use the "Test CSV" button to preview your data before trying again'
+        ];
+    } else if (errorMessage.includes('URL') || errorMessage.includes('url')) {
+        errorCategory = 'Invalid URL';
+        errorId = 'invalid_url_error';
+        recoverySteps = [
+            'Check that the URL starts with http:// or https://',
+            'Verify the URL is accessible (not behind a firewall)',
+            'Try testing the URL in your browser'
+        ];
+    } else if (errorMessage.includes('Participant') || errorMessage.includes('participant')) {
+        errorCategory = 'Participant Configuration Error';
+        errorId = 'participant_config_error';
+        recoverySteps = [
+            'Ensure the number of participants is between 1 and 400',
+            'Check that the participant number is a valid number'
+        ];
+    } else if (errorMessage.includes('Email') || errorMessage.includes('email')) {
+        errorCategory = 'Email Error';
+        errorId = 'email_error';
+        recoverySteps = [
+            'Verify that your email address is in the correct format (e.g., name@example.com)',
+            'Make sure there are no extra spaces in the email field'
+        ];
+    } else {
+        recoverySteps = [
+            'Review all form fields for errors',
+            'Check the browser console for more details (press F12)',
+            'Try refreshing the page and submitting again'
+        ];
+    }
+
+    // Create error div with categorized information
+    let errorDiv = document.createElement('div');
+    errorDiv.id = 'errorMessage';
+    errorDiv.className = 'alert alert-danger mt-4 shadow';
+    errorDiv.setAttribute('role', 'alert');
+
+    let titleElem = document.createElement('h5');
+    titleElem.className = 'alert-heading';
+    titleElem.innerHTML = '<i class="bi bi-exclamation-triangle"></i> ' + errorCategory;
+    errorDiv.appendChild(titleElem);
+
+    let messageElem = document.createElement('p');
+    messageElem.className = 'mb-3';
+    messageElem.textContent = errorMessage;
+    errorDiv.appendChild(messageElem);
+
+    if (recoverySteps.length > 0) {
+        let stepsLabel = document.createElement('strong');
+        stepsLabel.textContent = 'What to try:';
+        errorDiv.appendChild(stepsLabel);
+
+        let stepsList = document.createElement('ul');
+        stepsList.className = 'mb-3 mt-2';
+        recoverySteps.forEach(step => {
+            let li = document.createElement('li');
+            li.textContent = step;
+            stepsList.appendChild(li);
+        });
+        errorDiv.appendChild(stepsList);
+    }
+
+    // Add GitHub support section
+    let supportDiv = document.createElement('div');
+    supportDiv.className = 'border-top pt-3 mt-3';
+
+    let supportTitle = document.createElement('small');
+    supportTitle.className = 'text-muted d-block mb-2';
+    supportTitle.innerHTML = '<strong>Still having issues?</strong> Copy this info to <a href="https://github.com/Howquez/DICE/discussions" target="_blank">GitHub Discussions</a> and we\'ll help:';
+    supportDiv.appendChild(supportTitle);
+
+    // Create copyable error details
+    let errorDetails = `Error ID: ${errorId}
+Error Message: ${errorMessage}
+Timestamp: ${new Date().toISOString()}`;
+
+    let detailsBox = document.createElement('textarea');
+    detailsBox.className = 'form-control form-control-sm font-monospace';
+    detailsBox.rows = 4;
+    detailsBox.value = errorDetails;
+    detailsBox.readOnly = true;
+    detailsBox.style.fontSize = '0.85rem';
+    detailsBox.id = 'errorDetailsBox';
+    supportDiv.appendChild(detailsBox);
+
+    let copyBtn = document.createElement('button');
+    copyBtn.className = 'btn btn-sm btn-outline-secondary mt-2';
+    copyBtn.innerHTML = '<i class="bi bi-clipboard"></i> Copy Error Details';
+    copyBtn.onclick = function() {
+        const box = document.getElementById('errorDetailsBox');
+        box.select();
+        document.execCommand('copy');
+
+        // Show feedback
+        const originalText = copyBtn.innerHTML;
+        copyBtn.innerHTML = '<i class="bi bi-check"></i> Copied!';
+        setTimeout(() => {
+            copyBtn.innerHTML = originalText;
+        }, 2000);
+    };
+    supportDiv.appendChild(copyBtn);
+
+    errorDiv.appendChild(supportDiv);
+
+    // Insert the error message after the button
+    createSessionBtn.parentNode.insertBefore(errorDiv, createSessionBtn.nextSibling);
+
+    // Scroll to the error message
+    errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    errorDiv.focus();
 }
 
 function submitCompletionCode() {

@@ -22,6 +22,66 @@ class APIError(Exception):
         super().__init__(self.message)
 
 
+def detect_delimiter(csv_content: str, user_delimiter: str = ';') -> str:
+    """
+    Auto-detect CSV delimiter by checking which delimiter produces
+    the most consistent number of columns across rows.
+
+    Args:
+        csv_content: The CSV file content as a string
+        user_delimiter: The user-selected delimiter (fallback)
+
+    Returns:
+        The detected delimiter
+    """
+    possible_delimiters = [';', ',', '\t', '|']
+    lines = csv_content.strip().split('\n')[:10]  # Check first 10 lines
+
+    if not lines:
+        return user_delimiter
+
+    delimiter_scores = {}
+
+    for delim in possible_delimiters:
+        try:
+            # Count columns in each line
+            col_counts = [len(line.split(delim)) for line in lines if line.strip()]
+
+            if not col_counts:
+                continue
+
+            # Score: prefer delimiters that produce consistent column counts
+            # and at least 2 columns
+            if min(col_counts) >= 2:
+                # Lower variance = higher score
+                variance = max(col_counts) - min(col_counts)
+                # More columns = slightly higher score (to prefer comma over semicolon in ambiguous cases)
+                avg_cols = sum(col_counts) / len(col_counts)
+                score = avg_cols - (variance * 0.5)
+                delimiter_scores[delim] = score
+        except Exception:
+            continue
+
+    if not delimiter_scores:
+        return user_delimiter
+
+    # Return the delimiter with the highest score
+    detected = max(delimiter_scores, key=delimiter_scores.get)
+
+    # If detected delimiter is different from user's choice, still try user's first
+    # (in case user explicitly selected a different delimiter)
+    if user_delimiter in delimiter_scores:
+        # Give slight preference to user's choice if it's viable
+        user_score = delimiter_scores.get(user_delimiter, 0)
+        detected_score = delimiter_scores[detected]
+        # Only override user choice if detected is significantly better
+        if detected_score > user_score * 1.2:
+            return detected
+        return user_delimiter
+
+    return detected
+
+
 def call_api(method: str, *path_parts: str, **params: Any) -> Dict:
     """Enhanced API call function with better error handling"""
     try:
@@ -137,6 +197,109 @@ def get_session_data(session_code):
         return jsonify({"error": str(e)}), e.status_code
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@app.route('/test_csv', methods=['POST'])
+def test_csv():
+    """Test CSV file and validate structure"""
+    try:
+        data = request.get_json()
+        if not data or 'content_url' not in data:
+            return jsonify({"error": "Missing content_url"}), 400
+
+        content_url = data.get('content_url', '').strip()
+        user_delimiter = data.get('delimiter', ';')
+
+        if not content_url:
+            return jsonify({"error": "Content URL cannot be empty"}), 400
+
+        # Fetch CSV from URL
+        try:
+            response = requests.get(content_url, timeout=10)
+            response.raise_for_status()
+        except requests.Timeout:
+            return jsonify({"error": "Request timed out. The CSV URL may be unreachable or too slow."}), 400
+        except requests.ConnectionError:
+            return jsonify({"error": "Cannot connect to the URL. Please check that the URL is correct and accessible."}), 400
+        except requests.HTTPError as e:
+            return jsonify({"error": f"HTTP Error {response.status_code}: The URL returned an error. Check the URL is correct."}), 400
+        except requests.RequestException as e:
+            return jsonify({"error": f"Failed to fetch CSV: {str(e)}"}), 400
+
+        # Auto-detect delimiter
+        detected_delimiter = detect_delimiter(response.text, user_delimiter)
+        delimiter = detected_delimiter
+
+        try:
+            # Parse CSV without type inference to avoid issues
+            csv_data = pd.read_csv(StringIO(response.text), delimiter=delimiter, dtype=str)
+        except pd.errors.ParserError as e:
+            return jsonify({
+                "error": "Could not parse CSV with the detected or selected delimiter. Try a different delimiter or check the CSV format."
+            }), 400
+        except Exception as e:
+            return jsonify({"error": f"Error parsing CSV: {str(e)}"}), 400
+
+        # Validation checks
+        warnings = []
+        errors = []
+
+        # Check required columns (columns that must exist, even if they can be empty)
+        required_columns = ['doc_id', 'datetime', 'text', 'condition', 'sequence', 'media', 'alt_text',
+                           'likes', 'reposts', 'replies', 'username', 'handle', 'user_description',
+                           'user_image', 'user_followers', 'commented_post', 'sponsored', 'target']
+        all_columns = list(csv_data.columns)
+        missing_required = [col for col in required_columns if col not in all_columns]
+
+        if missing_required:
+            errors.append(f"Missing required columns: {', '.join(missing_required)}")
+
+        # Validate datetime format (similar to oTree preprocessing)
+        datetime_col = 'datetime'
+        if datetime_col in csv_data.columns:
+            datetime_series = pd.to_datetime(csv_data[datetime_col], errors='coerce')
+            failed_dates = csv_data[datetime_series.isna()][datetime_col].unique()
+
+            if len(failed_dates) > 0:
+                # Try alternate format
+                datetime_series_alt = pd.to_datetime(csv_data[datetime_col], errors='coerce', format='%d.%m.%y %H:%M')
+                still_failed = csv_data[datetime_series_alt.isna()][datetime_col].unique()
+
+                if len(still_failed) > 0:
+                    warnings.append(f"Some datetime values could not be parsed. Found {len(still_failed)} unparseable dates. Ensure dates are in format 'YYYY-MM-DD HH:MM' or 'DD.MM.YY HH:MM'")
+
+        # Check for rows with data
+        total_rows = len(csv_data)
+        if total_rows == 0:
+            errors.append("CSV file is empty (no data rows)")
+
+        # Prepare response
+        response_data = {
+            "success": len(errors) == 0,
+            "total_rows": int(total_rows),
+            "columns": all_columns,
+            "num_columns": int(len(all_columns)),
+            "delimiter": delimiter,
+            "warnings": warnings,
+            "errors": errors
+        }
+
+        # Add column info for display
+        column_info = []
+        for col in all_columns:
+            non_empty = int(csv_data[col].notna().sum()) if col in csv_data.columns else 0
+            empty = int(total_rows - non_empty)
+            column_info.append({
+                "name": col,
+                "non_empty_rows": non_empty,
+                "empty_rows": empty
+            })
+        response_data["column_info"] = column_info
+
+        return jsonify(response_data)
+
+    except Exception as e:
+        return jsonify({"error": f"Unexpected error: {str(e)}"}), 500
 
 
 @app.route('/create_replication_package', methods=['POST'])
