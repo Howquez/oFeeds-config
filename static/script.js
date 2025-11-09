@@ -59,6 +59,30 @@ document.addEventListener('DOMContentLoaded', function() {
         adCard.style.display = this.checked ? 'block' : 'none';
     });
 
+    // Platform preset logic for Participant ID Parameter Name
+    const platformParameterMap = {
+        'Prolific': 'PROLIFIC_PID',
+        'Connect': 'participant_label',
+        'Lab': 'participant_code'
+    };
+
+    const recruitmentPlatformSelect = document.getElementById('recruitment_platform');
+    const urlParameterInput = document.getElementById('url_parameter_name');
+
+    // Function to update parameter field based on platform selection
+    function updateParameterField() {
+        const selectedPlatform = recruitmentPlatformSelect.value;
+        const parameterValue = platformParameterMap[selectedPlatform] || '';
+
+        urlParameterInput.value = parameterValue;
+
+        // All platforms have fixed parameter names now, so always read-only
+        urlParameterInput.setAttribute('readonly', 'readonly');
+    }
+
+    // Add event listener to recruitment platform select
+    recruitmentPlatformSelect.addEventListener('change', updateParameterField);
+
     // Enable/disable load button based on file selection
     const configFileInput = document.getElementById('configFileInput');
     const loadConfigBtn = document.getElementById('loadConfigBtn');
@@ -150,40 +174,41 @@ function liveRecv(data) {
     paragraph_1.appendChild(urlDisplay);
     alertDiv.appendChild(paragraph_2);
 
-    if (recruitment_platform !== 'Prolific' && data.session_wide_url) {
-    // Get the URL parameter name that was used
-    let urlParamName = document.getElementById('url_parameter_name').value || 'participant_id';
+    if (recruitment_platform === 'Connect' && data.session_wide_url) {
+        var explanatoryText = document.createElement('p');
+        explanatoryText.innerHTML = "2. Copy the following URL and provide it to Connect (Cloud Research).<br><strong>In Connect:</strong> Set the <em>'Collecting Connect IDs'</em> field to use <code>participant_label</code> as the parameter name. This ensures that Connect will append <code>?participant_label=XXX</code> when redirecting participants to your study.<br><strong>In Qualtrics:</strong> Create an Embedded Data field named <code>participant_label</code> to capture the Connect participant ID.";
 
-    var modifiedSessionWideUrl = data.session_wide_url +
-                                 '/?participant_label={{PLACEHOLDER}}';
+        var inputGroup = document.createElement('div');
+        inputGroup.className = 'input-group mb-3';
 
-    var explanatoryText = document.createElement('p');
-    explanatoryText.textContent = "2. Copy the following URL and provide it to your recruitment platform. Replace the placeholder with your platform's actual participant ID variable.";
+        var urlInput = document.createElement('input');
+        urlInput.setAttribute('type', 'text');
+        urlInput.className = 'form-control';
+        urlInput.setAttribute('value', data.session_wide_url);
+        urlInput.setAttribute('readonly', true);
 
-    var inputGroup = document.createElement('div');
-    inputGroup.className = 'input-group mb-3';
+        var copyButton = document.createElement('button');
+        copyButton.className = 'btn btn-primary';
+        copyButton.setAttribute('type', 'button');
+        copyButton.textContent = 'Copy URL';
+        copyButton.onclick = function() {
+            urlInput.select();
+            document.execCommand('copy');
+        };
 
-    var urlInput = document.createElement('input');
-    urlInput.setAttribute('type', 'text');
-    urlInput.className = 'form-control';
-    urlInput.setAttribute('value', modifiedSessionWideUrl);
-    urlInput.setAttribute('readonly', true);
+        inputGroup.appendChild(urlInput);
+        inputGroup.appendChild(copyButton);
 
-    var copyButton = document.createElement('button');
-    copyButton.className = 'btn btn-primary';
-    copyButton.setAttribute('type', 'button');
-    copyButton.textContent = 'Copy URL';
-    copyButton.onclick = function() {
-        urlInput.select();
-        document.execCommand('copy');
-    };
+        alertDiv.appendChild(explanatoryText);
+        alertDiv.appendChild(inputGroup);
+    }
 
-    inputGroup.appendChild(urlInput);
-    inputGroup.appendChild(copyButton);
+    if (recruitment_platform === 'Lab' && data.session_wide_url) {
+        var explanatoryText = document.createElement('p');
+        explanatoryText.innerHTML = "2. In the <strong>Session Details</strong> (accessible via the admin interface using your session code), you will find <strong>single-use participant links</strong>. Each link contains a unique participant identifier (<code>participant_code</code>). Distribute these links to your participants individually.<br><strong>In your survey platform:</strong> Create an Embedded Data field named <code>participant_code</code> to capture the participant ID from the URL parameter. This will allow you to match DICE data with survey responses.";
 
-    alertDiv.appendChild(explanatoryText);
-    alertDiv.appendChild(inputGroup);
-}
+        alertDiv.appendChild(explanatoryText);
+    }
 
     if (recruitment_platform === 'Prolific' && data.session_wide_url) {
         var modifiedSessionWideUrl = data.session_wide_url +
@@ -192,7 +217,7 @@ function liveRecv(data) {
                                      '&prolific_session_id={{%SESSION_ID%}}';
 
         var explanatoryText = document.createElement('p');
-        explanatoryText.textContent = "2. Copy the following URL and provide it to Prolific's study details. The structure of the URL ensures that Prolific IDs are tracked. This ensures that you can merge DICE- and Qualtrics data.";
+        explanatoryText.innerHTML = "2. Copy the following URL and provide it to Prolific's study details. The structure of the URL ensures that Prolific IDs are tracked. This ensures that you can merge DICE- and Qualtrics data.<br><strong>In Qualtrics:</strong> Create an Embedded Data field named <code>participant_label</code> to capture the Prolific participant ID.";
 
         var inputGroup = document.createElement('div');
         inputGroup.className = 'input-group mb-3';
@@ -593,6 +618,7 @@ function generateConfigFile(sessionCode) {
         // Recruitment
         recruitment_platform: document.getElementById('recruitment_platform').value,
         participant_number: parseInt(document.getElementById('participant_number').value),
+        url_parameter_name: document.getElementById('url_parameter_name').value,
 
         // Layout and content
         channel_type: document.getElementById('channel_type').value,
@@ -711,6 +737,7 @@ function populateFormFromConfig(config) {
             'internal_name': 'internal_name',
             'recruitment_platform': 'recruitment_platform',
             'participant_number': 'participant_number',
+            'url_parameter_name': 'url_parameter_name',
             'channel_type': 'channel_type',
             'content_url': 'content_url',
             'delimiter': 'delimiter',
@@ -730,6 +757,12 @@ function populateFormFromConfig(config) {
                 }
             }
         });
+
+        // Trigger updateParameterField if it exists (for platform preset logic)
+        const recruitmentPlatformSelect = document.getElementById('recruitment_platform');
+        if (recruitmentPlatformSelect && typeof updateParameterField === 'function') {
+            updateParameterField();
+        }
 
         // Handle checkbox separately
         const skyscraperCheckbox = document.getElementById('display_skyscraper');

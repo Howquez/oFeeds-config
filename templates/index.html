@@ -183,13 +183,18 @@
                         </p>
                         <form>
                             <div class="mb-3">
-                                <label for="recruitment_platform" class="form-label">Recruitment Platform</label>
+                                <label for="recruitment_platform" class="form-label">Study Type</label>
                                 <select class="form-select" id="recruitment_platform" aria-describedby="recruitment_help">
-                                    <option value="Lab">Other Recruitment Platform</option>
-                                    <option value="Prolific" selected>Prolific</option>
+                                    <optgroup label="Online Recruitment Platforms">
+                                        <option value="Prolific" selected>Prolific</option>
+                                        <option value="Connect">Connect (Cloud Research)</option>
+                                    </optgroup>
+                                    <optgroup label="Lab Studies">
+                                        <option value="Lab">Lab Study (Single-Use Links)</option>
+                                    </optgroup>
                                 </select>
                                 <div id="recruitment_help" class="form-text">
-                                    Select where you're recruiting participants from.
+                                    Select whether you're recruiting online (Prolific/Connect) or running a lab study with single-use participant links.
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -202,16 +207,8 @@
                                     <br> Please get in touch if you intend to run larger studies.
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="url_parameter_name" class="form-label">Participant ID Parameter Name</label>
-                                <input type="text" class="form-control" id="url_parameter_name" aria-describedby="url_param_help" value="PROLIFIC_PID">
-                                <div id="url_param_help" class="form-text">
-                                    The name of the URL parameter your recruitment platform uses to pass participant IDs. DICE will capture this ID and forward it to your Qualtrics survey.
-                                    <br><strong>Prolific:</strong> Use "PROLIFIC_PID" (automatically set).
-                                    <br><strong>Lab/Other platforms:</strong> Enter the parameter name your system uses (e.g., "participant_id", "subject_number", "lab_id").
-                                    <br><strong>In Qualtrics:</strong> Create an Embedded Data field with the same name to automatically capture the participant ID.
-                                </div>
-                            </div>
+                            <!-- Hidden field for platform preset logic -->
+                            <input type="text" class="d-none" id="url_parameter_name" value="PROLIFIC_PID">
                         </form>
                     </div>
                 </div>

@@ -129,7 +129,15 @@ def create_session():
 
         # If no URL parameter is provided, use default based on recruitment platform
         if not url_param:
-            url_param = 'PROLIFIC_PID' if data.get('recruitment_platform') == 'Prolific' else 'participant_id'
+            recruitment_platform = data.get('recruitment_platform', '')
+            if recruitment_platform == 'Prolific':
+                url_param = 'PROLIFIC_PID'
+            elif recruitment_platform == 'Connect':
+                url_param = 'participant_label'
+            elif recruitment_platform == 'Lab':
+                url_param = 'participant_code'
+            else:
+                url_param = 'participant_code'  # Default for any other case
 
         response = call_api(
             'POST',
