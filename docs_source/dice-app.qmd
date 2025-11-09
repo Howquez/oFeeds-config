@@ -6,11 +6,57 @@ We developed the [DICE web-app](https://www.dice-app.org/) for researchers to la
 
 We ask you to provide some information about yourself and the study you intend to run. The DICE app uses these information to provide participants with contact information if any questions occur. In addition, the DICE app displays an external study name. The internal name only serves internal documentation purposes for yourself.
 
+### Configuration Files
+
+When you successfully create a session, DICE automatically generates and downloads a JSON configuration file (e.g., `abc123_dice_config.json`). This file contains all your study settings and can be reused to quickly set up similar studies.
+
+To load a saved configuration file:
+
+1. Upload a previously downloaded JSON configuration file
+2. Click "Load Configuration"
+3. All form fields will be automatically populated with the saved settings from that session
+4. You can then modify any settings as needed before creating a new session
+
+This is useful for running follow-up studies or quickly reproducing a previous study's exact configuration.
+
 ## Participant Recruitment
 
-As of today, we optimized the DICE app for Prolific. However, the DICE app can also create generic URLs that can be used for any other recruitment platform or strategy. In any case, you need to specify the number of rows in a database that will be created specifically for your study. Each row can be assumed by one participant. If there is attrition, that is, if a participant enters the study but leaves before finishing it, his or her row in the database will be taken and cannot be overwritten by other participants. Hence, you should consider attrition while specifying the number of rows in the database as participants who try to enter the experiment after all slots (rows in the database) are used, will receive an error message.
+DICE supports multiple recruitment strategies to fit your research needs:
 
-Whereas it is costly for you to underestimate attrition, it is also costly for you (and us) to overestimate attrition and enter an unreasonably large number of desired rows because this can have implications on the performance. For this reason, we enforce a maximum of 400 rows here. Feel free to contact us, if you require larger sample sizes and we'll schedule a session together. Or consider [deploying](deployment.qmd#sec-deploy) a Digital In-Context Experiment yourself.
+### Study Type Options
+
+You can choose from the following recruitment platforms:
+
+**Online Recruitment Platforms:**
+
+- **Prolific** — Optimized for Prolific's participant pool with automatic parameter handling for easy data linking
+- **Connect (Cloud Research)** — Integration with Cloud Research's Connect platform for access to diverse participant populations
+
+**Lab Studies:**
+
+- **Lab Study (Single-Use Links)** — Run studies in a controlled lab environment where each participant receives a unique, single-use link
+
+### Study Slots (Participant Capacity)
+
+You need to specify the number of participant slots available for your study. Each slot can be used by one participant. If there is attrition—that is, if a participant enters the study but leaves before finishing it—their slot in the database will be consumed and cannot be reused by other participants. Hence, you should account for expected attrition when specifying the number of study slots.
+
+For example, if you expect a 20% dropout rate and want 100 completed responses, you should allocate approximately 125 slots.
+
+Important considerations:
+- Once all slots are filled, no new participants can join the study
+- We enforce a maximum of 400 slots per study to maintain performance
+- If you need larger sample sizes, please contact us to discuss options
+- Alternatively, consider [deploying](deployment.qmd#sec-deploy) a Digital In-Context Experiment yourself
+
+### Automatic Participant ID Parameter Handling
+
+The participant ID parameter is automatically configured based on your selected recruitment platform:
+
+- **Prolific** → Uses `PROLIFIC_PID` parameter
+- **Connect** → Uses `participant_label` parameter
+- **Lab Study** → Uses `participant_code` parameter
+
+You don't need to manually configure these—they're set automatically when you select your study type. When integrating with survey platforms like Qualtrics, create an Embedded Data field that matches your platform's parameter name (e.g., `PROLIFIC_PID`, `participant_label`, or `participant_code`).
 
 ## Stimulus Design
 
@@ -44,10 +90,20 @@ Once you have the raw URL, simply paste it into DICE where requested. The app wi
 
 
 ### CSV Delimiter
-Your CSV file uses a special character to separate different pieces of data (like columns). While commas are the most common delimiter, some files use other characters. Select the character that matches your CSV file format - for example, if your data is separated by semicolons, choose "Semicolon" from the dropdown menu.
+Your CSV file uses a special character to separate different pieces of data (like columns). While commas are the most common delimiter, some files use other characters. DICE can auto-detect the correct delimiter, but you can also manually select the character that matches your CSV file format—for example, if your data is separated by semicolons, choose "Semicolon" from the dropdown menu.
 
-### Hashtag
-Enter the term you want participants to see in the search bar of your simulated social media interface. Using a hashtag or a username creates a more authentic social media experience, as it mimics how users typically search for content on platforms like Twitter. This search term will appear pre-filled in the interface's search bar when participants start the study.
+### Search Term
+Enter the term you want participants to see in the search bar of your simulated social media interface. Using a hashtag or a username creates a more authentic social media experience, as it mimics how users typically search for content on platforms like Twitter. This search term will appear pre-filled in the interface's search bar when participants start the study. For example, you might use `#myHashtag`, `@username`, or a specific topic like `climatechange`.
+
+### Validating Your CSV File (Recommended)
+Before creating your session, you can test your CSV file to ensure it's properly formatted and accessible. Click the "Test CSV" button to:
+
+- Verify that the CSV URL is accessible and working
+- Auto-detect the correct delimiter if needed
+- Check that all required columns are present
+- Identify any potential issues with your data
+
+This validation step helps catch configuration errors early and makes troubleshooting easier if anything goes wrong.
 
 ## Participant Briefing
 
@@ -74,12 +130,25 @@ The content you create in both editors is stored as part of your study configura
 After participants interact with the social media feed, you can redirect them to a survey. Simply provide the base URL of your survey (for example, a Qualtrics survey URL) without any additional parameters. DICE will automatically:
 
 - Add the participant's ID to track responses
-- Include a completion code (which is useful if you're using Prolific)
 - Handle the redirect process
 
 For example, if you're using Qualtrics, your URL might look like this: `https://unisg.qualtrics.com/jfe/form/SV_0DnMoLpM0VxjhrM`.
 
 If you leave this field empty, participants will see a closing screen with your contact information instead of being redirected to a survey.
+
+#### Completion Codes
+
+Completion codes are used to verify that participants have completed your study and are eligible for compensation or credit. Different recruitment platforms provide completion codes in different ways:
+
+- **Prolific**: Generates a unique completion code that participants must submit at the end of the study to confirm completion and receive payment
+- **Connect (Cloud Research)**: May use completion codes or require a redirect back to their platform with specific parameters
+- **Lab Studies**: You typically manage completion verification directly (e.g., via course credit systems or manual verification)
+
+**Best Practice for Data Integrity**: The most secure approaches to handle completion codes are:
+1. **Code-based**: Provide participants with a unique completion code at the end of your survey that they submit back to the recruitment platform
+2. **Redirect-based**: Have your survey redirect participants back to the recruitment platform with a completion confirmation, which automatically verifies their participation
+
+This ensures that participants who complete your DICE study and survey can properly confirm their participation without relying on self-reporting. Check your recruitment platform's documentation for their specific completion code requirements and implementation methods.
 
 ### Dwell Time Tracking
 The dwell time tracking threshold determines when DICE considers a social media post as "viewed" by the participant. This setting is expressed as a percentage of the post's visibility in the participant's browser window:
@@ -106,12 +175,41 @@ The success screen provides a specially formatted URL that includes Prolific's p
 https://ibt-hsg.herokuapp.com/join/pifararu/?participant_label={{%PROLIFIC_PID%}}&prolific_study_id={{%STUDY_ID%}}&prolific_session_id={{%SESSION_ID%}}
 ```
 
-Copy this entire URL and paste it (as is) into your Prolific study details. The URL contains three important placeholders:
+**Steps to integrate with Prolific:**
 
+1. Copy the entire URL from the success screen
+2. Paste it (as is) into your Prolific study details
+3. In Qualtrics, create an Embedded Data field named `PROLIFIC_PID` to capture the Prolific participant ID
+
+The URL contains three important placeholders:
 - `{{%PROLIFIC_PID%}}` captures each participant's unique identifier
 - `{{%STUDY_ID%}}` tracks your specific study
 - `{{%SESSION_ID%}}` records individual participant sessions
 
 You'll also find a field to enter your Prolific completion code. This code needs to be entered and submitted to allow participants to confirm their participation after completing your study. The system automatically handles the completion code distribution to eligible participants, ensuring proper compensation through Prolific's system.
 
-This setup creates a smooth data collection process where all necessary identifiers are automatically tracked and your DICE data can be easily merged with your survey responses.
+### Connect (Cloud Research) Integration
+_This section is relevant only if you're using Connect (Cloud Research) for participant recruitment._
+
+After creating your session, you'll see information about how to set up your study in Connect:
+
+1. Copy the session URL from the DICE success screen
+2. In Connect, set the "Collecting Connect IDs" field to use `participant_label` as the parameter name
+3. This ensures Connect will append `?participant_label=XXX` when redirecting participants to your study
+4. In Qualtrics, create an Embedded Data field named `participant_label` to capture the Connect participant ID
+
+This integration allows you to automatically track which Connect participants completed your study and link their DICE responses with their survey data.
+
+### Lab Study Integration (Single-Use Links)
+_This section is relevant only if you're running a lab study with single-use participant links._
+
+When you select "Lab Study (Single-Use Links)" as your study type, DICE generates unique participant links for each participant slot:
+
+1. After creating your session, navigate to the **Session Details** (accessible via the admin interface using your session code)
+2. You'll find a list of **single-use participant links**, each containing a unique `participant_code`
+3. Distribute these links to your participants individually (via email, on printed cards, etc.)
+4. Each link can only be used once, ensuring each participant receives a unique identifier
+5. In Qualtrics or your survey platform, create an Embedded Data field named `participant_code` to capture this identifier
+6. This allows you to match DICE data with survey responses for each participant
+
+This approach is ideal for in-person lab studies where you have direct control over participant recruitment and link distribution.
