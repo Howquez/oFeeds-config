@@ -4,9 +4,27 @@ import pandas as pd
 from io import StringIO
 import json
 import os
+import re
+import numpy as np
 from typing import Dict, Any, Tuple, Optional
+from json import JSONEncoder
 
 app = Flask(__name__)
+
+# Custom JSON encoder to handle numpy types and NaN
+class NumpyEncoder(JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, (np.integer, np.floating)):
+            if np.isnan(obj) if isinstance(obj, np.floating) else False:
+                return None
+            return int(obj) if isinstance(obj, np.integer) else float(obj)
+        elif isinstance(obj, np.bool_):
+            return bool(obj)
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return super().default(obj)
+
+app.json_encoder = NumpyEncoder
 
 # Constants moved to top and using environment variables
 SERVER_URL = os.getenv('SERVER_URL', 'https://ibt-hsg.herokuapp.com')
@@ -95,6 +113,119 @@ def call_api(method: str, *path_parts: str, **params: Any) -> Dict:
     except requests.RequestException as e:
         status_code = e.response.status_code if hasattr(e, 'response') else 500
         raise APIError(f'Request to "{url}" failed: {str(e)}', status_code)
+
+
+def is_url(s):
+    """Check if a string is a valid URL"""
+    return bool(re.match(r'^https?:\/\/', str(s)))
+
+
+def read_feed(path: str, delim: str) -> pd.DataFrame:
+    """
+    Read CSV feed data from local path or remote URL.
+    Adapted from oTree DICE app.
+    """
+    if re.match(r'^https?://\S+', path):
+        if 'github' in path:
+            tweets = pd.read_csv(path, sep=delim)
+        elif 'drive.google.com' in path:
+            file_id = path.split('/')[-2]
+            download_url = f'https://drive.google.com/uc?id={file_id}'
+            tweets = pd.read_csv(download_url, sep=delim)
+        else:
+            raise ValueError("Unrecognized URL format. Supported: GitHub, Google Drive")
+    else:
+        tweets = pd.read_csv(path, sep=delim)
+    return tweets
+
+
+def preprocessing(df: pd.DataFrame, config: Dict = None) -> pd.DataFrame:
+    """
+    Preprocess CSV data to match oTree DICE app formatting.
+    Adapted from oTree DICE app __init__.py preprocessing function.
+    """
+    # Default config if not provided
+    if config is None:
+        config = {'condition_col': 'condition'}
+
+    # Reformat date
+    df['datetime'] = pd.to_datetime(df['datetime'], errors='coerce')
+    mask = df['datetime'].isna()
+    if mask.any():
+        df.loc[mask, 'datetime'] = pd.to_datetime(
+            df.loc[mask, 'datetime'],
+            errors='coerce',
+            format='%d.%m.%y %H:%M'
+        )
+    df['date'] = df['datetime'].dt.strftime('%d %b').str.replace(' ', '. ')
+    df['date'] = df['date'].str.lstrip('0')
+    df['formatted_datetime'] = df['datetime'].dt.strftime('%I:%M %p · %b %d, %Y')
+
+    # Fill any NaN dates with empty string
+    df['date'] = df['date'].fillna('')
+    df['formatted_datetime'] = df['formatted_datetime'].fillna('')
+
+    # Highlight hashtags, cashtags, mentions, etc.
+    df['text'] = df['text'].str.replace(
+        r'\B(\#[a-zA-Z0-9_]+\b)',
+        r'<span class="text-primary">\g<0></span>',
+        regex=True
+    )
+    df['text'] = df['text'].str.replace(
+        r'\B(\$[a-zA-Z0-9_\.]+\b)',
+        r'<span class="text-primary">\g<0></span>',
+        regex=True
+    )
+    df['text'] = df['text'].str.replace(
+        r'\B(\@[a-zA-Z0-9_]+\b)',
+        r'<span class="text-primary">\g<0></span>',
+        regex=True
+    )
+    # Add links
+    df['text'] = df['text'].str.replace(
+        r'(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])',
+        r'<a class="text-primary">\g<0></a>',
+        regex=True
+    )
+
+    # Make numeric information integers and fill NAs with 0
+    df['replies'] = df['replies'].fillna(0).astype(int)
+    df['reposts'] = df['reposts'].fillna(0).astype(int)
+    df['likes'] = df['likes'].fillna(0).astype(int)
+
+    # Handle media - ensure it's string type
+    df['media'] = df['media'].fillna('').astype(str)
+    df['media'] = df['media'].str.replace("'|,", '', regex=True)
+    df['pic_available'] = np.where(df['media'].str.contains('http', na=False), True, False)
+
+    # Create profile picture availability and icon
+    df['profile_pic_available'] = df['user_image'].apply(is_url)
+    df['icon'] = df['username'].str[:2].str.title()
+
+    # Assign random color class from predefined list
+    color_classes = ['p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8']
+    df['color_class'] = np.random.choice(color_classes, size=len(df))
+
+    # Clean user descriptions
+    df['user_description'] = df['user_description'].str.replace("'", '')
+    df['user_description'] = df['user_description'].str.replace('"', '')
+    df['user_description'] = df['user_description'].fillna(' ')
+
+    # Format follower counts - handle NaN values
+    df['user_followers'] = df['user_followers'].fillna(0).astype(float)
+    df['user_followers'] = df['user_followers'].map('{:,.0f}'.format).str.replace(',', '.')
+
+    # Rename condition column if specified
+    if (config and 'condition_col' in config and
+            config['condition_col'] and
+            config['condition_col'] in df.columns):
+        df.rename(columns={config['condition_col']: 'condition'}, inplace=True)
+
+    # Drop the datetime column since we have formatted_datetime
+    if 'datetime' in df.columns:
+        df = df.drop(columns=['datetime'])
+
+    return df
 
 
 @app.route('/')
@@ -337,6 +468,96 @@ def create_replication_package():
         return jsonify({'error': f'Failed to fetch CSV data: {str(e)}'}), 500
     except Exception as e:
         return jsonify({'error': f'An error occurred: {str(e)}'}), 500
+
+@app.route('/preview_feed', methods=['POST'])
+def preview_feed():
+    """Generate a preview of the Twitter feed with preprocessed CSV data"""
+    try:
+        data = request.get_json()
+        if not data or 'content_url' not in data:
+            return jsonify({"error": "Missing content_url"}), 400
+
+        content_url = data.get('content_url', '').strip()
+        delimiter = data.get('delimiter', ';')
+        condition_col = data.get('condition_col', 'condition')
+
+        if not content_url:
+            return jsonify({"error": "Content URL cannot be empty"}), 400
+
+        # Fetch and read CSV
+        try:
+            response = requests.get(content_url, timeout=10)
+            response.raise_for_status()
+        except requests.Timeout:
+            return jsonify({"error": "Request timed out. The CSV URL may be unreachable."}), 400
+        except requests.HTTPError as e:
+            return jsonify({"error": f"HTTP Error {response.status_code}: Cannot access URL"}), 400
+        except requests.RequestException as e:
+            return jsonify({"error": f"Failed to fetch CSV: {str(e)}"}), 400
+
+        # Parse CSV
+        try:
+            csv_content = StringIO(response.text)
+            df = pd.read_csv(csv_content, sep=delimiter)
+        except Exception as e:
+            return jsonify({"error": f"Failed to parse CSV: {str(e)}"}), 400
+
+        # Check if dataframe is empty
+        if len(df) == 0:
+            return jsonify({"error": "CSV file is empty"}), 400
+
+        # Preprocess the data
+        try:
+            config = {'condition_col': condition_col}
+            processed_df = preprocessing(df, config)
+        except Exception as e:
+            return jsonify({"error": f"Error processing CSV data: {str(e)}"}), 400
+
+        # Group by condition
+        preview_data = {}
+        if 'condition' in processed_df.columns:
+            conditions = processed_df['condition'].unique()
+            for condition in conditions:
+                condition_df = processed_df[processed_df['condition'] == condition]
+                # Limit to 20 items per condition
+                condition_df = condition_df.head(20)
+                # Convert to dict and clean NaN/NaT values
+                records = condition_df.to_dict('records')
+                clean_records = []
+                for record in records:
+                    clean_record = {}
+                    for key, value in record.items():
+                        # Handle pandas NaT, numpy NaN, and None
+                        if pd.isna(value):
+                            clean_record[key] = None
+                        else:
+                            clean_record[key] = value
+                    clean_records.append(clean_record)
+                preview_data[str(condition)] = clean_records
+        else:
+            # No condition column, use all data
+            records = processed_df.head(20).to_dict('records')
+            clean_records = []
+            for record in records:
+                clean_record = {}
+                for key, value in record.items():
+                    if pd.isna(value):
+                        clean_record[key] = None
+                    else:
+                        clean_record[key] = value
+                clean_records.append(clean_record)
+            preview_data['default'] = clean_records
+
+        return jsonify({
+            "success": True,
+            "preview_data": preview_data,
+            "total_conditions": len(preview_data),
+            "items_per_condition": {cond: len(items) for cond, items in preview_data.items()}
+        })
+
+    except Exception as e:
+        return jsonify({"error": f"Unexpected error: {str(e)}"}), 500
+
 
 @app.route('/imprint')
 def imprint():

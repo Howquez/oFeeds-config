@@ -41,16 +41,12 @@
         <h3 class="mb-4" style="font-family: 'Source Serif Pro', serif; color: #404040;">
             Create Digital In-Context Experiments (DICE) to mimic social media feeds with experimental control and without a single line of code. Simply configure your stimuli, distribute them (e.g., via Prolific) and append a questionnaire.
         </h3>
-        <div class = "d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-            <a class= "btn btn-outline-secondary btn-lg px-4" href="https://ibt-hsg.herokuapp.com/demo" target="_blank" role="button"> Demo </a>
-            <button class="btn btn-outline-secondary btn-lg px-4" data-bs-toggle="modal" data-bs-target="#citationModal">
-                Cite
-            </button>
+        <div class="hero-buttons mb-5">
+            <a class="btn btn-outline-secondary btn-lg px-4" href="https://ibt-hsg.herokuapp.com/demo" target="_blank" role="button">Demo</a>
+            <button class="btn btn-outline-secondary btn-lg px-4" data-bs-toggle="modal" data-bs-target="#citationModal">Article</button>
             <a class="btn btn-outline-secondary btn-lg px-4" href="/docs/index.html" target="_blank">Documentation</a>
             <a class="btn btn-danger btn-lg px-4" href="https://www.youtube.com/watch?v=lx_akVasq7I&list=PLZ-soW8YjcdezgGILvI4dmQU2lpl0cAC0" target="_blank"><i class="bi bi-play-fill"></i> Watch Tutorial</a>
-            <button class="btn btn-outline-secondary btn-lg px-4" data-bs-toggle="modal" data-bs-target="#helpModal">
-                Get Help
-            </button>
+            <button class="btn btn-outline-secondary btn-lg px-4" data-bs-toggle="modal" data-bs-target="#helpModal">Get Help</button>
         </div>
     </div>
     <div class="overflow-hidden" style="max-height: 70vh;">
@@ -262,11 +258,17 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <div class="input-group">
-                                    <button class="btn btn-success w-100" type="button" onclick="testCSV()"
+                                <div class="button-group">
+                                    <button class="btn btn-success" type="button" onclick="testCSV()"
                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                             title="Check your CSV structure, column count, and separator before creating your session">
                                         <i class="bi bi-check-circle"></i> Test CSV
+                                    </button>
+                                    <button class="btn btn-secondary" type="button" id="previewFeedBtn" onclick="previewFeed()"
+                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="See how your stimuli will look in the social media feed"
+                                            disabled>
+                                        <i class="bi bi-eye"></i> Preview Feed
                                     </button>
                                 </div>
                                 <small class="form-text text-muted mt-2 d-block">Click to verify your CSV file before proceeding.</small>
@@ -561,6 +563,11 @@
                 &nbsp; &nbsp;DICE App
             </a>
             <ul class="list-unstyled small text-muted mt-3">
+                <li class="mb-2">
+                    Like this work? <a href="https://ko-fi.com/howquez" target="_blank" rel="noopener" class="text-secondary">
+                        Say thanks
+                    </a>
+                </li>
                 <li class="mb-2">Designed with Bootstrap. Built for oTree.</li>
                 <li class="mb-2">
                     <a class="text-secondary" href="https://github.com/Howquez/DICE/tree/main">DICE</a> © 2025 is licensed under
@@ -701,6 +708,17 @@
 
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Feed Preview Offcanvas -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="feedPreviewOffcanvas" aria-labelledby="feedPreviewOffcanvasLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="feedPreviewOffcanvasLabel">Feed Preview</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body p-0">
+        <div id="offcanvasPreviewContent"></div>
     </div>
 </div>
 

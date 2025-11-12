@@ -420,10 +420,16 @@ function hideFormSections() {
     const card5 = document.getElementById('card5'); // Participant Briefing
     const card6 = document.getElementById('card6'); // Measurement
     const createSessionBtn = document.getElementById('createSessionBtn');
+    const previewFeedBtn = document.getElementById('previewFeedBtn');
 
     if (card5) card5.style.display = 'none';
     if (card6) card6.style.display = 'none';
     if (createSessionBtn) createSessionBtn.style.display = 'none';
+    if (previewFeedBtn) {
+        previewFeedBtn.disabled = true;
+        previewFeedBtn.classList.remove('btn-success');
+        previewFeedBtn.classList.add('btn-secondary');
+    }
 }
 
 /**
@@ -433,10 +439,16 @@ function showFormSections() {
     const card5 = document.getElementById('card5');
     const card6 = document.getElementById('card6');
     const createSessionBtn = document.getElementById('createSessionBtn');
+    const previewFeedBtn = document.getElementById('previewFeedBtn');
 
     if (card5) card5.style.display = 'block';
     if (card6) card6.style.display = 'block';
     if (createSessionBtn) createSessionBtn.style.display = 'block';
+    if (previewFeedBtn) {
+        previewFeedBtn.disabled = false;
+        previewFeedBtn.classList.remove('btn-secondary');
+        previewFeedBtn.classList.add('btn-success');
+    }
 }
 
 /**

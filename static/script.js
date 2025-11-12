@@ -820,3 +820,201 @@ function getMessageIcon(type) {
     };
     return icons[type] || 'info-circle';
 }
+
+/**
+ * Preview the Twitter feed with preprocessed CSV data
+ */
+async function previewFeed() {
+    const contentUrl = document.getElementById('content_url').value;
+    const delimiter = document.getElementById('delimiter').value;
+    const conditionColField = document.getElementById('condition_col');
+    const conditionCol = conditionColField ? conditionColField.value : 'condition';
+    const offcanvasContent = document.getElementById('offcanvasPreviewContent');
+
+    if (!contentUrl) {
+        alert('Please enter a CSV URL first');
+        return;
+    }
+
+    // Show loading state
+    offcanvasContent.innerHTML = '<div class="text-center p-5"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div><p class="mt-2">Generating preview...</p></div>';
+
+    try {
+        const response = await fetch('/preview_feed', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                content_url: contentUrl,
+                delimiter: delimiter,
+                condition_col: conditionCol
+            })
+        });
+
+        const data = await response.json();
+        console.log('Preview data received:', data);
+
+        if (!response.ok) {
+            offcanvasContent.innerHTML = `<div class="alert alert-danger m-3"><strong>Error:</strong> ${data.error || 'Failed to generate preview'}</div>`;
+            const offcanvas = new bootstrap.Offcanvas(document.getElementById('feedPreviewOffcanvas'));
+            offcanvas.show();
+            return;
+        }
+
+        // Render the preview to offcanvas
+        renderSimplePreview(data, offcanvasContent);
+        console.log('Preview rendered');
+
+        // Show offcanvas
+        const offcanvas = new bootstrap.Offcanvas(document.getElementById('feedPreviewOffcanvas'));
+        offcanvas.show();
+
+    } catch (error) {
+        console.error('Error in previewFeed:', error);
+        offcanvasContent.innerHTML = `<div class="alert alert-danger m-3"><strong>Error:</strong> ${error.message}</div>`;
+        const offcanvas = new bootstrap.Offcanvas(document.getElementById('feedPreviewOffcanvas'));
+        offcanvas.show();
+    }
+}
+
+/**
+ * Simple preview render with condition selector
+ */
+function renderSimplePreview(data, container) {
+    const previewData = data.preview_data;
+    const conditions = Object.keys(previewData);
+
+    let html = '';
+
+    // Add condition buttons (nav pills style)
+    if (conditions.length > 1) {
+        html += '<div class="d-flex gap-2 p-3 border-bottom" style="border-color: #e1e8ed !important;">';
+        conditions.forEach((condition, index) => {
+            const isActive = index === 0 ? 'active' : '';
+            html += `<button class="btn btn-sm btn-outline-secondary condition-btn ${isActive}" data-condition="${condition}">
+                ${condition} <span class="badge bg-secondary">${previewData[condition].length}</span>
+            </button>`;
+        });
+        html += '</div>';
+    } else if (conditions.length === 1) {
+        html += `<div class="p-3 border-bottom" style="border-color: #e1e8ed !important;"><strong>${conditions[0]}</strong> <span class="badge bg-secondary">${previewData[conditions[0]].length} items</span></div>`;
+    }
+
+    // Add content container
+    html += '<div id="conditionContent">';
+
+    conditions.forEach((condition, index) => {
+        const isActive = index === 0 ? 'block' : 'none';
+        html += `<div class="condition-pane" data-condition="${condition}" style="display: ${isActive}; border: 1px solid #e1e8ed; border-radius: 8px; overflow: hidden; margin: 0;">`;
+
+        previewData[condition].forEach((item) => {
+            html += renderTweetItem(item);
+        });
+
+        html += '</div>';
+    });
+
+    html += '</div>';
+
+    container.innerHTML = html;
+
+    // Add event listeners to condition buttons
+    if (conditions.length > 1) {
+        const buttons = container.querySelectorAll('.condition-btn');
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                const selectedCondition = this.dataset.condition;
+
+                // Update active button
+                buttons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+
+                // Update visible pane
+                const panes = container.querySelectorAll('.condition-pane');
+                panes.forEach(pane => {
+                    pane.style.display = pane.dataset.condition === selectedCondition ? 'block' : 'none';
+                });
+            });
+        });
+    }
+}
+
+/**
+ * Render the Twitter feed preview with tabs for each condition
+ */
+function renderFeedPreview(data) {
+    const previewContent = document.getElementById('previewContent');
+    const previewData = data.preview_data;
+    const conditions = Object.keys(previewData);
+
+    // Create tabs and content
+    let html = '<ul class="nav nav-tabs mb-3" role="tablist">';
+
+    conditions.forEach((condition, index) => {
+        const isActive = index === 0 ? 'active' : '';
+        html += `<li class="nav-item" role="presentation">
+            <button class="nav-link ${isActive}" id="tab-${condition}" data-bs-toggle="tab" data-bs-target="#content-${condition}" type="button" role="tab" aria-selected="${isActive}">
+                ${condition} (${previewData[condition].length})
+            </button>
+        </li>`;
+    });
+
+    html += '</ul><div class="tab-content">';
+
+    conditions.forEach((condition, index) => {
+        const isActive = index === 0 ? 'active' : '';
+        html += `<div class="tab-pane fade ${isActive}" id="content-${condition}" role="tabpanel">
+            <div class="feed-preview" style="border: 1px solid #e1e8ed; border-radius: 8px; overflow: hidden;">`;
+
+        // Render tweets for this condition
+        previewData[condition].forEach((item) => {
+            html += renderTweetItem(item);
+        });
+
+        html += '</div></div>';
+    });
+
+    html += '</div>';
+    previewContent.innerHTML = html;
+}
+
+/**
+ * Render a single tweet item in Twitter style
+ */
+function renderTweetItem(item) {
+    const profilePic = item.profile_pic_available
+        ? `<img src="${item.user_image}" class="rounded-circle" style="width: 48px; height: 48px; object-fit: cover;" alt="Profile">`
+        : `<div class="rounded-circle d-flex align-items-center justify-content-center ${item.color_class}" style="width: 48px; height: 48px; color: white; font-weight: bold; font-size: 14px;">${item.icon}</div>`;
+
+    const mediaHtml = item.pic_available && item.media
+        ? `<img src="${item.media}" class="img-fluid rounded-4 mt-2" alt="${item.alt_text}" style="max-width: 100%;">`
+        : '';
+
+    return `
+        <div class="tweet-preview p-3 border-bottom" style="border-color: #e1e8ed !important;">
+            <div class="d-flex gap-3">
+                <div class="flex-shrink-0">
+                    ${profilePic}
+                </div>
+                <div class="flex-grow-1">
+                    <div class="d-flex justify-content-between align-items-start mb-1">
+                        <div>
+                            <strong class="text-dark">${item.username}</strong>
+                            <span class="text-muted ms-1">@${item.handle}</span>
+                        </div>
+                    </div>
+                    <div class="text-muted small mb-2">${item.date || ''}</div>
+                    <div class="tweet-text mb-2">${item.text}</div>
+                    ${mediaHtml}
+                    <div class="d-flex justify-content-between mt-3 text-muted small" style="max-width: 425px; color: #657786;">
+                        <span><i class="bi bi-chat"></i> ${item.replies || 0}</span>
+                        <span><i class="bi bi-arrow-repeat"></i> ${item.reposts || 0}</span>
+                        <span><i class="bi bi-heart"></i> ${item.likes || 0}</span>
+                        <span><i class="bi bi-share"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
