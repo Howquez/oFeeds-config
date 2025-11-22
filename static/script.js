@@ -62,22 +62,26 @@ document.addEventListener('DOMContentLoaded', function() {
     // Platform preset logic for Participant ID Parameter Name
     const platformParameterMap = {
         'Prolific': 'PROLIFIC_PID',
-        'Connect': 'participant_label',
+        'Connect': 'participantId',
         'Lab': 'participant_code'
     };
 
     const recruitmentPlatformSelect = document.getElementById('recruitment_platform');
-    const urlParameterInput = document.getElementById('url_parameter_name');
+    const participantIdParamInput = document.getElementById('participant_id_param');
 
     // Function to update parameter field based on platform selection
     function updateParameterField() {
         const selectedPlatform = recruitmentPlatformSelect.value;
         const parameterValue = platformParameterMap[selectedPlatform] || '';
 
-        urlParameterInput.value = parameterValue;
+        participantIdParamInput.value = parameterValue;
 
-        // All platforms have fixed parameter names now, so always read-only
-        urlParameterInput.setAttribute('readonly', 'readonly');
+        // Lab studies allow custom parameter names, others are read-only
+        if (selectedPlatform === 'Lab') {
+            participantIdParamInput.removeAttribute('readonly');
+        } else {
+            participantIdParamInput.setAttribute('readonly', 'readonly');
+        }
     }
 
     // Add event listener to recruitment platform select
@@ -299,7 +303,7 @@ function sendValue() {
     let delimiter = document.getElementById('delimiter').value;
     let content_url = document.getElementById('content_url').value;
     let recruitment_platform = document.getElementById('recruitment_platform').value;
-    let url_parameter_name = document.getElementById('url_parameter_name').value;
+    let participant_id_param = document.getElementById('participant_id_param').value;
     let survey_url = document.getElementById('survey_url').value;
     let dwell_threshold = document.getElementById('dwell_threshold').value;
     let search_term = document.getElementById('search_term').value;
@@ -322,7 +326,7 @@ function sendValue() {
             content_url: content_url,
             delimiter: delimiter,
             recruitment_platform: recruitment_platform,
-            url_parameter_name: url_parameter_name,
+            participant_id_param: participant_id_param,
             survey_url: survey_url,
             dwell_threshold: dwell_threshold,
             search_term: search_term,
@@ -618,7 +622,7 @@ function generateConfigFile(sessionCode) {
         // Recruitment
         recruitment_platform: document.getElementById('recruitment_platform').value,
         participant_number: parseInt(document.getElementById('participant_number').value),
-        url_parameter_name: document.getElementById('url_parameter_name').value,
+        participant_id_param: document.getElementById('participant_id_param').value,
 
         // Layout and content
         channel_type: document.getElementById('channel_type').value,
@@ -737,7 +741,7 @@ function populateFormFromConfig(config) {
             'internal_name': 'internal_name',
             'recruitment_platform': 'recruitment_platform',
             'participant_number': 'participant_number',
-            'url_parameter_name': 'url_parameter_name',
+            'participant_id_param': 'participant_id_param',
             'channel_type': 'channel_type',
             'content_url': 'content_url',
             'delimiter': 'delimiter',

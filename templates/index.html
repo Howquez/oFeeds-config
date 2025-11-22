@@ -204,8 +204,18 @@
                                     <br> Please get in touch if you intend to run larger studies.
                                 </div>
                             </div>
-                            <!-- Hidden field for platform preset logic -->
-                            <input type="text" class="d-none" id="url_parameter_name" value="PROLIFIC_PID">
+                            <div class="mb-3">
+                                <label for="participant_id_param" class="form-label">Participant ID Parameter Name</label>
+                                <input type="text" class="form-control" id="participant_id_param" aria-describedby="participant_id_param_help" value="PROLIFIC_PID">
+                                <div id="participant_id_param_help" class="form-text">
+                                    <strong>Auto-filled based on recruitment platform:</strong>
+                                    <br>
+                                    <strong>Prolific:</strong> PROLIFIC_PID |
+                                    <strong>Connect:</strong> participantId |
+                                    <strong>Lab:</strong> participant_code (editable)
+                                    <br><small>For lab studies, enter the parameter name your URLs use (e.g., UID, participant_id, etc.).</small>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>

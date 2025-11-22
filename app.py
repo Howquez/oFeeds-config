@@ -255,20 +255,20 @@ def create_session():
                                                         int) or participant_number < 1 or participant_number > 400:
             return jsonify({"error": "Participant number must be between 1 and 400"}), 400
 
-        # Get the URL parameter name from the form, with fallback logic
-        url_param = data.get('url_parameter_name', '').strip()
+        # Get the participant ID parameter name from the form
+        participant_id_param = data.get('participant_id_param', '').strip()
 
-        # If no URL parameter is provided, use default based on recruitment platform
-        if not url_param:
+        # If no participant ID parameter is provided, use default based on recruitment platform
+        if not participant_id_param:
             recruitment_platform = data.get('recruitment_platform', '')
             if recruitment_platform == 'Prolific':
-                url_param = 'PROLIFIC_PID'
+                participant_id_param = 'PROLIFIC_PID'
             elif recruitment_platform == 'Connect':
-                url_param = 'participant_label'
+                participant_id_param = 'participantId'
             elif recruitment_platform == 'Lab':
-                url_param = 'participant_code'
+                participant_id_param = 'participant_code'
             else:
-                url_param = 'participant_code'  # Default for any other case
+                participant_id_param = 'participant_code'  # Default for any other case
 
         response = call_api(
             'POST',
@@ -284,7 +284,7 @@ def create_session():
                 'data_path': data.get('content_url'),
                 'delimiter': data.get('delimiter'),
                 'topics': not data.get('display_skyscraper'),
-                'url_param': url_param,  # Use the customizable parameter name
+                'participant_id_param': participant_id_param,  # Which URL param contains the participant ID
                 'survey_link': data.get('survey_url'),
                 'dwell_threshold': data.get('dwell_threshold'),
                 'search_term': data.get('search_term'),
