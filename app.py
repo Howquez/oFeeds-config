@@ -8,6 +8,10 @@ import re
 import numpy as np
 from typing import Dict, Any, Tuple, Optional
 from json import JSONEncoder
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -28,7 +32,9 @@ app.json_encoder = NumpyEncoder
 
 # Constants moved to top and using environment variables
 SERVER_URL = os.getenv('SERVER_URL', 'https://ibt-hsg.herokuapp.com')
-REST_KEY = os.getenv('REST_KEY', 'Torstrasse25')  # Better to use environment variable
+REST_KEY = os.getenv('REST_KEY')
+if not REST_KEY:
+    raise ValueError("REST_KEY environment variable must be set")
 
 
 class APIError(Exception):
