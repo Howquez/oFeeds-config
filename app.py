@@ -36,6 +36,10 @@ REST_KEY = os.getenv('REST_KEY')
 if not REST_KEY:
     raise ValueError("REST_KEY environment variable must be set")
 
+# Large session configuration (optional)
+LARGE_SESSION_PASSWORD = os.getenv('LARGE_SESSION_PASSWORD', '')
+LARGE_SESSION_EMAILS = [email.strip() for email in os.getenv('LARGE_SESSION_EMAILS', '').split(',') if email.strip()]
+
 
 class APIError(Exception):
     """Custom exception for API-related errors"""
@@ -124,6 +128,24 @@ def call_api(method: str, *path_parts: str, **params: Any) -> Dict:
 def is_url(s):
     """Check if a string is a valid URL"""
     return bool(re.match(r'^https?:\/\/', str(s)))
+
+
+def validate_large_session(email: str, password: str) -> bool:
+    """
+    Validate if user is authorized for sessions > 400 participants.
+    Returns True if authorized, False otherwise.
+    """
+    if not LARGE_SESSION_PASSWORD or not LARGE_SESSION_EMAILS:
+        return False
+
+    email_normalized = email.strip().lower()
+    password_provided = password.strip()
+
+    # Check if email is in whitelist AND password is correct
+    is_email_whitelisted = any(e.lower() == email_normalized for e in LARGE_SESSION_EMAILS)
+    is_password_correct = password_provided == LARGE_SESSION_PASSWORD
+
+    return is_email_whitelisted and is_password_correct
 
 
 def read_feed(path: str, delim: str) -> pd.DataFrame:
@@ -248,6 +270,32 @@ def serve_docs(filename):
         return redirect(url_for('serve_docs', filename='index.html'))
 
 
+@app.route('/validate_large_session', methods=['POST'])
+def validate_large_session_endpoint():
+    """Validate large session credentials without creating a session"""
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({"error": "No data provided"}), 400
+
+        email = data.get('email', '').strip()
+        password = data.get('password', '').strip()
+
+        if not email or not password:
+            return jsonify({"error": "Email and password are required"}), 400
+
+        if validate_large_session(email, password):
+            return jsonify({"authorized": True}), 200
+        else:
+            return jsonify({
+                "authorized": False,
+                "error": "Authorization failed. Please check your email and password. "
+                         "If you haven't requested access to larger sessions, please contact us."
+            }), 403
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route('/create_session', methods=['POST'])
 def create_session():
     try:
@@ -255,11 +303,28 @@ def create_session():
         if not data:
             return jsonify({"error": "No data provided"}), 400
 
-        # Participant Number Validation (max of 400)
+        # Participant Number Validation
         participant_number = data.get('participant_number')
-        if participant_number is None or not isinstance(participant_number,
-                                                        int) or participant_number < 1 or participant_number > 400:
-            return jsonify({"error": "Participant number must be between 1 and 400"}), 400
+        if participant_number is None or not isinstance(participant_number, int) or participant_number < 1:
+            return jsonify({"error": "Participant number must be at least 1"}), 400
+
+        # Check if requesting more than 400 participants
+        if participant_number > 400:
+            # Large session requires authentication
+            large_session_email = data.get('large_session_email', '').strip()
+            large_session_password = data.get('large_session_password', '').strip()
+
+            if not validate_large_session(large_session_email, large_session_password):
+                return jsonify({
+                    "error": "Authorization failed. Please check your email and password and try again. "
+                             "If you haven't requested access to larger sessions, please contact us."
+                }), 403
+
+            # Max limit for authenticated users
+            if participant_number > 1000:
+                return jsonify({
+                    "error": "Maximum 1000 participants allowed. Please contact us for higher limits."
+                }), 400
 
         # Get the URL parameter name from the form, with fallback logic
         url_param = data.get('url_parameter_name', '').strip()

@@ -83,6 +83,78 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add event listener to recruitment platform select
     recruitmentPlatformSelect.addEventListener('change', updateParameterField);
 
+    // Large session authentication UI
+    const participantNumberInput = document.getElementById('participant_number');
+    const largeSessionAuthDiv = document.getElementById('large_session_auth');
+
+    function toggleLargeSessionAuth() {
+        const participantNumber = parseInt(participantNumberInput.value) || 0;
+        if (participantNumber > 400) {
+            largeSessionAuthDiv.style.display = 'block';
+        } else {
+            largeSessionAuthDiv.style.display = 'none';
+        }
+    }
+
+    participantNumberInput.addEventListener('change', toggleLargeSessionAuth);
+    participantNumberInput.addEventListener('input', toggleLargeSessionAuth);
+
+    // Large session credential validation
+    const largeSessionEmailInput = document.getElementById('large_session_email');
+    const largeSessionPasswordInput = document.getElementById('large_session_password');
+    const largeSessionStatusDiv = document.getElementById('large_session_status');
+    let validationTimeout;
+
+    async function validateLargeSessionCredentials() {
+        const email = largeSessionEmailInput.value.trim();
+        const password = largeSessionPasswordInput.value.trim();
+
+        // Clear previous message
+        largeSessionStatusDiv.innerHTML = '';
+
+        // Only validate if both fields have values
+        if (!email || !password) {
+            return;
+        }
+
+        // Show loading state
+        largeSessionStatusDiv.innerHTML = '<small style="color: #6c757d;">Checking credentials...</small>';
+
+        try {
+            const response = await fetch('/validate_large_session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.authorized) {
+                largeSessionStatusDiv.innerHTML = '<small style="color: #28a745;"><i class="bi bi-check-circle"></i> Credentials verified</small>';
+            } else {
+                largeSessionStatusDiv.innerHTML = `<small style="color: #dc3545;"><i class="bi bi-exclamation-circle"></i> ${data.error}</small>`;
+            }
+        } catch (error) {
+            largeSessionStatusDiv.innerHTML = '<small style="color: #dc3545;">Error validating credentials</small>';
+        }
+    }
+
+    // Add listeners for real-time validation
+    largeSessionEmailInput.addEventListener('input', () => {
+        clearTimeout(validationTimeout);
+        validationTimeout = setTimeout(validateLargeSessionCredentials, 500);
+    });
+
+    largeSessionPasswordInput.addEventListener('input', () => {
+        clearTimeout(validationTimeout);
+        validationTimeout = setTimeout(validateLargeSessionCredentials, 500);
+    });
+
     // Enable/disable load button based on file selection
     const configFileInput = document.getElementById('configFileInput');
     const loadConfigBtn = document.getElementById('loadConfigBtn');
@@ -306,6 +378,8 @@ function sendValue() {
     let sort_by = "sequence";
     let condition_col = "condition";
     let display_skyscraper = document.getElementById('display_skyscraper').checked;
+    let large_session_email = document.getElementById('large_session_email').value;
+    let large_session_password = document.getElementById('large_session_password').value;
 
     fetch('/create_session', {
         method: 'POST',
@@ -329,6 +403,8 @@ function sendValue() {
             sort_by: sort_by,
             condition_col: condition_col,
             display_skyscraper: display_skyscraper,
+            large_session_email: large_session_email,
+            large_session_password: large_session_password,
             briefing: html_briefing,
             consent_form: html_consent
         }),
@@ -389,7 +465,7 @@ function displaySessionError(errorMessage) {
         errorCategory = 'Participant Configuration Error';
         errorId = 'participant_config_error';
         recoverySteps = [
-            'Ensure the number of participants is between 1 and 400',
+            'Ensure the number of participants is between 1 and 400 (or up to 1000 with authorization)',
             'Check that the participant number is a valid number'
         ];
     } else if (errorMessage.includes('Email') || errorMessage.includes('email')) {

@@ -210,15 +210,29 @@
                             </div>
                             <div class="mb-3">
                                 <label for="participant_number" class="form-label">Study Slots</label>
-                                <input type="number" class="form-control w-100" id="participant_number" aria-describedby="participant_help" value="3" min="1" max="400">
+                                <input type="number" class="form-control w-100" id="participant_number" aria-describedby="participant_help" value="3" min="1" max="1000">
                                 <div id="participant_help" class="form-text">
-                                    How many participants can <em>start</em> your study (maximum 400).
-                                    <strong>Note:</strong> If you're just testing and playing around, please keep your sessions small to avoid unnecessary database strain.
+                                    How many participants can <em>start</em> your study. Up to 400 participants are available by default. For larger sessions (up to 1000), authorization is required—you'll be prompted to enter credentials below.
+                                    Note: If you're just testing, keep your sessions small to avoid unnecessary database strain.
                                     <strong>Remember:</strong> Some participants may not complete the study, so allocate extra slots to account for dropouts.
-                                    Once this limit is reached, no new participants can join.
-                                    <br> Please get in touch if you intend to run larger studies.
                                 </div>
                             </div>
+
+                            <!-- Large Session Authentication (hidden by default) -->
+                            <div id="large_session_auth" class="mb-3" style="display: none; background-color: #f8f9fa; padding: 1rem; border-left: 4px solid #0d6efd; border-radius: 4px;">
+                                <label class="form-label">Access Credentials for Large Sessions (>400 participants)</label>
+                                <div class="mb-2">
+                                    <label for="large_session_email" class="form-label form-label-sm">Email</label>
+                                    <input type="email" class="form-control form-control-sm" id="large_session_email" placeholder="your.email@example.com">
+                                </div>
+                                <div>
+                                    <label for="large_session_password" class="form-label form-label-sm">Password</label>
+                                    <input type="password" class="form-control form-control-sm" id="large_session_password" placeholder="Enter access password">
+                                </div>
+                                <div id="large_session_status" style="margin-top: 0.5rem; font-size: 0.875rem;"></div>
+                                <small class="form-text text-muted mt-2">Contact us for credentials to run sessions with more than 400 participants.</small>
+                            </div>
+
                             <!-- Hidden field for platform preset logic -->
                             <input type="text" class="d-none" id="url_parameter_name" value="PROLIFIC_PID">
                         </form>
