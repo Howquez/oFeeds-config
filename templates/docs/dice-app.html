@@ -281,6 +281,16 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Lab Study</strong> → Uses <code>participant_code</code> parameter</li>
 </ul>
 <p>You don’t need to manually configure these—they’re set automatically when you select your study type. When integrating with survey platforms like Qualtrics, create an Embedded Data field that matches your platform’s parameter name (e.g., <code>PROLIFIC_PID</code>, <code>participant_label</code>, or <code>participant_code</code>).</p>
+<p>In addition to the participant ID, DICE also passes the participant’s <strong>experimental condition</strong> as a URL parameter named <code>condition</code>. This allows you to:</p>
+<ul>
+<li>Create condition-specific survey questions in your survey platform</li>
+<li>Track which condition each participant experienced</li>
+<li>Analyze responses by experimental condition</li>
+</ul>
+<p>For example, when redirecting to Qualtrics, participants will be sent to a URL like:</p>
+<pre><code>https://unisg.qualtrics.com/jfe/form/SV_0DnMoLpM0VxjhrM?PROLIFIC_PID=abc123&amp;condition=A</code></pre>
+<p>To capture the condition in Qualtrics, create an Embedded Data field named <code>condition</code>, and it will be automatically populated with the participant’s assigned condition.</p>
+<p><strong>Important Methodological Consideration</strong>: The condition label is visible in the redirect URL. If participants notice their condition assignment in the URL, they may infer details about your experimental design and hypothesis, which could create demand effects or bias their survey responses. To mitigate this risk, we recommend using abstract or non-descriptive condition labels in your CSV file (for example, “A” and “B” instead of “control” and “treatment”, or acronyms like “FV” and “SV”). This way, even if participants see the URL parameter, they won’t understand what condition they’re in.</p>
 </section>
 </section>
 <section id="stimulus-design" class="level2" data-number="2.3">

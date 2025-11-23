@@ -58,6 +58,21 @@ The participant ID parameter is automatically configured based on your selected 
 
 You don't need to manually configure these—they're set automatically when you select your study type. When integrating with survey platforms like Qualtrics, create an Embedded Data field that matches your platform's parameter name (e.g., `PROLIFIC_PID`, `participant_label`, or `participant_code`).
 
+In addition to the participant ID, DICE also passes the participant's **experimental condition** as a URL parameter named `condition`. This allows you to:
+
+- Create condition-specific survey questions in your survey platform
+- Track which condition each participant experienced
+- Analyze responses by experimental condition
+
+For example, when redirecting to Qualtrics, participants will be sent to a URL like:
+```
+https://unisg.qualtrics.com/jfe/form/SV_0DnMoLpM0VxjhrM?PROLIFIC_PID=abc123&condition=A
+```
+
+To capture the condition in Qualtrics, create an Embedded Data field named `condition`, and it will be automatically populated with the participant's assigned condition.
+
+**Important Methodological Consideration**: The condition label is visible in the redirect URL. If participants notice their condition assignment in the URL, they may infer details about your experimental design and hypothesis, which could create demand effects or bias their survey responses. To mitigate this risk, we recommend using abstract or non-descriptive condition labels in your CSV file (for example, "A" and "B" instead of "control" and "treatment", or acronyms like "FV" and "SV"). This way, even if participants see the URL parameter, they won't understand what condition they're in.
+
 ## Stimulus Design
 
 ### Social Media Platform
