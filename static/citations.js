@@ -15,15 +15,15 @@ const citations = {
 
     chicago: `Roggenkamp, Hauke, Johannes Boegershausen, and Christian Hildebrand. "EXPRESS: DICE: Advancing Social Media Research through Digital In-Context Experiments." Journal of Marketing (2025): 00222429251371702. https://doi.org/10.1177/00222429251371702.`,
 
-    plaintext: `Roggenkamp, H., Boegershausen, J., & Hildebrand, C. (2025). EXPRESS: DICE: Advancing Social Media Research through Digital In-Context Experiments. Journal of Marketing, 00222429251371702.`,
+    plaintext: `Roggenkamp, H., Boegershausen, J., & Hildebrand, C. (2026). DICE: Advancing Social Media Research Through Digital In-Context Experiments. Journal of Marketing, https://doi.org/10.1177/00222429251371702.`,
 
     ris: `TY  - JOUR
 AU  - Roggenkamp, Hauke
 AU  - Boegershausen, Johannes
 AU  - Hildebrand, Christian
-TI  - EXPRESS: DICE: Advancing Social Media Research through Digital In-Context Experiments
+TI  - DICE: Advancing Social Media Research Through Digital In-Context Experiments
 JO  - Journal of Marketing
-PY  - 2025
+PY  - 2026
 SP  - 00222429251371702
 DO  - 10.1177/00222429251371702
 UR  - https://journals.sagepub.com/doi/10.1177/00222429251371702
