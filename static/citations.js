@@ -3,7 +3,7 @@
 const citations = {
     bibtex: `@article{RoggenkampEtAl_2026,
   author = {Roggenkamp, Hauke and Boegershausen, Johannes and Hildebrand, Christian},
-  title = {DICE: Advancing Social Media Research through Digital In-Context Experiments},
+  title = {DICE: Advancing Social Media Research Through Digital In-Context Experiments},
   journal = {Journal of Marketing},
   year = {2026},
   doi = {10.1177/00222429251371702},
