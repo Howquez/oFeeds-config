@@ -41,12 +41,12 @@ const validationRules = {
     participant_number: {
         required: true,
         min: 1,
-        max: 400,
+        max: 1000,
         type: 'number',
         errorMessages: {
             required: 'Number of participants is required',
             min: 'Participant number must be at least 1',
-            max: 'Participant number cannot exceed 400',
+            max: 'Participant number cannot exceed 1000',
             type: 'Must be a valid number'
         }
     },
@@ -188,6 +188,44 @@ function removeFieldError(fieldId) {
 }
 
 /**
+ * Validate large session credentials (required when participants > 400)
+ */
+function validateLargeSessionFields() {
+    const participantField = document.getElementById('participant_number');
+    if (!participantField) return true;
+
+    const participantCount = parseInt(participantField.value) || 0;
+    if (participantCount <= 400) return true;
+
+    let valid = true;
+
+    const emailField = document.getElementById('large_session_email');
+    const passwordField = document.getElementById('large_session_password');
+
+    if (emailField && !emailField.value.trim()) {
+        emailField.classList.remove('is-valid');
+        emailField.classList.add('is-invalid');
+        showFieldError('large_session_email', 'Email is required for sessions with more than 400 participants');
+        valid = false;
+    } else if (emailField) {
+        emailField.classList.remove('is-invalid');
+        removeFieldError('large_session_email');
+    }
+
+    if (passwordField && !passwordField.value.trim()) {
+        passwordField.classList.remove('is-valid');
+        passwordField.classList.add('is-invalid');
+        showFieldError('large_session_password', 'Password is required for sessions with more than 400 participants');
+        valid = false;
+    } else if (passwordField) {
+        passwordField.classList.remove('is-invalid');
+        removeFieldError('large_session_password');
+    }
+
+    return valid;
+}
+
+/**
  * Validate all required fields
  */
 function validateAllFields() {
@@ -202,6 +240,10 @@ function validateAllFields() {
             allValid = false;
         }
     });
+
+    if (!validateLargeSessionFields()) {
+        allValid = false;
+    }
 
     return allValid;
 }
@@ -249,6 +291,14 @@ function initializeFormValidation() {
                     updateSubmitButtonState();
                 });
             }
+        }
+    });
+
+    // Re-evaluate button state when large session credential fields change
+    ['large_session_email', 'large_session_password'].forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (field) {
+            field.addEventListener('input', updateSubmitButtonState);
         }
     });
 
