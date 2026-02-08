@@ -346,6 +346,7 @@ def create_session():
             'sessions',
             session_config_name='Twitter',
             num_participants=data.get('participant_number'),
+            label=f"{data.get('eMail')} | {data.get('internal_name', '')}",
             modified_session_config_fields={
                 'title': data.get('title'),
                 'full_name': data.get('full_name'),

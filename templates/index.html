@@ -162,22 +162,22 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name" aria-describedby="name_help" value="" placeholder="Jane Doe" required>
+                                <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="name" aria-describedby="name_help" placeholder="Jane Doe" required>
                                 <div id="name_help" class="form-text">
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label for="eMail" class="form-label">Email address</label>
+                                <label for="eMail" class="form-label">Email address <span class="text-danger">*</span></label>
                                 <input type="email" class="form-control" id="eMail" placeholder="name@example.com" required>
                             </div>
 
                             <div class="mb-3">
-                                <label for="external_name" class="form-label">External study name</label>
+                                <label for="external_name" class="form-label">External study name <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="external_name" value="" placeholder="A Social Media Study" required>
                             </div>
                             <div class="mb-3">
-                                <label for="internal_name" class="form-label">Internal study name (not visible to participants)</label>
+                                <label for="internal_name" class="form-label">Internal study name (not visible to participants) <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="internal_name" value="" placeholder="Social Media Study Pilot" required>
                             </div>
                         </form>
@@ -265,14 +265,14 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="search_term" class="form-label">Provide a Term Displayed in Search Bar</label>
+                                <label for="search_term" class="form-label">Provide a Term Displayed in Search Bar <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="search_term" aria-describedby="search_help" value="#myHashtag">
                                 <div id="search_help" class="form-text">
                                     Consider using a hashtag as a prefix.
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label for="content_url" class="form-label">Provide URL Directing to Your Content</label>
+                                <label for="content_url" class="form-label">Provide URL Directing to Your Content <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="content_url" aria-describedby="url_help" value="https://raw.githubusercontent.com/DICE-app/sample-feeds/refs/heads/main/feeds/9gag.csv">
                                 <div id="url_help" class="form-text">
                                     Please provide an url directing to your raw, UTF-8 formatted csv file (preferably GitHub or Google Drive).
@@ -465,7 +465,7 @@
                                     your contact information that you provided above.
                                 </div>
                             </div>
-                            <label for="dwell_threshold" class="form-label">Dwell Time Tracking Threshold</label>
+                            <label for="dwell_threshold" class="form-label">Dwell Time Tracking Threshold <span class="text-danger">*</span></label>
                             <div class="input-group mb-3">
                                 <span class="input-group-text">%</span>
                                 <input type="number" class="form-control" id="dwell_threshold" value="75" min="1" max="100">

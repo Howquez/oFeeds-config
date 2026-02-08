@@ -252,8 +252,7 @@ function initializeFormValidation() {
         }
     });
 
-    // Initial button state
-    updateSubmitButtonState();
+    // Don't validate on page load — only validate when user interacts or submits
 }
 
 /**
@@ -455,7 +454,6 @@ function showFormSections() {
  * Initialize everything when DOM is ready
  */
 document.addEventListener('DOMContentLoaded', function() {
-    // Form field validation disabled for now
-    // initializeFormValidation();
+    initializeFormValidation();
     hideFormSections(); // Hide optional sections until CSV is tested
 });

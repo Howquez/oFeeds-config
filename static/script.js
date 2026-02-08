@@ -347,6 +347,17 @@ function liveRecv(data) {
 function sendValue() {
     console.log('sent');
 
+    // Validate all fields before submitting
+    if (!validateAllFields()) {
+        // Scroll to the first invalid field
+        const firstInvalid = document.querySelector('.is-invalid');
+        if (firstInvalid) {
+            firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            firstInvalid.focus();
+        }
+        return;
+    }
+
     var createSessionBtn = document.getElementById('createSessionBtn');
 
     createSessionBtn.innerHTML = '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Creating Session...';
@@ -390,6 +401,7 @@ function sendValue() {
             title: title,
             full_name: full_name,
             eMail: eMail,
+            internal_name: document.getElementById('internal_name').value,
             study_name: study_name,
             channel_type: channel_type,
             participant_number: parseInt(participant_number),
