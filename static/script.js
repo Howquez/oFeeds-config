@@ -853,6 +853,12 @@ function populateFormFromConfig(config) {
             'dwell_threshold': 'dwell_threshold'
         };
 
+        // Migrate legacy channel_type values
+        const channelTypeMigrations = { 'Insta': 'Instagram', 'Stories_beta': 'Stories', 'Linkedin_beta': 'Linkedin', 'Generic_beta': 'Generic' };
+        if (config.channel_type && channelTypeMigrations[config.channel_type]) {
+            config.channel_type = channelTypeMigrations[config.channel_type];
+        }
+
         // Populate basic fields
         Object.entries(fieldMappings).forEach(([elementId, configKey]) => {
             const element = document.getElementById(elementId);
