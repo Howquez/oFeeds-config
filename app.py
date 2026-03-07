@@ -344,7 +344,7 @@ def create_session():
         response = call_api(
             'POST',
             'sessions',
-            session_config_name='Twitter',
+            session_config_name=data.get('channel_type'),
             num_participants=data.get('participant_number'),
             label=f"{data.get('eMail')} | {data.get('internal_name', '')}",
             modified_session_config_fields={
@@ -363,7 +363,9 @@ def create_session():
                 'sort_by': data.get('sort_by'),
                 'condition_col': data.get('condition_col'),
                 'briefing': data.get('briefing'),
-                'consent_form': data.get('consent_form')
+                'consent_form': data.get('consent_form'),
+                'skip_intro': data.get('skip_intro', False),
+                'skip_briefing': data.get('skip_briefing', False)
             }
         )
         return jsonify(response)

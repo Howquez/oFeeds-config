@@ -59,6 +59,20 @@ document.addEventListener('DOMContentLoaded', function() {
         adCard.style.display = this.checked ? 'block' : 'none';
     });
 
+    var skipIntroCheckbox = document.getElementById('skip_intro');
+    var consentEditor = document.getElementById('editor-container-consent');
+
+    skipIntroCheckbox.addEventListener('change', function() {
+        consentEditor.style.display = this.checked ? 'none' : 'block';
+    });
+
+    var skipBriefingCheckbox = document.getElementById('skip_briefing');
+    var briefingEditor = document.getElementById('editor-container-briefing');
+
+    skipBriefingCheckbox.addEventListener('change', function() {
+        briefingEditor.style.display = this.checked ? 'none' : 'block';
+    });
+
     // Platform preset logic for Participant ID Parameter Name
     const platformParameterMap = {
         'Prolific': 'PROLIFIC_PID',
@@ -418,7 +432,9 @@ function sendValue() {
             large_session_email: large_session_email,
             large_session_password: large_session_password,
             briefing: html_briefing,
-            consent_form: html_consent
+            consent_form: html_consent,
+            skip_intro: document.getElementById('skip_intro').checked,
+            skip_briefing: document.getElementById('skip_briefing').checked
         }),
     })
     .then(response => {
@@ -721,7 +737,10 @@ function generateConfigFile(sessionCode) {
 
         // Rich text content (Quill editors)
         briefing: quillBriefing.root.innerHTML,
-        consent_form: quillConsent.root.innerHTML
+        consent_form: quillConsent.root.innerHTML,
+
+        skip_intro: document.getElementById('skip_intro').checked,
+        skip_briefing: document.getElementById('skip_briefing').checked
     };
 
     return configData;
@@ -867,6 +886,16 @@ function populateFormFromConfig(config) {
 
         if (config.consent_form && quillConsent) {
             quillConsent.root.innerHTML = config.consent_form;
+        }
+
+        if (config.skip_intro !== undefined) {
+            document.getElementById('skip_intro').checked = config.skip_intro;
+            document.getElementById('editor-container-consent').style.display = config.skip_intro ? 'none' : 'block';
+        }
+
+        if (config.skip_briefing !== undefined) {
+            document.getElementById('skip_briefing').checked = config.skip_briefing;
+            document.getElementById('editor-container-briefing').style.display = config.skip_briefing ? 'none' : 'block';
         }
 
     } catch (error) {

@@ -260,7 +260,7 @@
                                 <label for="channel_type" class="form-label">Choose Media Platform to Mimic</label>
                                 <select class="form-select" id="channel_type" aria-describedby="title_help">
                                     <option value="Twitter">Twitter</option>
-                                    <option value="Insta">Instagram</option>
+                                    <option value="Instagram">Instagram</option>
                                     <option value="Stories">Stories</option>
                                     <option value="Linkedin">Linkedin</option>
                                     <option value="Generic">Swipe</option>
@@ -357,14 +357,32 @@
                 <div id="card5" class="card my-4 border-0 shadow">
                     <div class="card-body">
                         <h5 class="card-title h2 mb-0">
-                            4. Participant Briefing
+                            4. Intro &amp; Briefing Pages
                         </h5>
                         <p class="card-text text-muted">
                             <small>
-                                Please use the following two editors to specify (1) the consent form that participants must agree to before participating in your study
-                                as well as (2) the study instructions participants read prior to the feed exposure.
+                                Participants see up to two pages before the feed: an intro page with a consent form, and a briefing page with study instructions.
+                                Use the editors below to customize their content.
                             </small>
                         </p>
+
+                        <hr class="my-4">
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-0">Page 1: Intro &amp; Consent Form</h6>
+                                <small class="text-muted">Participants must agree to the consent form before proceeding.</small>
+                            </div>
+                            <div class="form-check form-switch ms-3 mb-0">
+                                <input class="form-check-input" type="checkbox" role="switch" id="skip_intro">
+                                <label class="form-check-label text-muted" for="skip_intro">
+                                    <small>Skip this page</small>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-text mb-3">
+                            Enable <em>Skip this page</em> if participants are redirected from an external survey platform that already handles consent.
+                        </div>
 
                         <div id="editor-container-consent" class="mb-4">
                             <div id="quill-editor-consent">
@@ -428,6 +446,24 @@
                             </div>
                         </div>
 
+                        <hr class="my-4">
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-0">Page 2: Briefing</h6>
+                                <small class="text-muted">Study instructions and context shown to participants before the feed.</small>
+                            </div>
+                            <div class="form-check form-switch ms-3 mb-0">
+                                <input class="form-check-input" type="checkbox" role="switch" id="skip_briefing">
+                                <label class="form-check-label text-muted" for="skip_briefing">
+                                    <small>Skip this page</small>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-text mb-3">
+                            Enable <em>Skip this page</em> to hide the briefing page from participants.
+                        </div>
+
                         <div id="editor-container-briefing">
                             <div id="quill-editor-briefing">
                                 <h2>Study Instructions</h2>
@@ -435,11 +471,6 @@
                                 <p>Take your time to read the posts that you find interesting.</p>
                             </div>
                         </div>
-                        <p class="card-text text-muted">
-                            <small>
-                                Note: The whole briefing page is skipped if you leave this field empty.
-                            </small>
-                        </p>
 
                     </div>
                 </div>
