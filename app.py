@@ -352,7 +352,6 @@ def create_session():
                 'full_name': data.get('full_name'),
                 'eMail': data.get('eMail'),
                 'study_name': data.get('study_name'),
-                'channel_type': data.get('channel_type'),
                 'data_path': data.get('content_url'),
                 'delimiter': data.get('delimiter'),
                 'topics': not data.get('display_skyscraper'),
