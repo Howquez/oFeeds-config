@@ -16,10 +16,10 @@ if (!requireNamespace("groundhog", quietly = TRUE)) {
 pkgs <- c("magrittr", "data.table", "knitr", "stringr", "english", "moments", "devtools",
           "ggplot2", "patchwork", "scales",  "ggdist", "gghalves", "sjPlot", "gtsummary", "wesanderson", "ggsci",
           "stargazer", "gt", "gtsummary", "flextable", "kableExtra", "MOTE", "dplyr",
-          "multilevelmediation", "mediation", "lme4", "optimx")
+          "multilevelmediation", "mediation", "lme4", "optimx", "psych", "broom.helpers", "broom.mixed")
 
 groundhog::groundhog.library(pkg = pkgs,
-                             date = "2024-10-01")
+                             date = "2026-01-01")
 
 rm(pkgs)
 ```
@@ -89,8 +89,8 @@ get_effect_size <- function(data) {
 ## Case Study 1: Feed Composition and Context Effects {#sec-brand-safety-case}
 
 ```{r read_brazil_data}
-short <- fread(file = "../../oFeeds/studies/brand_safety/data/processed/brand-safety-short.csv", na.strings = "")
-long  <- fread(file = "../../oFeeds/studies/brand_safety/data/processed/brand-safety-long.csv", na.strings = "")
+short <- fread(file = "../../dice/studies/brand_safety/data/processed/brand-safety-short.csv", na.strings = "")
+long  <- fread(file = "../../dice/studies/brand_safety/data/processed/brand-safety-long.csv", na.strings = "")
 stimuli_1  <- fread(file = "../templates/docs/data/case-study-2/brazil.csv", na.strings = "")
 ```
 
@@ -597,7 +597,7 @@ table
 ## Case Study 2: Position Effects and Competing Attention Between Brands {#sec-positioning-case}
 
 ```{r read_meme_data}
-data <- fread(file = "../../oFeeds/studies/meme_feed/data/processed/meme-feed-data.csv", na.strings = "")
+data <- fread(file = "../../dice/studies/meme_feed/data/processed/meme-feed-data.csv", na.strings = "")
 stimuli_2  <- fread(file = "../templates/docs/data/case-study-1/9gag.csv", na.strings = "")
 ```
 
@@ -844,7 +844,7 @@ out_model <- glmer(recalled_brand_cued ~ displayed_sequence + brand + log_dwell_
 # summary(out_model)
 
 # mediation analysis
-med_results <- mediate(med_model, out_model, 
+med_results <- mediation::mediate(med_model, out_model,
                       treat = "displayed_sequence",
                       mediator = "log_dwell_pixel",
                       boot = FALSE, sims = 1000)
@@ -1061,7 +1061,7 @@ out_model <- glmer(recalled_brand_uncued ~ displayed_sequence + brand + log_dwel
 # summary(out_model)
 
 # mediation analysis
-med_results <- mediate(med_model, out_model, 
+med_results <- mediation::mediate(med_model, out_model,
                       treat = "displayed_sequence",
                       mediator = "log_dwell_pixel",
                       boot = FALSE, sims = 1000)

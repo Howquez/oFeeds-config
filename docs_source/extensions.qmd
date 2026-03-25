@@ -10,3 +10,17 @@ You can download the corresponding `*.otreezip` files below. The [Deployment](de
 <a href="https://www.dice-app.org/static/extension-shopping-feed.otreezip" class="btn btn-outline-primary btn-sm" role="button">Download Shopping Feed</a>
 
 We hope to feature more DICE extensions (such as a review platform, for instance) developed by the research community in the future.
+
+## DICE Lite
+
+[DICE Lite](https://github.com/Howquez/DICE-lite) is a stripped-down version of the DICE app designed as a minimal starting point for researchers who want to build their own custom feed experiments. Compared to the fully-fledged DICE app, it carries less legacy code and is easier to understand, modify, and extend. It is a good starting point if you want to customize the look and feel of the feed beyond what the standard DICE app supports.
+
+::: {.callout-note}
+DICE Lite must be hosted by researchers themselves — it cannot be launched via [dice-app.org](https://www.dice-app.org). See the [Deployment](deployment.qmd#sec-deployment) chapter for guidance on self-hosting.
+:::
+
+## TikTok-Style Feed
+
+Built on top of DICE Lite, the [TikTok-style feed](https://github.com/Howquez/DICE-tiktok) extension simulates a short-video platform interface. Participants scroll vertically through full-screen video items, mimicking the TikTok experience. This extension is well-suited for studies on short-form video content, algorithmic curation, or attention and engagement in vertical video formats.
+
+Like DICE Lite, this extension requires researchers to host it on their own server and cannot be configured via [dice-app.org](https://www.dice-app.org).

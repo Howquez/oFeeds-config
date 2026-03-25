@@ -13,7 +13,7 @@ The combination of detailed documentation, community resources, and technologica
 
 Before you begin, ensure you have the following installed:
 
-1. **Python**: oTree requires Python 3.7 or higher. Download and install Python from [python.org](https://www.python.org/downloads/).
+1. **Python**: oTree requires Python 3.9 or higher. Download and install Python from [python.org](https://www.python.org/downloads/).
 
 2. **pip**: This is Python's package installer. It usually comes with Python installation.
 
@@ -41,7 +41,7 @@ mkdir my_DICE_experiment
 cd my_DICE_experiment
 ```
 
-Now download the `DICE.otreezip` file [(which you can find here)](https://github.com/Howquez/oFeeds/blob/main/software/DICE/DICE.otreezip) and store it in your new directory. Then use the command prompt or terminal and run the `otree unzip` command to extract the contents of the otreezip file:
+Now download the `DICE.otreezip` file [(which you can find here)](https://github.com/Howquez/DICE/blob/main/software/DICE/DICE.otreezip) and store it in your new directory. Then use the command prompt or terminal and run the `otree unzip` command to extract the contents of the otreezip file:
 
 ```{.bash}
 otree unzip DICE.otreezip

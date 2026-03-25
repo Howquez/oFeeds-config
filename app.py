@@ -156,12 +156,19 @@ def read_feed(path: str, delim: str) -> pd.DataFrame:
     if re.match(r'^https?://\S+', path):
         if 'github' in path:
             tweets = pd.read_csv(path, sep=delim)
+        elif 'spreadsheets.google.com' in path or ('docs.google.com' in path and 'spreadsheets' in path):
+            sheet_id = re.search(r'/d/([a-zA-Z0-9_-]+)', path).group(1)
+            gid_match = re.search(r'gid=(\d+)', path)
+            export_url = f'https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv'
+            if gid_match:
+                export_url += f'&gid={gid_match.group(1)}'
+            tweets = pd.read_csv(export_url, sep=delim)
         elif 'drive.google.com' in path:
             file_id = path.split('/')[-2]
             download_url = f'https://drive.google.com/uc?id={file_id}'
             tweets = pd.read_csv(download_url, sep=delim)
         else:
-            raise ValueError("Unrecognized URL format. Supported: GitHub, Google Drive")
+            raise ValueError("Unrecognized URL format. Supported: GitHub, Google Sheets, Google Drive")
     else:
         tweets = pd.read_csv(path, sep=delim)
     return tweets

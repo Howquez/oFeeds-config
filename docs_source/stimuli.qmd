@@ -15,7 +15,7 @@ if (!requireNamespace("groundhog", quietly = TRUE)) {
 pkgs <- c("magrittr", "data.table", "knitr", "kableExtra", "stringr")
 
 groundhog::groundhog.library(pkg = pkgs,
-                             date = "2024-10-01")
+                             date = "2026-01-01")
 
 rm(pkgs)
 ```
@@ -25,6 +25,16 @@ The DICE app was designed to fit into a consumer researcher's typical workflow w
 ## Overview
 
 [Here](https://www.dice-app.org/static/sample_feed.csv), we provide a configuration csv file that serves as a template for researchers who configure their first set of stimuli. In @tbl-template, we display and describe an exemplary row of this template containing social media posts on the Yosemite National Park in California. The first column in @tbl-template describes a configuration column's scope, that is, whether it defines how, when and to whom a post is displayed (`design`), contains a post's actual content or engagement metrics such as the number of likes the post has received (`post`), or whether it describes a post's author (`user`). The second column lists all of the input csv file's required configuration columns.^[Researchers can change the order of these columns as they want. In addition, they can add additional columns for internal purposes. We recommend, to document a post's source (i.e., a url) if a post was scraped or copied from social media or an ad library.] We then describe the configuration columns' data types, provide examplary values, and describe them in more detail.
+
+::: {.callout-important}
+## All columns must be present
+All 18 columns listed in @tbl-template must exist as column headers in your CSV, even if some cells are left empty. DICE will report an error if any column is missing. Columns marked as *optional* may contain empty values; columns marked as *required* must have a value in every row.
+:::
+
+::: {.callout-note}
+## Platform-specific requirements
+The `media` column is required for **Instagram** and **Stories** feeds: posts without a media URL are silently skipped and not shown to participants. For **Twitter** and **LinkedIn**, `media` is optional — text-only posts are displayed normally.
+:::
 
 ```{r}
 #| warning: false

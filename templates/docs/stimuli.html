@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -59,7 +59,7 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d5e7ad547044776d59bf9b59a51f66bb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -129,10 +129,6 @@ div.csl-indent {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="./index.html" class="sidebar-logo-link">
-      </a>
-      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -238,7 +234,33 @@ div.csl-indent {
 <p>The DICE app was designed to fit into a consumer researcher’s typical workflow where participants are recruited (e.g., via Prolific) before they are exposed to stimuli and survey items (e.g., in Qualtrics). The key procedural difference in using the DICE app (compared to software such as Adobe Photoshop or Microsoft Powerpoint) is that the stimuli are not configured graphically but tabularly: the DICE app requires researchers to configure a csv file that provides information on each post, such as the actual content, engagement metrics, and the corresponding username. The app then loops through that file (while filtering for conditions) to display each row as a separate post embedded in an interactive feed. The advantage of this procedural difference is that while it requires the same amount of information as the graphical configuration, it is less time consuming and less error prone because the software handles the graphical representation consistently. In addition, the tabular configuration is more accessible as researchers are trained to work with csv, as opposed to Photoshop files.</p>
 <section id="overview" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1.1</span> Overview</h2>
-<p><a href="https://www.dice-app.org/static/sample_feed.csv">Here</a>, we provide a configuration csv file that serves as a template for researchers who configure their first set of stimuli. In <a href="#tbl-template" class="quarto-xref">Table&nbsp;<span>1.1</span></a>, we display and describe an exemplary row of this template containing social media posts on the Yosemite National Park in California. The first column in <a href="#tbl-template" class="quarto-xref">Table&nbsp;<span>1.1</span></a> describes a configuration column’s scope, that is, whether it defines how, when and to whom a post is displayed (<code>design</code>), contains a post’s actual content or engagement metrics such as the number of likes the post has received (<code>post</code>), or whether it describes a post’s author (<code>user</code>). The second column lists all of the input csv file’s required configuration columns.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> We then describe the configuration columns’ data types, provide examplary values, and describe them in more detail.</p>
+<p><a href="https://www.dice-app.org/static/sample_feed.csv">Here</a>, we provide a configuration csv file that serves as a template for researchers who configure their first set of stimuli. In <a href="#tbl-template" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-template</span></a>, we display and describe an exemplary row of this template containing social media posts on the Yosemite National Park in California. The first column in <a href="#tbl-template" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-template</span></a> describes a configuration column’s scope, that is, whether it defines how, when and to whom a post is displayed (<code>design</code>), contains a post’s actual content or engagement metrics such as the number of likes the post has received (<code>post</code>), or whether it describes a post’s author (<code>user</code>). The second column lists all of the input csv file’s required configuration columns.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> We then describe the configuration columns’ data types, provide examplary values, and describe them in more detail.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>All columns must be present
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>All 18 columns listed in <a href="#tbl-template" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-template</span></a> must exist as column headers in your CSV, even if some cells are left empty. DICE will report an error if any column is missing. Columns marked as <em>optional</em> may contain empty values; columns marked as <em>required</em> must have a value in every row.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Platform-specific requirements
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <code>media</code> column is required for <strong>Instagram</strong> and <strong>Stories</strong> feeds: posts without a media URL are silently skipped and not shown to participants. For <strong>Twitter</strong> and <strong>LinkedIn</strong>, <code>media</code> is optional — text-only posts are displayed normally.</p>
+</div>
+</div>
 <div class="cell">
 <div id="tbl-template" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -250,10 +272,10 @@ Table&nbsp;1.1: Description of Input csv File
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 2%">
-<col style="width: 6%">
-<col style="width: 2%">
-<col style="width: 26%">
-<col style="width: 61%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 23%">
+<col style="width: 63%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -268,128 +290,128 @@ Table&nbsp;1.1: Description of Input csv File
 <tr class="odd">
 <td style="text-align: left;">design</td>
 <td style="text-align: left;">condition</td>
-<td style="text-align: left;">text</td>
+<td style="text-align: left;">text or numeric</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: left;">Unique identifier for the condition (e.g., group A or B). The app will create the same number of conditions and randomly assign participants to them.</td>
+<td style="text-align: left;">Required. Unique identifier for the condition (e.g., “A” / “B” or 1 / 2). The app creates the same number of conditions as unique values and randomly assigns participants to them.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">design</td>
 <td style="text-align: left;">sequence</td>
 <td style="text-align: left;">numeric</td>
 <td style="text-align: left;">1</td>
-<td style="text-align: left;">Defines the order in which posts are displayed (ascending). If missing, random integers will be assigned, leading to between-subject randomization.</td>
+<td style="text-align: left;">Optional. Defines the order in which posts are displayed (ascending). If missing, random integers are assigned per participant, leading to between-subject randomization.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">design</td>
 <td style="text-align: left;">commented_post</td>
 <td style="text-align: left;">boolean</td>
 <td style="text-align: left;">0</td>
-<td style="text-align: left;">If 1, this post will be displayed at the top of the feed while all other posts are displayed as comments of this post.</td>
+<td style="text-align: left;">Optional (Legacy for Twitter only). If 1, this post is displayed at the top of the feed and all other posts appear as comments beneath it. Defaults to 0 if missing.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">post</td>
 <td style="text-align: left;">doc_id</td>
 <td style="text-align: left;">numeric</td>
 <td style="text-align: left;">1</td>
-<td style="text-align: left;">Unique identifier for each post in each condition.</td>
+<td style="text-align: left;">Required. Unique numeric identifier for each post. Must be an integer (e.g., 1, 2, 3).</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">post</td>
 <td style="text-align: left;">datetime</td>
 <td style="text-align: left;">text</td>
 <td style="text-align: left;">01.03.22 06:00</td>
-<td style="text-align: left;">The time a post was published, formatted as dd.mm.yyyy hh:mm:ss.</td>
+<td style="text-align: left;">Required. The time a post was published, formatted as dd.mm.yyyy hh:mm:ss.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">post</td>
 <td style="text-align: left;">text</td>
 <td style="text-align: left;">text</td>
 <td style="text-align: left;">Just experienced the most incredible sunrise… #Yosemite #NatureLovers</td>
-<td style="text-align: left;">Content of the post. Can contain hashtags, emojis, and URLs.</td>
+<td style="text-align: left;">Required. Content of the post. Can contain hashtags, emojis, and URLs.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">post</td>
 <td style="text-align: left;">media</td>
 <td style="text-align: left;">text</td>
 <td style="text-align: left;">https://images.unsplash.com/photo-1472396961693…</td>
-<td style="text-align: left;">URL to a publicly available image or GIF. We recommend using compressed formats like .webp or hosting images on platforms such as Unsplash or GitHub.</td>
+<td style="text-align: left;">Required. Direct (raw) URL to an image file (.jpg, .png, .gif, or .webp). Posts without a media URL are not displayed in Instagram and Stories feeds.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">post</td>
 <td style="text-align: left;">alt_text</td>
 <td style="text-align: left;">text</td>
 <td style="text-align: left;">Sunset illuminates Half Dome…</td>
-<td style="text-align: left;">Optional description of the media element for accessibility purposes.</td>
+<td style="text-align: left;">Optional. Accessibility description of the media element.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">post</td>
 <td style="text-align: left;">likes</td>
 <td style="text-align: left;">numeric</td>
 <td style="text-align: left;">15</td>
-<td style="text-align: left;">Number of likes the post has received.</td>
+<td style="text-align: left;">Required. Number of likes the post has received. Defaults to 0 if missing.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">post</td>
 <td style="text-align: left;">reposts</td>
 <td style="text-align: left;">numeric</td>
 <td style="text-align: left;">6</td>
-<td style="text-align: left;">Number of reposts the post has received.</td>
+<td style="text-align: left;">Required. Number of reposts the post has received. Defaults to 0 if missing.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">post</td>
 <td style="text-align: left;">replies</td>
 <td style="text-align: left;">numeric</td>
 <td style="text-align: left;">2</td>
-<td style="text-align: left;">Number of replies the post has received.</td>
+<td style="text-align: left;">Required. Number of replies the post has received. Defaults to 0 if missing.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">post</td>
 <td style="text-align: left;">sponsored</td>
 <td style="text-align: left;">boolean</td>
 <td style="text-align: left;">0</td>
-<td style="text-align: left;">If 1, the post will be displayed as a sponsored post.</td>
+<td style="text-align: left;">Optional. If 1, the post is displayed as a sponsored/promoted post. Defaults to 0 if missing.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">post</td>
 <td style="text-align: left;">target</td>
 <td style="text-align: left;">text</td>
 <td style="text-align: left;">https://example.com</td>
-<td style="text-align: left;">URL of the landing page for sponsored posts. If sponsored = 1, this URL will be displayed as the target for the advertisement.</td>
+<td style="text-align: left;">Conditionally required. URL of the landing page for sponsored posts. Must be provided if sponsored = 1.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">user</td>
 <td style="text-align: left;">username</td>
 <td style="text-align: left;">text</td>
 <td style="text-align: left;">NatureFanatic</td>
-<td style="text-align: left;">The username of the post’s author.</td>
+<td style="text-align: left;">Required. The display name of the post’s author.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">user</td>
 <td style="text-align: left;">handle</td>
 <td style="text-align: left;">text</td>
 <td style="text-align: left;">NatureFanatic88</td>
-<td style="text-align: left;">The handle of the post’s author, automatically prefixed by an @ symbol.</td>
+<td style="text-align: left;">Required. The handle of the post’s author, automatically prefixed by an @ symbol.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">user</td>
 <td style="text-align: left;">user_description</td>
 <td style="text-align: left;">text</td>
 <td style="text-align: left;">Lover of all things nature…</td>
-<td style="text-align: left;">A brief description or bio of the user, displayed when hovering over the user’s profile.</td>
+<td style="text-align: left;">Optional. A brief bio of the user, shown in a tooltip when hovering over the profile picture.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">user</td>
 <td style="text-align: left;">user_image</td>
 <td style="text-align: left;">text</td>
 <td style="text-align: left;">https://images.unsplash.com/photo-1522506209496…</td>
-<td style="text-align: left;">URL to the user’s profile picture. Similar to media, we recommend using stock images or hosting them on platforms such as GitHub, preferably in compressed formats.</td>
+<td style="text-align: left;">Required. Direct (raw) URL to the user’s profile picture. For Twitter, Instagram, and LinkedIn a colored avatar with initials is used as fallback, but providing an image is strongly recommended.</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">user</td>
 <td style="text-align: left;">user_followers</td>
 <td style="text-align: left;">numeric</td>
 <td style="text-align: left;">4523</td>
-<td style="text-align: left;">Number of followers the user has.</td>
+<td style="text-align: left;">Required. Number of followers the user has.</td>
 </tr>
 </tbody>
 </table>
@@ -401,7 +423,7 @@ Table&nbsp;1.1: Description of Input csv File
 </section>
 <section id="design-columns" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="design-columns"><span class="header-section-number">1.2</span> Design Columns</h2>
-<p>Before <a href="#fig-tutorial-1" class="quarto-xref">Video&nbsp;<span>1.1</span></a> describes the columns in more detail, we focus on the design columns and describe how researchers can configure them to implement their experimental designs.</p>
+<p>Before <a href="#fig-tutorial-1" class="quarto-xref">Video&nbsp;<span class="quarto-unresolved-ref ref-noprefix">fig-tutorial-1</span></a> describes the columns in more detail, we focus on the design columns and describe how researchers can configure them to implement their experimental designs.</p>
 <section id="conditions" class="level3" data-number="1.2.1">
 <h3 data-number="1.2.1" class="anchored" data-anchor-id="conditions"><span class="header-section-number">1.2.1</span> Conditions</h3>
 <p>Researchers can leverage the <code>condition</code> configuration column to set up between-subjects designs by assigning the respective rows with N different values (e.g., “treatment 1”, “treatment 2”, …, “treatment N”). The DICE app will then count the number on unique values and create N different treatment groups. When launching a study, participants will then be assigned to these groups randomly and uniformly such that the group sizes do not differ in expectation. In case study 2, we show how we leveraged this variable to create two conditions that contain two different sets of nineteen organic posts but share the same sponsored post. As each row can only be assigned to one condition, this required us to enter the sponsored post twice within the configuration file: both versions contained the same post and user configurations and only differed with respect to their <code>condition</code>. Similarly, if researchers want to display the same set of organic posts in N conditions, then they have to enter N copies of that set of posts and adjust the <code>condition</code> column accordingly.</p>
@@ -434,7 +456,7 @@ Table&nbsp;1.1: Description of Input csv File
 </section>
 <section id="video-tutorial" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="video-tutorial"><span class="header-section-number">1.4</span> Video Tutorial</h2>
-<p>Here, we describe the configuration of the stimuli we used in our <a href="./cases.html#sec-brand-safety-case">brand safety case study</a> (see <a href="cases.html#sec-brand-safety-case" class="quarto-xref"><span>Section 4.1</span></a>) in detail.</p>
+<p>Here, we describe the configuration of the stimuli we used in our <a href="./cases.html#sec-brand-safety-case">brand safety case study</a> (see <a href="#sec-brand-safety-case" class="quarto-xref"><span class="quarto-unresolved-ref">sec-brand-safety-case</span></a>) in detail.</p>
 <div id="fig-tutorial-1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-tutorial-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -459,12 +481,12 @@ Figure&nbsp;1.1: DICE: csv file configuration
 </section>
 <section id="public-stimuli-resources-databases" class="level2" data-number="1.7">
 <h2 data-number="1.7" class="anchored" data-anchor-id="public-stimuli-resources-databases"><span class="header-section-number">1.7</span> Public Stimuli Resources &amp; Databases</h2>
-<p>We created a set of synthetic users, where we matched <a href="https://www.usna.edu/Users/cs/nchamber/data/twitternames/">actual usernames and handles</a> <span class="citation" data-cites="McKelveyEtAl_2017">(see <a href="references.html#ref-McKelveyEtAl_2017" role="doc-biblioref">McKelvey et al. 2017</a>)</span> with stock images (from <a href="https://unsplash.com/">unsplash.com</a>) and some synthetic, LLM-generated information. Also see <a href="https://generated.photos/datasets/academic">generated.photos</a> and their academic data for user images and <a href="https://www.behindthename.com/random/">behindthename.com</a> for user names.</p>
+<p>We created a set of synthetic users, where we matched <a href="https://www.usna.edu/Users/cs/nchamber/data/twitternames/">actual usernames and handles</a> <span class="citation" data-cites="McKelveyEtAl_2017">(see <a href="#ref-McKelveyEtAl_2017" role="doc-biblioref">McKelvey et al. 2017</a>)</span> with stock images (from <a href="https://unsplash.com/">unsplash.com</a>) and some synthetic, LLM-generated information. Also see <a href="https://generated.photos/datasets/academic">generated.photos</a> and their academic data for user images and <a href="https://www.behindthename.com/random/">behindthename.com</a> for user names.</p>
 <p>In addition, the data science competition platform <em>kaggle</em> hosts a variety of annotated social media related datasets (e.g., the <a href="https://www.kaggle.com/datasets/kashishparmar02/social-media-sentiments-analysis-dataset">Social Media Sentiments Analysis Dataset</a>, the <a href="https://www.kaggle.com/datasets/saurabhshahane/cyberbullying-dataset">Cyberbullying Dataset</a>, <a href="https://www.kaggle.com/datasets/ramjasmaurya/top-1000-social-media-channels">Social Media Influencers in 2022</a>, or <a href="https://www.kaggle.com/datasets/crowdflower/political-social-media-posts">Political Social Media Posts</a>) which researchers can use to create their stimuli. The same applies to <em>Hugging Face</em>, which hosts a <a href="https://huggingface.co/datasets/SocialGrep/one-million-reddit-confessions">Reddit confessions</a> dataset, for instance.</p>
 <p>Finally, you can use <a href="https://www.facebook.com/ads/library/">Facebook’s Ad Library</a>, a publicly accessible database that archives advertisements run by advertisers across Meta’s platforms to copy (or draw inspiration for) copy, creative as well as a landing page for sponsored posts.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-McKelveyEtAl_2017" class="csl-entry" role="listitem">
 McKelvey, Kevin, Peter Goutzounis, Stephen da Cruz, and Nathanael Chambers. 2017. <span>“Aligning Entity Names with Online Aliases on <span>T</span>witter.”</span> In <em>Proceedings of the Fifth International Workshop on Natural Language Processing for Social Media</em>, edited by Lun-Wei Ku and Cheng-Te Li, 25–35. Valencia, Spain: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/W17-1104">https://doi.org/10.18653/v1/W17-1104</a>.
 </div>

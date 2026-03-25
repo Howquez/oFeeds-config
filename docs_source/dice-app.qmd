@@ -8,7 +8,10 @@ We ask you to provide some information about yourself and the study you intend t
 
 ### Configuration Files
 
-When you successfully create a session, DICE automatically generates and downloads a JSON configuration file (e.g., `abc123_dice_config.json`). This file contains all your study settings and can be reused to quickly set up similar studies.
+When you successfully create a session, DICE automatically generates and downloads a JSON configuration file named after the session code (e.g., `abc123_dice_config.json`). This file records all your study settings — including the session code and creation date — and serves two purposes:
+
+- **Reproducibility**: load it to pre-fill the form and quickly recreate or adapt a previous study
+- **Debugging & record-keeping**: the session code inside the file lets me look up a past session and could be useful for tracking down issues
 
 To load a saved configuration file:
 
@@ -16,8 +19,6 @@ To load a saved configuration file:
 2. Click "Load Configuration"
 3. All form fields will be automatically populated with the saved settings from that session
 4. You can then modify any settings as needed before creating a new session
-
-This is useful for running follow-up studies or quickly reproducing a previous study's exact configuration.
 
 ## Participant Recruitment
 
@@ -43,10 +44,16 @@ You need to specify the number of participant slots available for your study. Ea
 For example, if you expect a 20% dropout rate and want 100 completed responses, you should allocate approximately 125 slots.
 
 Important considerations:
+
 - Once all slots are filled, no new participants can join the study
-- We enforce a maximum of 400 slots per study to maintain performance
-- If you need larger sample sizes, please contact us to discuss options
-- Alternatively, consider [deploying](deployment.qmd#sec-deploy) a Digital In-Context Experiment yourself
+- Standard sessions support up to **400 slots**
+- Sessions of up to **1,000 slots** are available upon authentication with an approved email address and password — contact us if you need access
+- For very large samples, consider [deploying](deployment.qmd#sec-deploy) DICE yourself
+
+::: {.callout-important}
+## Keep Test Sessions Small
+When testing your setup before a real study, please create sessions with only 10–20 slots. Test sessions occupy server resources and database space even if no one participates. Once you are satisfied with the configuration, create a fresh session with the full participant count for your actual study.
+:::
 
 ### Automatic Participant ID Parameter Handling
 
@@ -77,6 +84,14 @@ To capture the condition in Qualtrics, create an Embedded Data field named `cond
 
 ### Social Media Platform
 
+Select the social media platform style that best fits your study. Each option renders a distinct feed interface:
+
+- **Twitter/X** — Microblogging feed with tweet cards, retweet counts, likes, and replies
+- **Instagram** — Image-centric feed with a double-tap to like interaction
+- **Stories** — Full-screen vertical stories format; each post is displayed for a (soon-to-be) configurable number of seconds before advancing automatically
+- **LinkedIn** — Professional network feed with reaction buttons and connection-style user profiles
+- **Generic (Swipe)** — A minimal, platform-agnostic feed that participants swipe through; useful when you want to avoid priming participants with a specific platform association
+
 ### URL
 
 In this section, you will provide the csv file you created to configure your stimuli as described in @sec-stimuli. The DICE app "ingests" these configurations if you provide raw URL to the file. This requires you to upload the csv file in a publicly available storage (we recommend [GitHub](https://github.com/) as it is free and easy-to-use). 
@@ -94,11 +109,13 @@ The key difference is that a raw URL starts with `raw.` in the domain name. This
 
 #### Getting a Raw URL
 If you're using GitHub, you can find the raw URL by navigating to your file and clicking the "Raw" button. The URL in your browser will then show the correct format that DICE needs.
-If you prefer using Google Drive, you can share your CSV file and get a direct link. First, share the file by setting it to "Anyone with the link can view." Then, instead of using the standard sharing link, modify it by replacing "file/d/" with "uc?export=download&id=" and removing everything after the file ID. Your Google Drive URL should look like this:
+If you prefer using **Google Drive**, share the file by setting it to "Anyone with the link can view." Then modify the sharing URL by replacing `file/d/` with `uc?export=download&id=` and removing everything after the file ID:
 
 ```
 https://drive.google.com/uc?export=download&id=YOUR_FILE_ID
 ```
+
+If you prefer using **Google Sheets**, share the sheet by setting it to "Anyone with the link can view" and paste the sharing URL directly into DICE — no modifications needed. DICE will automatically export the sheet as a CSV.
 
 #### Using Your Raw URL
 Once you have the raw URL, simply paste it into DICE where requested. The app will automatically fetch your configuration file and use it to set up your study.
@@ -133,7 +150,7 @@ The consent form typically includes information about the study's purpose, proce
 
 The second editor is where you provide instructions and context for participants before they interact with the social media feed. These instructions could explain what participants will see, what they should do, and any specific guidance about how to engage with the content. Accordingly, your study instructions might include welcome text, task instructions, expectations about timing, and any special considerations for interacting with the social media posts. 
 
-If you leave the study instructions editor empty, participants will skip directly from the consent form to the social media feed. If both editors are empty, participants will go directly to the social media content without any preliminary pages.
+Use the **Skip Intro** checkbox to bypass the consent page entirely, and the **Skip Briefing** checkbox to bypass the instructions page. Both are useful during testing or when your study design does not require those pages.
 
 The content you create in both editors is stored as part of your study configuration and will be displayed exactly as you format it to all participants in your study.
 
@@ -180,6 +197,11 @@ After clicking "Create Session," you'll see a confirmation screen that contains 
 
 ### Saving Your Session Information
 The success screen displays your unique session code (such as `h4qfjieu`) and a corresponding session URL. These identifiers are crucial as they provide the only way to monitor your study's progress and download your data later. Make sure to save both the code and URL in a secure location for future reference.
+
+::: {.callout-warning}
+## Download your data promptly
+The database is reset periodically as part of server maintenance, and **any data not downloaded beforehand is permanently lost**. Once data collection is complete, download your data immediately and store it somewhere safe. Do not treat the server as long-term storage. See the [Data](data.qmd#sec-data) chapter for download instructions.
+:::
 
 ### Prolific Integration
 _This section is relevant only if you're using Prolific for participant recruitment._

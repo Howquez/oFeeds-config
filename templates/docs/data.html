@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -74,7 +74,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d5e7ad547044776d59bf9b59a51f66bb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -173,10 +173,6 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="./index.html" class="sidebar-logo-link">
-      </a>
-      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -269,8 +265,21 @@ window.Quarto = {
 <p>The shiny-app requires you to upload your raw DICE data and transforms its wide to a long format. It then provides a download-button. Below, we briefly describe the raw data before we turn our attention to the output of the shiny-app, that is, the processed data. In both sections, we use the data collected in <a href="./cases.html#sec-positioning-case">Case Study 1</a> and anonymize the Prolific IDs (called participant labels).</p>
 <section id="raw-data" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="raw-data"><span class="header-section-number">3.1</span> Raw Data</h2>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Download your data immediately
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The database is reset periodically as part of server maintenance. <strong>Any data not downloaded before a reset is permanently lost.</strong> Do not rely on the server as long-term storage — download your data as soon as data collection is complete and save it in a secure location (e.g., your institution’s research storage or a private repository).</p>
+</div>
+</div>
 <p>While creating an experimental session, the DICE web app returns session code such as <code>r5fbdbr1</code>, for instance. It will also create a url containing that session code (e.g., <code>https://ibt-hsg.herokuapp.com/SessionStartLinks/r5fbdbr1</code>) directing you to you <a href="https://otree.readthedocs.io/en/latest/admin.html">oTree interface</a>, where you can monitor the session or download the data. After clicking on the <code>Data</code> tab, you can download the raw data by clicking on the <code>Plain</code> button in the bottom right of her screen. This will generate a csv file called <code>all_apps_wide_YYYY-MM-DD.csv</code>.</p>
-<p>This data follows oTree’s <a href="https://otree.readthedocs.io/en/latest/conceptual_overview.html#object-hierarchy">conventions</a> as displayed in <a href="#tbl-raw" class="quarto-xref">Table&nbsp;<span>3.1</span></a>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>This data follows oTree’s <a href="https://otree.readthedocs.io/en/latest/conceptual_overview.html#object-hierarchy">conventions</a> as displayed in <a href="#tbl-raw" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-raw</span></a>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Note that data from participants who dropped out mid-study is not lost — their behavioral measures up to the point of drop-off are recorded and included in the download. You can identify incomplete responses by filtering for participants where <code>participant.finished</code> is <code>False</code>.</p>
 <div class="cell">
 <div id="tbl-raw" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -437,7 +446,7 @@ Table&nbsp;3.1: Excerpt of Raw Data Analyzed in Case Study 1
 <td style="text-align: left;">Twitter</td>
 <td style="text-align: left;">https://raw.githubusercontent.com/Howquez/DICE/refs/heads/main/studies/meme_feed/stimuli/9gag.csv</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: left;"><span class="citation" data-cites="9GAG">(<a href="references.html#ref-9GAG" role="doc-biblioref"><strong>9GAG?</strong></a>)</span></td>
+<td style="text-align: left;"><span class="citation" data-cites="9GAG">(<a href="#ref-9GAG" role="doc-biblioref"><strong>9GAG?</strong></a>)</span></td>
 <td style="text-align: right;">0</td>
 <td style="text-align: left;">sequence</td>
 <td style="text-align: left;">NA</td>
@@ -500,7 +509,7 @@ Table&nbsp;3.1: Excerpt of Raw Data Analyzed in Case Study 1
 <td style="text-align: left;">Twitter</td>
 <td style="text-align: left;">https://raw.githubusercontent.com/Howquez/DICE/refs/heads/main/studies/meme_feed/stimuli/9gag.csv</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: left;"><span class="citation" data-cites="9GAG">(<a href="references.html#ref-9GAG" role="doc-biblioref"><strong>9GAG?</strong></a>)</span></td>
+<td style="text-align: left;"><span class="citation" data-cites="9GAG">(<a href="#ref-9GAG" role="doc-biblioref"><strong>9GAG?</strong></a>)</span></td>
 <td style="text-align: right;">0</td>
 <td style="text-align: left;">sequence</td>
 <td style="text-align: left;">NA</td>
@@ -777,7 +786,7 @@ Table&nbsp;3.1: Excerpt of Raw Data Analyzed in Case Study 1
 </table>
 </div>
 </div>
-<p><a href="#tbl-codebook-processed" class="quarto-xref">Table&nbsp;<span>3.2</span></a> presents a code-book that describes the variables presented above.</p>
+<p><a href="#tbl-codebook-processed" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-codebook-processed</span></a> presents a code-book that describes the variables presented above.</p>
 <div class="cell">
 <div id="tbl-codebook-processed" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -886,7 +895,7 @@ Table&nbsp;3.2: Codebook of Processed Data
 <td style="text-align: left;">liked</td>
 <td style="text-align: left;">boolean</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: left;">Describes wheter a participant liked a social media post.</td>
+<td style="text-align: left;">Describes whether a participant liked a social media post.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Participant x Post</td>
@@ -900,9 +909,16 @@ Table&nbsp;3.2: Codebook of Processed Data
 <td style="text-align: left;">hasReply</td>
 <td style="text-align: left;">boolean</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: left;">Describes wheter a participant commented on a social media post.</td>
+<td style="text-align: left;">Describes whether a participant commented on a social media post.</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">Participant x Post</td>
+<td style="text-align: left;">promoted_post_clicks</td>
+<td style="text-align: left;">boolean</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Describes whether a participant clicked on a post labeled as sponsored. Designed to measure click-through rate (CTR) on advertised content.</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">Participant x Post</td>
 <td style="text-align: left;">height</td>
 <td style="text-align: left;">numeric</td>
@@ -919,7 +935,7 @@ Table&nbsp;3.2: Codebook of Processed Data
 </section>
 <section id="additional-processing" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="additional-processing"><span class="header-section-number">3.3</span> Additional Processing</h2>
-<p>Importantly, none of the two datasets presented here contains any self-reports. To generate you final dataset which includes behavioral measures, the stimuli, as well as self-reports, we advise you to merge the processed data with two other data sources. First, merge the shiny app’s output with your survey data using the <code>participant_label</code> as a key. Because the DICE app passes that ID to your survey tool, both datasets have these information. Second, merge that data with you stimuli csv (see <a href="stimuli.html" class="quarto-xref"><span>Chapter 1</span></a>) based on the <code>doc_id</code> and <code>condition</code>, if applicable.</p>
+<p>Importantly, none of the two datasets presented here contains any self-reports. To generate you final dataset which includes behavioral measures, the stimuli, as well as self-reports, we advise you to merge the processed data with two other data sources. First, merge the shiny app’s output with your survey data using the <code>participant_label</code> as a key. Because the DICE app passes that ID to your survey tool, both datasets have these information. Second, merge that data with you stimuli csv (see <a href="#sec-stimuli" class="quarto-xref"><span class="quarto-unresolved-ref">sec-stimuli</span></a>) based on the <code>doc_id</code> and <code>condition</code>, if applicable.</p>
 <p>Using R and the <code>{data.table}</code> package, this process looks as follows:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">merge.data.table</span>(<span class="at">x =</span> dice,</span>
@@ -938,7 +954,7 @@ Table&nbsp;3.2: Codebook of Processed Data
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>In <a href="#tbl-raw" class="quarto-xref">Table&nbsp;<span>3.1</span></a>, we removed a column called <code>participant.tweets</code> as it reports all the information displayed in the feed for every participant. We would advise you to delete that column too as it decreases the file size considerably (if you work with long feeds).<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>In <a href="#tbl-raw" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-raw</span></a>, we removed a column called <code>participant.tweets</code> as it reports all the information displayed in the feed for every participant. We would advise you to delete that column too as it decreases the file size considerably (if you work with long feeds).<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

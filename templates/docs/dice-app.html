@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -39,7 +39,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d5e7ad547044776d59bf9b59a51f66bb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -109,10 +109,6 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="./index.html" class="sidebar-logo-link">
-      </a>
-      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -239,7 +235,11 @@ ul.task-list li input[type="checkbox"] {
 <p>We ask you to provide some information about yourself and the study you intend to run. The DICE app uses these information to provide participants with contact information if any questions occur. In addition, the DICE app displays an external study name. The internal name only serves internal documentation purposes for yourself.</p>
 <section id="configuration-files" class="level3" data-number="2.1.1">
 <h3 data-number="2.1.1" class="anchored" data-anchor-id="configuration-files"><span class="header-section-number">2.1.1</span> Configuration Files</h3>
-<p>When you successfully create a session, DICE automatically generates and downloads a JSON configuration file (e.g., <code>abc123_dice_config.json</code>). This file contains all your study settings and can be reused to quickly set up similar studies.</p>
+<p>When you successfully create a session, DICE automatically generates and downloads a JSON configuration file named after the session code (e.g., <code>abc123_dice_config.json</code>). This file records all your study settings — including the session code and creation date — and serves two purposes:</p>
+<ul>
+<li><strong>Reproducibility</strong>: load it to pre-fill the form and quickly recreate or adapt a previous study</li>
+<li><strong>Debugging &amp; record-keeping</strong>: the session code inside the file lets me look up a past session and could be useful for tracking down issues</li>
+</ul>
 <p>To load a saved configuration file:</p>
 <ol type="1">
 <li>Upload a previously downloaded JSON configuration file</li>
@@ -247,7 +247,6 @@ ul.task-list li input[type="checkbox"] {
 <li>All form fields will be automatically populated with the saved settings from that session</li>
 <li>You can then modify any settings as needed before creating a new session</li>
 </ol>
-<p>This is useful for running follow-up studies or quickly reproducing a previous study’s exact configuration.</p>
 </section>
 </section>
 <section id="participant-recruitment" class="level2" data-number="2.2">
@@ -270,7 +269,26 @@ ul.task-list li input[type="checkbox"] {
 <h3 data-number="2.2.2" class="anchored" data-anchor-id="study-slots-participant-capacity"><span class="header-section-number">2.2.2</span> Study Slots (Participant Capacity)</h3>
 <p>You need to specify the number of participant slots available for your study. Each slot can be used by one participant. If there is attrition—that is, if a participant enters the study but leaves before finishing it—their slot in the database will be consumed and cannot be reused by other participants. Hence, you should account for expected attrition when specifying the number of study slots.</p>
 <p>For example, if you expect a 20% dropout rate and want 100 completed responses, you should allocate approximately 125 slots.</p>
-<p>Important considerations: - Once all slots are filled, no new participants can join the study - We enforce a maximum of 400 slots per study to maintain performance - If you need larger sample sizes, please contact us to discuss options - Alternatively, consider <a href="./deployment.html#sec-deploy">deploying</a> a Digital In-Context Experiment yourself</p>
+<p>Important considerations:</p>
+<ul>
+<li>Once all slots are filled, no new participants can join the study</li>
+<li>Standard sessions support up to <strong>400 slots</strong></li>
+<li>Sessions of up to <strong>1,000 slots</strong> are available upon authentication with an approved email address and password — contact us if you need access</li>
+<li>For very large samples, consider <a href="./deployment.html#sec-deploy">deploying</a> DICE yourself</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Keep Test Sessions Small
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When testing your setup before a real study, please create sessions with only 10–20 slots. Test sessions occupy server resources and database space even if no one participates. Once you are satisfied with the configuration, create a fresh session with the full participant count for your actual study.</p>
+</div>
+</div>
 </section>
 <section id="automatic-participant-id-parameter-handling" class="level3" data-number="2.2.3">
 <h3 data-number="2.2.3" class="anchored" data-anchor-id="automatic-participant-id-parameter-handling"><span class="header-section-number">2.2.3</span> Automatic Participant ID Parameter Handling</h3>
@@ -297,10 +315,18 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="2.3" class="anchored" data-anchor-id="stimulus-design"><span class="header-section-number">2.3</span> Stimulus Design</h2>
 <section id="social-media-platform" class="level3" data-number="2.3.1">
 <h3 data-number="2.3.1" class="anchored" data-anchor-id="social-media-platform"><span class="header-section-number">2.3.1</span> Social Media Platform</h3>
+<p>Select the social media platform style that best fits your study. Each option renders a distinct feed interface:</p>
+<ul>
+<li><strong>Twitter/X</strong> — Microblogging feed with tweet cards, retweet counts, likes, and replies</li>
+<li><strong>Instagram</strong> — Image-centric feed with a double-tap to like interaction</li>
+<li><strong>Stories</strong> — Full-screen vertical stories format; each post is displayed for a (soon-to-be) configurable number of seconds before advancing automatically</li>
+<li><strong>LinkedIn</strong> — Professional network feed with reaction buttons and connection-style user profiles</li>
+<li><strong>Generic (Swipe)</strong> — A minimal, platform-agnostic feed that participants swipe through; useful when you want to avoid priming participants with a specific platform association</li>
+</ul>
 </section>
 <section id="url" class="level3" data-number="2.3.2">
 <h3 data-number="2.3.2" class="anchored" data-anchor-id="url"><span class="header-section-number">2.3.2</span> URL</h3>
-<p>In this section, you will provide the csv file you created to configure your stimuli as described in <a href="stimuli.html" class="quarto-xref"><span>Chapter 1</span></a>. The DICE app “ingests” these configurations if you provide raw URL to the file. This requires you to upload the csv file in a publicly available storage (we recommend <a href="https://github.com/">GitHub</a> as it is free and easy-to-use).</p>
+<p>In this section, you will provide the csv file you created to configure your stimuli as described in <a href="#sec-stimuli" class="quarto-xref"><span class="quarto-unresolved-ref">sec-stimuli</span></a>. The DICE app “ingests” these configurations if you provide raw URL to the file. This requires you to upload the csv file in a publicly available storage (we recommend <a href="https://github.com/">GitHub</a> as it is free and easy-to-use).</p>
 <p>The DICE app needs access to your CSV file through what’s called a “raw” URL. A raw URL points directly to the file’s content, allowing DICE to read your configuration. Think of it as a direct link to the raw data, rather than a webpage showing the file.</p>
 <section id="what-is-a-raw-url" class="level4" data-number="2.3.2.1">
 <h4 data-number="2.3.2.1" class="anchored" data-anchor-id="what-is-a-raw-url"><span class="header-section-number">2.3.2.1</span> What is a Raw URL?</h4>
@@ -310,8 +336,9 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="getting-a-raw-url" class="level4" data-number="2.3.2.2">
 <h4 data-number="2.3.2.2" class="anchored" data-anchor-id="getting-a-raw-url"><span class="header-section-number">2.3.2.2</span> Getting a Raw URL</h4>
-<p>If you’re using GitHub, you can find the raw URL by navigating to your file and clicking the “Raw” button. The URL in your browser will then show the correct format that DICE needs. If you prefer using Google Drive, you can share your CSV file and get a direct link. First, share the file by setting it to “Anyone with the link can view.” Then, instead of using the standard sharing link, modify it by replacing “file/d/” with “uc?export=download&amp;id=” and removing everything after the file ID. Your Google Drive URL should look like this:</p>
+<p>If you’re using GitHub, you can find the raw URL by navigating to your file and clicking the “Raw” button. The URL in your browser will then show the correct format that DICE needs. If you prefer using <strong>Google Drive</strong>, share the file by setting it to “Anyone with the link can view.” Then modify the sharing URL by replacing <code>file/d/</code> with <code>uc?export=download&amp;id=</code> and removing everything after the file ID:</p>
 <pre><code>https://drive.google.com/uc?export=download&amp;id=YOUR_FILE_ID</code></pre>
+<p>If you prefer using <strong>Google Sheets</strong>, share the sheet by setting it to “Anyone with the link can view” and paste the sharing URL directly into DICE — no modifications needed. DICE will automatically export the sheet as a CSV.</p>
 </section>
 <section id="using-your-raw-url" class="level4" data-number="2.3.2.3">
 <h4 data-number="2.3.2.3" class="anchored" data-anchor-id="using-your-raw-url"><span class="header-section-number">2.3.2.3</span> Using Your Raw URL</h4>
@@ -348,7 +375,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="study-instructions" class="level3" data-number="2.4.2">
 <h3 data-number="2.4.2" class="anchored" data-anchor-id="study-instructions"><span class="header-section-number">2.4.2</span> Study Instructions</h3>
 <p>The second editor is where you provide instructions and context for participants before they interact with the social media feed. These instructions could explain what participants will see, what they should do, and any specific guidance about how to engage with the content. Accordingly, your study instructions might include welcome text, task instructions, expectations about timing, and any special considerations for interacting with the social media posts.</p>
-<p>If you leave the study instructions editor empty, participants will skip directly from the consent form to the social media feed. If both editors are empty, participants will go directly to the social media content without any preliminary pages.</p>
+<p>Use the <strong>Skip Intro</strong> checkbox to bypass the consent page entirely, and the <strong>Skip Briefing</strong> checkbox to bypass the instructions page. Both are useful during testing or when your study design does not require those pages.</p>
 <p>The content you create in both editors is stored as part of your study configuration and will be displayed exactly as you format it to all participants in your study.</p>
 </section>
 </section>
@@ -392,6 +419,19 @@ ul.task-list li input[type="checkbox"] {
 <section id="saving-your-session-information" class="level3" data-number="2.6.1">
 <h3 data-number="2.6.1" class="anchored" data-anchor-id="saving-your-session-information"><span class="header-section-number">2.6.1</span> Saving Your Session Information</h3>
 <p>The success screen displays your unique session code (such as <code>h4qfjieu</code>) and a corresponding session URL. These identifiers are crucial as they provide the only way to monitor your study’s progress and download your data later. Make sure to save both the code and URL in a secure location for future reference.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Download your data promptly
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The database is reset periodically as part of server maintenance, and <strong>any data not downloaded beforehand is permanently lost</strong>. Once data collection is complete, download your data immediately and store it somewhere safe. Do not treat the server as long-term storage. See the <a href="./data.html#sec-data">Data</a> chapter for download instructions.</p>
+</div>
+</div>
 </section>
 <section id="prolific-integration" class="level3" data-number="2.6.2">
 <h3 data-number="2.6.2" class="anchored" data-anchor-id="prolific-integration"><span class="header-section-number">2.6.2</span> Prolific Integration</h3>

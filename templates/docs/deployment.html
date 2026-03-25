@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.8.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -74,7 +74,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-d5e7ad547044776d59bf9b59a51f66bb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -144,10 +144,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="./index.html" class="sidebar-logo-link">
-      </a>
-      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -257,7 +253,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="5.1" class="anchored" data-anchor-id="prerequisites"><span class="header-section-number">5.1</span> Prerequisites</h2>
 <p>Before you begin, ensure you have the following installed:</p>
 <ol type="1">
-<li><p><strong>Python</strong>: oTree requires Python 3.7 or higher. Download and install Python from <a href="https://www.python.org/downloads/">python.org</a>.</p></li>
+<li><p><strong>Python</strong>: oTree requires Python 3.9 or higher. Download and install Python from <a href="https://www.python.org/downloads/">python.org</a>.</p></li>
 <li><p><strong>pip</strong>: This is Python’s package installer. It usually comes with Python installation.</p></li>
 <li><p><strong>Command Prompt or Terminal</strong>: This is a text-based interface to interact with your computer. You’ll use it to run commands for installing and running oTree.</p>
 <ul>
@@ -277,7 +273,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Create and open a new directory (e.g.&nbsp;<code>my_DICE_experiment</code>) for your experiment (either manually or using the command prompt or terminal):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> my_DICE_experiment</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> my_DICE_experiment</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Now download the <code>DICE.otreezip</code> file <a href="https://github.com/Howquez/oFeeds/blob/main/software/DICE/DICE.otreezip">(which you can find here)</a> and store it in your new directory. Then use the command prompt or terminal and run the <code>otree unzip</code> command to extract the contents of the otreezip file:</p>
+<p>Now download the <code>DICE.otreezip</code> file <a href="https://github.com/Howquez/DICE/blob/main/software/DICE/DICE.otreezip">(which you can find here)</a> and store it in your new directory. Then use the command prompt or terminal and run the <code>otree unzip</code> command to extract the contents of the otreezip file:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">otree</span> unzip DICE.otreezip</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If necessary, adjust the path to the otreezip file.</p>
 <p>This will unpack the experiment such that you can browse and edit its raw files. One of them is called <code>requirements.txt</code>. You can find it in <code>my_DICE_experiment/</code> (or whatever name you chose for your project directory). You should have all the requirements installed but it may not hurt to re-install them using:</p>
