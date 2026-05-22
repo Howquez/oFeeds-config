@@ -303,7 +303,7 @@ function liveRecv(data) {
                                      '&prolific_session_id={{%SESSION_ID%}}';
 
         var explanatoryText = document.createElement('p');
-        explanatoryText.innerHTML = "2. Copy the following URL and provide it to Prolific's study details. The structure of the URL ensures that Prolific IDs are tracked. This ensures that you can merge DICE- and Qualtrics data.<br><strong>In Qualtrics:</strong> Create an Embedded Data field named <code>participant_label</code> to capture the Prolific participant ID.";
+        explanatoryText.innerHTML = "2. Copy the following URL and provide it to Prolific's study details. The structure of the URL ensures that Prolific IDs are tracked. This ensures that you can merge DICE- and Qualtrics data.<br><strong>In Qualtrics:</strong> Create an Embedded Data field named <code>prolific_pid</code> to capture the Prolific participant ID.";
 
         var inputGroup = document.createElement('div');
         inputGroup.className = 'input-group mb-3';
