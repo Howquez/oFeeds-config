@@ -548,7 +548,7 @@ function displaySessionError(errorMessage) {
 
     let supportTitle = document.createElement('small');
     supportTitle.className = 'text-muted d-block mb-2';
-    supportTitle.innerHTML = '<strong>Still having issues?</strong> Copy this info to <a href="https://github.com/Howquez/DICE/discussions" target="_blank">GitHub Discussions</a> and we\'ll help:';
+    supportTitle.innerHTML = '<strong>Still having issues?</strong> Open a ticket in <a href="https://github.com/Howquez/DICE/discussions" target="_blank">GitHub Discussions</a>. To help us debug, please include: (1) a link to your CSV file (e.g. the GitHub page or Google Sheets URL — not a raw/download link) and (2) a brief description of what you were trying to do.';
     supportDiv.appendChild(supportTitle);
 
     // Create copyable error details
