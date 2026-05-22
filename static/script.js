@@ -4,6 +4,18 @@ var quillConsent;  // Quill instance for consent form
 
 // Initialize both Quill editors when document is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    var banner = document.getElementById('emacBanner');
+    if (banner) {
+        var expired = new Date() > new Date('2026-06-04T23:59:59');
+        if (expired || sessionStorage.getItem('emacBannerDismissed')) {
+            banner.style.display = 'none';
+        } else {
+            document.getElementById('emacBannerClose').addEventListener('click', function () {
+                banner.style.display = 'none';
+                sessionStorage.setItem('emacBannerDismissed', '1');
+            });
+        }
+    }
     // Initialize Bootstrap tooltips
     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {

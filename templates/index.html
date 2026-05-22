@@ -21,19 +21,25 @@
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 {#<script src="{{ url_for('static', filename='config_goals.js') }}"></script>#}
 
-<nav class="navbar fixed-top border-bottom bg-white bg-opacity-75 border-opacity-50">
-    <div class="container">
+<nav class="navbar fixed-top bg-white bg-opacity-75 border-opacity-50" style="flex-direction: column; align-items: stretch; padding: 0;">
+    <div class="container" style="padding-top: 0.5rem; padding-bottom: 0.5rem;">
         <a class="navbar-brand" href="#">
             <img src="{{ url_for('static', filename='favicon.ico') }}" alt="Logo" width="30" height="30">
             &nbsp; &nbsp;DICE App
         </a>
-        <!-- Add form for session code input
-        <form class="d-flex" onsubmit="retrieveSessionData(event)">
-          <input class="form-control me-2" type="search" placeholder="Enter session code" aria-label="Session code" id="sessionCodeInput">
-          <button class="btn btn-outline-success" type="submit">Get Data</button>
-        </form>
-        -->
         <img src="{{ url_for('static', filename='eth_logo_kurz_pos.png') }}" alt="ETH Zürich" height="50" class="ms-auto">
+    </div>
+    <div id="emacBanner" class="w-100 border-top border-primary border-opacity-25 py-1 bg-primary bg-opacity-10">
+        <div class="container d-flex align-items-center justify-content-between">
+            <small class="text-muted">
+                <i class="bi bi-calendar-event me-1"></i>
+                We're giving a <strong class="text-dark">DICE Workshop</strong>
+                as part of the Special Session on Contemporary Research Methods at EMAC 2026
+                &middot; <span class="text-nowrap">Thu Jun 4 &middot; 10:30–12:00 &middot; CB1.11</span>
+                <a href="https://whova.com/portal/webapp/dXeZC6pWG0B6GIL8hn-9/Agenda/5323697" target="_blank" class="ms-2">Details →</a>
+            </small>
+            <button type="button" class="btn-close btn-sm ms-2" id="emacBannerClose" aria-label="Dismiss"></button>
+        </div>
     </div>
 </nav>
 
@@ -48,8 +54,7 @@
             <button class="btn btn-outline-secondary btn-lg px-4" data-bs-toggle="modal" data-bs-target="#citationModal">Citation</button>
             <a class="btn btn-outline-secondary btn-lg px-4" href="/docs/index.html" target="_blank">Docs</a>
             <a class="btn btn-outline-secondary btn-lg px-4" href="https://zenodo.org/records/18589494" target="_blank">Slides</a>
-            <a class="btn btn-danger btn-lg px-4" href="https://whova.com/portal/webapp/dXeZC6pWG0B6GIL8hn-9/Agenda/5323697" target="_blank">EMAC Workshop</a>
-            <a class="btn btn-outline-secondary btn-lg px-4" href="https://www.youtube.com/watch?v=lx_akVasq7I&list=PLZ-soW8YjcdezgGILvI4dmQU2lpl0cAC0" target="_blank"><i class="bi bi-play-fill"></i> Watch Tutorial</a>
+<a class="btn btn-outline-secondary btn-lg px-4" href="https://www.youtube.com/watch?v=lx_akVasq7I&list=PLZ-soW8YjcdezgGILvI4dmQU2lpl0cAC0" target="_blank"><i class="bi bi-play-fill"></i> Watch Tutorial</a>
             <button class="btn btn-outline-secondary btn-lg px-4" data-bs-toggle="modal" data-bs-target="#helpModal">Get Help</button>
         </div>
     </div>
@@ -483,7 +488,7 @@
                         </h5>
                         <p class="card-text text-muted">
                             <small>
-                                Plese use the following forms to define what you measure and how you measure it.
+                                Please use the following forms to define what you measure and how you measure it.
                             </small>
                         </p>
                         <form>
