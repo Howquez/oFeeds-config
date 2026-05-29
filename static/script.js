@@ -109,6 +109,28 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add event listener to recruitment platform select
     recruitmentPlatformSelect.addEventListener('change', updateParameterField);
 
+    // Auto-select comma delimiter for Google Sheets URLs
+    const contentUrlInput = document.getElementById('content_url');
+    const delimiterSelect = document.getElementById('delimiter');
+    const delimiterBadge = document.querySelector('[data-delimiter-badge]');
+
+    function updateDelimiterForUrl() {
+        const url = contentUrlInput.value;
+        const isGoogleSheets = url.includes('spreadsheets.google.com') ||
+                               (url.includes('docs.google.com') && url.includes('spreadsheets'));
+        if (isGoogleSheets) {
+            delimiterSelect.value = ',';
+            if (delimiterBadge) {
+                delimiterBadge.textContent = 'Set to comma for Google Sheets';
+                delimiterBadge.style.opacity = '1';
+            }
+        }
+    }
+
+    contentUrlInput.addEventListener('input', updateDelimiterForUrl);
+    contentUrlInput.addEventListener('change', updateDelimiterForUrl);
+    updateDelimiterForUrl(); // run on load in case field is pre-filled
+
     // Large session authentication UI
     const participantNumberInput = document.getElementById('participant_number');
     const largeSessionAuthDiv = document.getElementById('large_session_auth');

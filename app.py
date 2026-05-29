@@ -50,6 +50,18 @@ class APIError(Exception):
         super().__init__(self.message)
 
 
+def resolve_csv_url(url: str) -> str:
+    """Convert a Google Sheets or Google Drive sharing URL to a direct CSV download URL."""
+    if 'spreadsheets.google.com' in url or ('docs.google.com' in url and 'spreadsheets' in url):
+        sheet_id = re.search(r'/d/([a-zA-Z0-9_-]+)', url).group(1)
+        gid_match = re.search(r'gid=(\d+)', url)
+        export_url = f'https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv'
+        if gid_match:
+            export_url += f'&gid={gid_match.group(1)}'
+        return export_url
+    return url
+
+
 def detect_delimiter(csv_content: str, user_delimiter: str = ';') -> str:
     """
     Auto-detect CSV delimiter by checking which delimiter produces
@@ -154,15 +166,9 @@ def read_feed(path: str, delim: str) -> pd.DataFrame:
     Adapted from oTree DICE app.
     """
     if re.match(r'^https?://\S+', path):
-        if 'github' in path:
+        path = resolve_csv_url(path)
+        if 'github' in path or 'docs.google.com' in path:
             tweets = pd.read_csv(path, sep=delim)
-        elif 'spreadsheets.google.com' in path or ('docs.google.com' in path and 'spreadsheets' in path):
-            sheet_id = re.search(r'/d/([a-zA-Z0-9_-]+)', path).group(1)
-            gid_match = re.search(r'gid=(\d+)', path)
-            export_url = f'https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv'
-            if gid_match:
-                export_url += f'&gid={gid_match.group(1)}'
-            tweets = pd.read_csv(export_url, sep=delim)
         elif 'drive.google.com' in path:
             file_id = path.split('/')[-2]
             download_url = f'https://drive.google.com/uc?id={file_id}'
@@ -432,6 +438,8 @@ def test_csv():
         if not content_url:
             return jsonify({"error": "Content URL cannot be empty"}), 400
 
+        content_url = resolve_csv_url(content_url)
+
         # Fetch CSV from URL
         try:
             response = requests.get(content_url, timeout=10)
@@ -563,6 +571,14 @@ def preview_feed():
 
         if not content_url:
             return jsonify({"error": "Content URL cannot be empty"}), 400
+
+        # Convert Google Sheets URL to CSV export URL
+        if 'spreadsheets.google.com' in content_url or ('docs.google.com' in content_url and 'spreadsheets' in content_url):
+            sheet_id = re.search(r'/d/([a-zA-Z0-9_-]+)', content_url).group(1)
+            gid_match = re.search(r'gid=(\d+)', content_url)
+            content_url = f'https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv'
+            if gid_match:
+                content_url += f'&gid={gid_match.group(1)}'
 
         # Fetch and read CSV
         try:
